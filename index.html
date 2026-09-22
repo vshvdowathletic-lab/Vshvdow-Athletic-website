@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Sets theme + language before first paint, so there's no flash of the wrong one -->
+<script>
+(function(){
+  try {
+    var theme = localStorage.getItem('vshvdow-theme');
+    if (!theme) theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    var lang = localStorage.getItem('vshvdow-lang') || 'en';
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  } catch (e) {}
+})();
+</script>
+
+<title>VSHVDOW — Athletic Coaching</title>
+<meta name="description" content="Football-first athletic coaching. One training system, three bundles, built to perform and built to last.">
+
+<meta property="og:title" content="VSHVDOW — Athletic Coaching">
+<meta property="og:description" content="Football-first athletic coaching. One training system, three bundles.">
+<meta property="og:image" content="images/hero.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0a0a">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a class="wordmark" href="#top" data-text="VSHVDOW">VSHVDOW</a>
+
+    <nav class="main-nav" id="mainNav" aria-label="Primary">
+      <a href="#pyramid" data-nav="method"></a>
+      <a href="#bundles" data-nav="bundles"></a>
+      <a href="#included" data-nav="included"></a>
+      <a href="#coach" data-nav="coach"></a>
+      <a href="#contact" data-nav="contact"></a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="langToggle" class="pill-btn" type="button"></button>
+
+      <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle color theme">
+        <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+        <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+      </button>
+
+      <a id="navCta" class="btn btn-primary btn-small" href="#" target="_blank" rel="noopener"></a>
+
+      <button id="menuToggle" class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="mainNav" aria-label="Menu">
+        <span class="burger"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="hero-media">
+      <img src="images/hero.jpg" alt="" class="hero-img">
+      <div class="hero-scrim"></div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-headline">
+        <span id="heroLine1" class="reveal"></span>
+        <span id="heroLine2" class="reveal reveal-delay"></span>
+      </h1>
+      <p class="hero-sub" id="heroSub"></p>
+      <a id="heroCta" class="btn btn-primary" href="#" target="_blank" rel="noopener"></a>
+    </div>
+  </section>
+
+  <section class="pyramid-section" id="pyramid">
+    <div class="section-inner">
+      <h2 id="pyramidTitle"></h2>
+      <p class="section-sub" id="pyramidSub"></p>
+      <div class="pyramid" id="pyramidLayers"></div>
+    </div>
+  </section>
+
+  <section class="band" id="momentumBand">
+    <img src="images/momentum.jpg" alt="" class="band-img">
+    <div class="band-scrim"></div>
+    <p class="band-line" id="bandLine"></p>
+  </section>
+
+  <section class="bundles-section" id="bundles">
+    <div class="section-inner">
+      <h2 id="bundlesTitle"></h2>
+      <p class="section-sub" id="bundlesSub"></p>
+      <p class="pricing-note" id="pricingNote"></p>
+      <div class="bundle-grid" id="bundleGrid"></div>
+      <p class="fx-note" id="fxNote"></p>
+    </div>
+  </section>
+
+  <section class="products-section" id="included">
+    <div class="section-inner">
+      <h2 id="productsTitle"></h2>
+      <p class="section-sub" id="productsSub"></p>
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </section>
+
+  <section class="about-section" id="coach">
+    <div class="section-inner about-grid">
+      <div class="about-media">
+        <img src="images/about.jpg" alt="VSHVDOW coach">
+      </div>
+      <div class="about-copy">
+        <h2 id="aboutTitle"></h2>
+        <div class="about-body" id="aboutBody"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="results-section" id="results">
+    <div class="section-inner results-grid">
+      <div class="results-media">
+        <img src="images/results.jpg" alt="VSHVDOW athlete training">
+      </div>
+      <div class="results-copy">
+        <h2 id="resultsTitle"></h2>
+        <p id="resultsBody"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <img src="images/closing.jpg" alt="" class="contact-bg">
+    <div class="contact-scrim"></div>
+    <div class="section-inner contact-inner">
+      <h2 id="contactTitle"></h2>
+      <p id="contactSub"></p>
+      <div class="contact-actions">
+        <a id="contactCta" class="btn btn-primary" href="#" target="_blank" rel="noopener"></a>
+        <span id="contactOr" class="contact-or"></span>
+        <a id="whatsappCta" class="btn btn-ghost" href="#" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">VSHVDOW</div>
+    <p class="footer-tagline" id="footerTagline"></p>
+    <div class="footer-social">
+      <a id="igLink" href="https://www.instagram.com/vshvdow/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      </a>
+      <a id="fbLink" href="#" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 8.5h2V5.4c-.35-.05-1.5-.15-2.86-.15-2.84 0-4.79 1.73-4.79 4.92v2.57H6.5v3.5h2.85V21h3.62v-4.76h2.73l.43-3.5h-3.16v-2.2c0-1.01.28-1.7 1.03-1.7z"/></svg>
+      </a>
+      <a id="waLink" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 12a8 8 0 1 1-3.7-6.75M20 12a8 8 0 0 0-8-8M9 10.5c.3 1.9 2.1 3.7 4 4l1.1-1.3c.6.2 1.5.4 1.9.4.5 2-.1 2.4-.6 2.5-2.8.6-8-2-8.6-7.3-.1-.6.5-1.1 2.4-.6.1.4.3 1.3.5 1.9z"/></svg>
+      </a>
+    </div>
+    <p class="footer-rights"><span id="footerYear"></span> VSHVDOW. <span id="footerRights"></span></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="content.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
