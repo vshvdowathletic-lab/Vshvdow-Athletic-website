@@ -172,7 +172,7 @@ const CONTENT = {
     hero: {
       line1: "Build an athlete first.",
       line2: "The physique follows.",
-      sub: "Athletic coaching, built around one training system → the Pyramid.",
+      sub: "Athletic coaching, built around one training system, the Pyramid.",
       cta: "Message me on Instagram",
     },
     pyramid: {
