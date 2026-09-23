@@ -204,8 +204,8 @@ const CONTENT = {
     about: {
       title: "About the coach",
       body: [
-        "No certificate on the wall. Just years on the pitch and in the gym, testing what actually works until I understood why — then building a system around it.",
-        "VSHVDOW isn't something I studied. It's the standard I hold myself to, and the one every athlete I coach gets held to. No shortcuts. No skipping the foundation. Build the athlete first — everything else follows.",
+        "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline — it's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
+        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed, and rebuilt every four weeks around what the sessions and the numbers actually show — never guesswork.",
         "I coach the way I train — obsessively, honestly, with zero patience for wasted effort.",
       ],
     },
@@ -274,8 +274,8 @@ const CONTENT = {
     about: {
       title: "عن المدرب",
       body: [
-        "لا شهادة معلَّقة على الحائط. فقط سنوات في الملعب وصالة التدريب، أختبر كل طريقة حتى أفهم لماذا تنجح — ثم أبني نظامًا حولها.",
-        "VSHVDOW ليس شيئًا درسته في كتاب. إنه المعيار الذي أطبّقه على نفسي، ونفسه أطبّقه على كل رياضي أدرّبه. لا اختصارات، ولا تخطي للأساس. ابنِ الرياضي أولًا — وكل شيء آخر يتبعه.",
+        "كل رياضي أدرّبه يمر بنفس النظام: خمسة مستويات، مبنية بالترتيب، بلا تخطي لأي منها. هذا ليس شعارًا — إنه الأسلوب الوحيد الذي رأيته يبني أداءً حقيقيًا ومستمرًا، بعد سنوات في الملعب وصالة التدريب.",
+        "VSHVDOW هو المعيار الذي أطبّقه على نفسي، ونفسه يُطبَّق على كل رياضي أدرّبه. يُتابَع برنامجك ويُراجَع ويُعاد بناؤه كل أربعة أسابيع بناءً على ما تُظهره الحصص والأرقام فعليًا — لا تخمينًا.",
         "أدرّب كما أتمرّن: بهوس، وبصدق، وبلا صبر على أي مجهود يُهدر.",
       ],
     },

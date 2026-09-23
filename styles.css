@@ -35,9 +35,10 @@ h1, h2, h3, p { margin: 0; }
   --invert-muted: #b8b3ac;
   --scrim: rgba(10,10,10,.5);
 
-  --font-display: 'Anton', sans-serif;
-  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-display: 'Raleway', sans-serif;
+  --font-body: 'Raleway', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
+  --w-heavy: 800;
 
   --container: 1180px;
   --radius: 3px;
@@ -48,12 +49,12 @@ h1, h2, h3, p { margin: 0; }
 
   --text-xs: .78rem; --text-sm: .9rem; --text-base: 1rem; --text-lg: 1.15rem;
   --text-xl: 1.4rem;  --text-2xl: 1.75rem; --text-3xl: 2.25rem;
-  --text-4xl: 3rem;   --text-hero: clamp(2.6rem, 7vw, 5.6rem);
+  --text-4xl: 3rem;   --text-hero: clamp(2.4rem, 6.5vw, 5rem);
 }
 
 html[lang="ar"] {
-  --font-display: 'IBM Plex Sans Arabic', sans-serif;
-  --font-body: 'IBM Plex Sans Arabic', sans-serif;
+  --font-display: 'Cairo', sans-serif;
+  --font-body: 'Cairo', sans-serif;
 }
 
 html[data-theme="dark"] {
@@ -85,8 +86,8 @@ section { padding-block: var(--sp-9); }
 section[id] { scroll-margin-top: 84px; }
 @media (max-width: 760px) { section { padding-block: var(--sp-7); } }
 
-h2 { font-family: var(--font-display); font-weight: 400; font-size: var(--text-3xl); line-height: 1.1; letter-spacing: .2px; }
-html[lang="ar"] h2 { font-weight: 800; letter-spacing: 0; }
+h2 { font-family: var(--font-display); font-weight: var(--w-heavy); font-size: var(--text-3xl); line-height: 1.15; letter-spacing: -.2px; }
+html[lang="ar"] h2 { letter-spacing: 0; }
 .section-sub { max-width: 46ch; color: var(--text-muted); font-size: var(--text-lg); margin-top: var(--sp-3); }
 
 .skip-link { position: absolute; inset-inline-start: -999px; top: 0; background: var(--text); color: var(--bg); padding: .8em 1.2em; z-index: 999; }
@@ -129,10 +130,10 @@ html { scroll-behavior: smooth; }
   height: 68px; display: flex; align-items: center; justify-content: space-between; gap: var(--sp-5);
 }
 .wordmark {
-  font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 1px;
+  font-family: var(--font-display); font-weight: var(--w-heavy); font-size: 1.3rem; letter-spacing: .5px;
   text-decoration: none; color: var(--text); position: relative; white-space: nowrap;
 }
-html[lang="ar"] .wordmark { font-weight: 800; }
+html[lang="ar"] .wordmark { letter-spacing: 0; }
 .wordmark::after {
   content: attr(data-text); position: absolute; inset-inline-start: 2px; top: 2px;
   color: var(--text-faint); z-index: -1; opacity: .5;
@@ -181,8 +182,8 @@ html[data-theme="dark"] .icon-moon { display: block; }
 .hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
 .hero-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,10,.15) 0%, rgba(10,10,10,.25) 45%, rgba(10,10,10,.88) 100%); }
 .hero-content { position: relative; z-index: 1; padding: var(--sp-9) var(--sp-5) var(--sp-8); width: 100%; max-width: var(--container); margin-inline: auto; color: #fff; }
-.hero-headline { font-family: var(--font-display); font-weight: 400; font-size: var(--text-hero); line-height: 1.02; letter-spacing: .5px; }
-html[lang="ar"] .hero-headline { font-weight: 800; letter-spacing: 0; }
+.hero-headline { font-family: var(--font-display); font-weight: var(--w-heavy); font-size: var(--text-hero); line-height: 1.08; letter-spacing: -1px; }
+html[lang="ar"] .hero-headline { letter-spacing: 0; }
 .hero-headline span { display: block; }
 .hero-sub { margin-top: var(--sp-5); max-width: 44ch; font-size: var(--text-lg); color: rgba(255,255,255,.85); }
 .hero-content .btn { margin-top: var(--sp-6); }
@@ -199,8 +200,7 @@ html[lang="ar"] .hero-headline { font-weight: 800; letter-spacing: 0; }
 }
 .layer:hover { transform: translateY(-3px); border-color: var(--text-faint); }
 .layer-num { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-faint); display: block; margin-bottom: 4px; }
-.layer-name { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 400; }
-html[lang="ar"] .layer-name { font-weight: 700; }
+.layer-name { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--w-heavy); }
 .layer-detail { font-size: var(--text-sm); color: var(--text-muted); margin-top: 4px; }
 @media (max-width: 640px) { .layer { padding: var(--sp-3) var(--sp-4); } }
 
@@ -208,8 +208,8 @@ html[lang="ar"] .layer-name { font-weight: 700; }
 .band { position: relative; height: 46vh; min-height: 320px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .band-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .band-scrim { position: absolute; inset: 0; background: var(--scrim); }
-.band-line { position: relative; z-index: 1; color: #fff; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.6rem, 4.5vw, 3rem); text-align: center; padding-inline: var(--sp-5); letter-spacing: .5px; }
-html[lang="ar"] .band-line { font-weight: 800; letter-spacing: 0; }
+.band-line { position: relative; z-index: 1; color: #fff; font-family: var(--font-display); font-weight: var(--w-heavy); font-size: clamp(1.6rem, 4.5vw, 3rem); text-align: center; padding-inline: var(--sp-5); letter-spacing: -.3px; }
+html[lang="ar"] .band-line { letter-spacing: 0; }
 
 /* ---------- Bundles ---------- */
 .pricing-note { max-width: 62ch; color: var(--text-muted); margin-top: var(--sp-5); padding-inline-start: var(--sp-4); border-inline-start: 2px solid var(--border); }
@@ -229,8 +229,7 @@ html[lang="ar"] .band-line { font-weight: 800; letter-spacing: 0; }
 .bundle-card.featured .btn-primary.is-waitlist { opacity: .6; }
 
 .bundle-badge { font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: .3px; color: var(--text-muted); }
-.bundle-name { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 400; }
-html[lang="ar"] .bundle-name { font-weight: 800; }
+.bundle-name { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--w-heavy); }
 .bundle-price { font-family: var(--font-mono); font-size: var(--text-2xl); font-weight: 600; margin-top: var(--sp-1); }
 .bundle-price small { font-family: var(--font-body); font-weight: 500; font-size: var(--text-sm); color: var(--text-muted); }
 .bundle-price .egp { display: block; font-size: var(--text-sm); color: var(--text-muted); font-weight: 500; margin-top: 2px; }
@@ -256,8 +255,7 @@ html[lang="ar"] .bundle-name { font-weight: 800; }
 .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-5); margin-top: var(--sp-7); }
 @media (max-width: 700px) { .products-grid { grid-template-columns: 1fr; } }
 .product-card { border-inline-start: 2px solid var(--text); padding-inline-start: var(--sp-5); padding-block: var(--sp-2); }
-.product-name { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 400; }
-html[lang="ar"] .product-name { font-weight: 700; }
+.product-name { font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--w-heavy); }
 .product-list { margin-top: var(--sp-3); display: flex; flex-direction: column; gap: 6px; }
 .product-list li { font-size: var(--text-sm); color: var(--text-muted); padding-inline-start: var(--sp-4); position: relative; }
 .product-list li::before { content: "—"; position: absolute; inset-inline-start: 0; color: var(--text-faint); }
@@ -288,8 +286,8 @@ html[lang="ar"] .product-name { font-weight: 700; }
 /* ---------- Footer ---------- */
 .site-footer { padding-block: var(--sp-7); border-top: 1px solid var(--border); }
 .footer-inner { max-width: var(--container); margin-inline: auto; padding-inline: var(--sp-5); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); }
-.footer-brand { font-family: var(--font-display); font-size: var(--text-lg); }
-html[lang="ar"] .footer-brand { font-weight: 800; }
+.footer-brand { font-family: var(--font-body); font-weight: 500; font-size: var(--text-sm); letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-muted); }
+html[lang="ar"] .footer-brand { letter-spacing: 0; text-transform: none; }
 .footer-tagline { color: var(--text-muted); font-size: var(--text-sm); }
 .footer-social { display: flex; gap: var(--sp-4); margin-block: var(--sp-2); }
 .footer-social a { color: var(--text-muted); }
