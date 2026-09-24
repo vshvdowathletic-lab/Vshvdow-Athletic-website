@@ -136,7 +136,7 @@ const BUNDLES = [
       ]},
     ],
     bestFor: {
-      en: ["Hybrid athletes", "Semi pro/pro footballers", "MENA / international"],
+      en: ["Hybrid athletes", "Semi-pro footballers", "MENA / international"],
       ar: ["الرياضيون الهجينون", "لاعبو كرة القدم شبه المحترفين", "الشرق الأوسط ودوليًا"],
     },
   },
@@ -145,7 +145,7 @@ const BUNDLES = [
 /* ---------- 3. WHAT'S INCLUDED (bundle products) ---------- */
 const PRODUCTS = [
   { id: "welcome", name: { en: "Welcome Pack", ar: "حزمة الترحيب" }, items: {
-    en: ["Coaching philosophy explained", "Your weekly rhythm & schedule", "Communication standards", "Week 1, step by step", "Everything you need to start day 1"],
+    en: ["Coaching philosophy explained", "Your weekly rhythm & schedule", "Communication standards", "Week 1, step-by-step", "Everything you need to start day 1"],
     ar: ["شرح فلسفة التدريب", "إيقاعك وجدولك الأسبوعي", "معايير التواصل", "الأسبوع الأول خطوة بخطوة", "كل ما تحتاجه لتبدأ من اليوم الأول"],
   }},
   { id: "training", name: { en: "Training Plan", ar: "خطة التدريب" }, items: {
@@ -153,11 +153,11 @@ const PRODUCTS = [
     ar: ["من 2 إلى 6 حصص أسبوعيًا", "مبنية حول الهرم الرياضي", "حمل تدريجي على 4 مراحل", "كل مجموعة وتكرار وتلميح مكتوب بالتفصيل", "تحديث كل 4 أسابيع"],
   }},
   { id: "nutrition", name: { en: "Nutrition System", ar: "نظام التغذية" }, items: {
-    en: ["TDEE (total daily energy expenditure)", "Your macros, set by phase", "Country specific food guide", "Pre/post training timing", "Meal alternatives", "Adjusts every 4 weeks"],
+    en: ["TDEE — total daily energy expenditure", "Your macros, set by phase", "Country-specific food guide", "Pre/post-training timing", "Meal alternatives", "Adjusts every 4 weeks"],
     ar: ["حساب TDEE (إجمالي الطاقة اليومية)", "الماكروز الخاصة بك حسب كل مرحلة", "دليل أطعمة حسب بلدك", "توقيت الأكل قبل وبعد التدريب", "بدائل للوجبات", "تعديل كل 4 أسابيع"],
   }},
   { id: "tracker", name: { en: "Athlete Tracker", ar: "متتبع الأداء" }, items: {
-    en: ["Google Sheet shared on day 1", "1RM auto load calculator", "12 week strength log", "Body composition tracker", "Speed and power benchmarks", "Weekly check in log"],
+    en: ["Google Sheet shared on day 1", "1RM auto-load calculator", "12-week strength log", "Body composition tracker", "Speed and power benchmarks", "Weekly check-in log"],
     ar: ["ملف Google Sheet يُشارَك من اليوم الأول", "حاسبة تحميل تلقائية لأقصى تكرار (1RM)", "سجل قوة لمدة 12 أسبوعًا", "متتبع تكوين الجسم", "معايير السرعة والقدرة الانفجارية", "سجل متابعة أسبوعي"],
   }},
 ];
@@ -166,35 +166,35 @@ const PRODUCTS = [
 const CONTENT = {
   en: {
     dir: "ltr",
-    metaTitle: "VSHVDOW | Athletic Coaching",
-    metaDescription: "Athletic coaching. One training system, three bundles, built to perform and built to last.",
+    metaTitle: "VSHVDOW — Athletic Coaching",
+    metaDescription: "Football-first athletic coaching. One training system, three bundles, built to perform and built to last.",
     nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Message me" },
     hero: {
       line1: "Build an athlete first.",
       line2: "The physique follows.",
-      sub: "Athletic coaching, built around one training system, the Pyramid.",
+      sub: "Football-first athletic coaching, built around one training system — the Pyramid.",
       cta: "Message me on Instagram",
     },
     pyramid: {
       title: "The Pyramid",
-      sub: "Every client, every goal, every session, the pyramid is always the process.",
+      sub: "Every client, every goal, every session — the pyramid is always the process.",
     },
     layers: [
       { n: 5, name: "Peak expression", detail: "Physique, performance, and mindset" },
       { n: 4, name: "Speed and agility", detail: "Max velocity, change of direction, reactive agility" },
       { n: 3, name: "Strength and power", detail: "Progressive overload, explosiveness, force production" },
-      { n: 2, name: "Athletic conditioning", detail: "Aerobic base, lactate threshold, repeat sprint capacity" },
+      { n: 2, name: "Athletic conditioning", detail: "Aerobic base, lactate threshold, repeat-sprint capacity" },
       { n: 1, name: "Movement foundation", detail: "Mobility, joint health, movement quality, injury resilience, posture" },
     ],
     bundles: {
       title: "Bundle System",
       sub: "All three bundles are athletic first. Your goal changes the apex, not the process.",
-      pricingNote: "Every price is set for the individual athlete your level, your goals, and your training capacity decide the exact number. The ranges below are the frame; message me and we'll land on yours in a couple of messages.",
+      pricingNote: "Every price is set for the individual athlete — your level, your goals, and your training capacity decide the exact number. The ranges below are the frame; message me and we'll land on yours in a couple of messages.",
       fxNote: "EGP pricing is fixed at roughly 50 EGP per $1, reviewed monthly.",
       minimum: "3-month minimum",
       perMonth: "/ month",
       bestForTitle: "Best for",
-      waitlistBadge: "Full waitlist open",
+      waitlistBadge: "Full — waitlist open",
       waitlistCta: "Join waitlist",
     },
     products: {
@@ -204,14 +204,14 @@ const CONTENT = {
     about: {
       title: "About the coach",
       body: [
-        "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline, it's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
-        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed, and rebuilt every four weeks around what the sessions and the numbers actually show, never guesswork.",
-        "I coach the way I train obsessively and honestly, with zero patience for wasted effort.",
+        "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline — it's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
+        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed, and rebuilt every four weeks around what the sessions and the numbers actually show — never guesswork.",
+        "I coach the way I train — obsessively, honestly, with zero patience for wasted effort.",
       ],
     },
     results: {
       title: "Results",
-      body: "Real athletes, real numbers, case studies are on their way. Message me directly and I'll walk you through current client progress.",
+      body: "Real athletes, real numbers — case studies are on their way. Message me directly and I'll walk you through current client progress.",
     },
     contact: {
       title: "Ready to start?",

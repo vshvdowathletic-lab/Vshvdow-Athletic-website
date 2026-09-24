@@ -13,11 +13,19 @@ let toastTimer;
 
 function layerHTML(layer) {
   const w = 40 + (5 - layer.n) * 15; // Layer 5 = 40% (peak) ... Layer 1 = 100% (base)
+  const isTop = layer.n === 5;
+  let clip = '';
+  if (!isTop) {
+    const f = (750 / w).toFixed(2);
+    clip = `clip-path: polygon(${f}% 0, ${(100 - f).toFixed(2)}% 0, 100% 100%, 0% 100%);`;
+  }
   return `
-    <div class="layer" style="width:${w}%">
+    <div class="layer" style="width:${w}%; ${clip}">
       <span class="layer-num">0${layer.n}</span>
-      <div class="layer-name">${layer.name}</div>
-      <div class="layer-detail">${layer.detail}</div>
+      <div class="layer-text">
+        <div class="layer-name">${layer.name}</div>
+        <div class="layer-detail">${layer.detail}</div>
+      </div>
     </div>`;
 }
 

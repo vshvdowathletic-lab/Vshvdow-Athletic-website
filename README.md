@@ -133,9 +133,15 @@ working, the most common cause is a missing comma or quotation mark
   Egyptian colloquial, for a more universal, professional tone across
   MENA — happy to shift the tone if you'd prefer it more colloquial.
 - **Fonts**: Raleway (headlines and body text) and Cairo (Arabic),
-  with a little IBM Plex Mono on prices and stats for a "tracked
-  data" feel. All load from Google Fonts automatically — no setup
-  needed, this just works once the site is live on the internet.
+  with Aileron on the pyramid numbers and bundle prices specifically
+  — everywhere else stays Raleway/Cairo. All load automatically from
+  Google Fonts and cdnjs — no setup needed, this just works once the
+  site is live on the internet.
+- **The pyramid** is drawn with real angled edges (via CSS clip-path)
+  so the five tiers connect into one continuous pyramid shape, widest
+  at the bottom, instead of separate stacked cards.
+- **Footer wordmark**: now a large hollow/outlined "VSHVDOW", centered,
+  sitting behind the tagline and social links as a quiet signature.
 - **Favicon**: now your V/lightning-bolt mark, with the white square
   behind it removed so it sits cleanly on both light and dark browser
   tabs.
