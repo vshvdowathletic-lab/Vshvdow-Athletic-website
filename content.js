@@ -168,7 +168,7 @@ const CONTENT = {
     dir: "ltr",
     metaTitle: "VSHVDOW | Athletic Coaching",
     metaDescription: "Athletic coaching. One training system, three bundles, built to perform and built to last.",
-    nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Message me" },
+    nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Start Now" },
     hero: {
       line1: "Build an athlete first.",
       line2: "The physique follows.",
@@ -183,7 +183,7 @@ const CONTENT = {
       { n: 5, name: "Peak expression", detail: "Physique, performance, and mindset" },
       { n: 4, name: "Speed and agility", detail: "Max velocity, change of direction, reactive agility" },
       { n: 3, name: "Strength and power", detail: "Progressive overload, explosiveness, force production" },
-      { n: 2, name: "Athletic conditioning", detail: "Aerobic base, lactate threshold, repeat-sprint capacity" },
+      { n: 2, name: "Athletic conditioning", detail: "Aerobic base, lactate threshold, repeat sprint capacity" },
       { n: 1, name: "Movement foundation", detail: "Mobility, joint health, movement quality, injury resilience, posture" },
     ],
     bundles: {
@@ -191,8 +191,8 @@ const CONTENT = {
       sub: "All three bundles are athletic first. Your goal changes the apex, not the process.",
       pricingNote: "Every price is set for the individual athlete your level, your goals, and your training capacity decide the exact number. The ranges below are the frame; message me and we'll land on yours in a couple of messages.",
       fxNote: "EGP pricing is fixed at roughly 50 EGP per $1, reviewed monthly.",
-      minimum: "12 weeks minimum",
-      perMonth: "/ month",
+      minimum: "12 weeks ",
+      perMonth: "",
       bestForTitle: "Best for",
       waitlistBadge: "Full waitlist open",
       waitlistCta: "Join waitlist",
