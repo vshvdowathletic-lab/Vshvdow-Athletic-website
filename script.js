@@ -13,19 +13,11 @@ let toastTimer;
 
 function layerHTML(layer) {
   const w = 40 + (5 - layer.n) * 15; // Layer 5 = 40% (peak) ... Layer 1 = 100% (base)
-  const isTop = layer.n === 5;
-  let clip = '';
-  if (!isTop) {
-    const f = (750 / w).toFixed(2);
-    clip = `clip-path: polygon(${f}% 0, ${(100 - f).toFixed(2)}% 0, 100% 100%, 0% 100%);`;
-  }
   return `
-    <div class="layer" style="width:${w}%; ${clip}">
+    <div class="layer" style="width:${w}%">
       <span class="layer-num">0${layer.n}</span>
-      <div class="layer-text">
-        <div class="layer-name">${layer.name}</div>
-        <div class="layer-detail">${layer.detail}</div>
-      </div>
+      <div class="layer-name">${layer.name}</div>
+      <div class="layer-detail">${layer.detail}</div>
     </div>`;
 }
 
@@ -156,6 +148,7 @@ function render(lang) {
   document.querySelectorAll('[data-nav]').forEach(a => { a.textContent = C.nav[a.dataset.nav]; });
   document.getElementById('navCta').textContent = C.nav.cta;
   document.getElementById('langToggle').textContent = C.ui.langSwitch;
+  document.getElementById('langToggleMobile').textContent = C.ui.langSwitch;
 
   document.getElementById('heroLine1').textContent = C.hero.line1;
   document.getElementById('heroLine2').textContent = C.hero.line2;
@@ -201,6 +194,14 @@ function render(lang) {
 function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   try { localStorage.setItem('vshvdow-theme', theme); } catch (e) {}
+  const label = theme === 'dark' ? CONTENT[currentLang].ui.themeToLight : CONTENT[currentLang].ui.themeToDark;
+  document.getElementById('themeToggle').setAttribute('aria-label', label);
+  document.getElementById('themeToggleMobile').textContent = label;
+}
+
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  setTheme(cur === 'dark' ? 'light' : 'dark');
 }
 
 function setLang(lang) {
@@ -208,14 +209,14 @@ function setLang(lang) {
   render(lang);
 }
 
-document.getElementById('themeToggle').addEventListener('click', () => {
-  const cur = document.documentElement.getAttribute('data-theme');
-  setTheme(cur === 'dark' ? 'light' : 'dark');
-});
-
-document.getElementById('langToggle').addEventListener('click', () => {
+function toggleLang() {
   setLang(currentLang === 'ar' ? 'en' : 'ar');
-});
+}
+
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
+document.getElementById('langToggle').addEventListener('click', toggleLang);
+document.getElementById('langToggleMobile').addEventListener('click', toggleLang);
 
 /* ---------- mobile nav ---------- */
 
@@ -238,3 +239,21 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(
 
 render(currentLang);
 document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+// Populate the theme button's label/aria-text for whichever theme the
+// inline head-script already applied, without actually toggling it.
+setTheme(document.documentElement.getAttribute('data-theme') || 'light');
+
+// Only load the hero video on wider screens (saves mobile data) and only
+// if the visitor hasn't asked for reduced motion. On narrow screens or
+// with reduced motion on, the <video poster="hero.jpg"> just shows the
+// still photo forever — nothing extra to load, nothing to break.
+(function initHeroVideo() {
+  const isWide = window.matchMedia('(min-width: 768px)').matches;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!isWide || reduceMotion) return;
+  const video = document.getElementById('heroVideo');
+  const source = document.getElementById('heroVideoSource');
+  source.src = 'hero.mp4';
+  video.load();
+})();

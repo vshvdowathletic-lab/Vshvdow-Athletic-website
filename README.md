@@ -14,6 +14,7 @@ favicon-16.png        browser-tab icon, small size
 favicon-32.png        browser-tab icon
 favicon-180.png       icon used when saved to a phone home screen
 favicon-512.png       larger version of the same icon
+hero.mp4              looping hero background video (desktop/tablet only)
 hero.jpg, about.jpg, momentum.jpg, results.jpg, closing.jpg   the five photos
 ```
 
@@ -27,10 +28,10 @@ sub-folder. That's deliberate (see the troubleshooting note below).
    Keep it **Public** (Cloudflare Pages' free tier wants that) and
    don't add a README/gitignore when it asks — just click **Create**.
 2. On the empty repo page, click **"uploading an existing file"**.
-3. Drag in **all 13 files** — select them all at once in your file
+3. Drag in **all 15 files** — select them all at once in your file
    browser (click the first, shift-click the last) and drag that
    whole selection in together. Don't drag a folder.
-4. Wait until you can see all 13 file names listed on the upload
+4. Wait until you can see all 15 file names listed on the upload
    screen before committing — if you only see a handful, the drag
    didn't pick everything up; clear it and try again.
 5. Scroll down, click **Commit changes**.
@@ -132,6 +133,13 @@ working, the most common cause is a missing comma or quotation mark
 - **Arabic**: I used Modern Standard Arabic throughout rather than
   Egyptian colloquial, for a more universal, professional tone across
   MENA — happy to shift the tone if you'd prefer it more colloquial.
+- **Hero video**: plays on tablet/desktop only — phones show the
+  still `hero.jpg` instead, both to save mobile data and because a
+  moving background is harder to read text over on a small screen.
+  It also stays a still image for anyone with "reduce motion" turned
+  on in their system settings. To swap the clip later, replace
+  `hero.mp4` with a new file of the same name (keep it short, muted,
+  and under ~10MB so it stays fast).
 - **Fonts**: Raleway (headlines and body text) and Cairo (Arabic),
   with Aileron on the pyramid numbers and bundle prices specifically
   — everywhere else stays Raleway/Cairo. All load automatically from
