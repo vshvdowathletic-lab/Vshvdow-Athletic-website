@@ -166,7 +166,7 @@ const PRODUCTS = [
 const CONTENT = {
   en: {
     dir: "ltr",
-    metaTitle: "VSHVDOW | Athletic Coaching",
+    metaTitle: "She7ata | 3la Zby",
     metaDescription: "Athletic coaching. One training system, three bundles, built to perform and built to last.",
     nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Start Now" },
     hero: {
