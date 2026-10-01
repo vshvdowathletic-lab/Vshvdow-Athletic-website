@@ -166,35 +166,35 @@ const PRODUCTS = [
 const CONTENT = {
   en: {
     dir: "ltr",
-    metaTitle: "She7ata | 3la Zby",
-    metaDescription: "Athletic coaching. One training system, three bundles, built to perform and built to last.",
-    nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Start Now" },
+    metaTitle: "VSHVDOW | 3la zby",
+    metaDescription: "Football-first athletic coaching. One training system, three bundles, built to perform and built to last.",
+    nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Message me" },
     hero: {
       line1: "Build an athlete first.",
       line2: "The physique follows.",
-      sub: "Athletic coaching, built around one training system, the Pyramid.",
-      cta: "Start Now",
+      sub: "Football-first athletic coaching, built around one training system — the Pyramid.",
+      cta: "Message me on Instagram",
     },
     pyramid: {
       title: "The Pyramid",
-      sub: "Every client, every goal, every session, the pyramid is always the process.",
+      sub: "Every client, every goal, every session — the pyramid is always the process.",
     },
     layers: [
       { n: 5, name: "Peak expression", detail: "Physique, performance, and mindset" },
       { n: 4, name: "Speed and agility", detail: "Max velocity, change of direction, reactive agility" },
       { n: 3, name: "Strength and power", detail: "Progressive overload, explosiveness, force production" },
-      { n: 2, name: "Athletic conditioning", detail: "Aerobic base, lactate threshold, repeat sprint capacity" },
+      { n: 2, name: "Athletic conditioning", detail: "Aerobic base, lactate threshold, repeat-sprint capacity" },
       { n: 1, name: "Movement foundation", detail: "Mobility, joint health, movement quality, injury resilience, posture" },
     ],
     bundles: {
       title: "Bundle System",
       sub: "All three bundles are athletic first. Your goal changes the apex, not the process.",
-      pricingNote: "Every price is set for the individual athlete your level, your goals, and your training capacity decide the exact number. The ranges below are the frame; message me and we'll land on yours in a couple of messages.",
+      pricingNote: "Every price is set for the individual athlete — your level, your goals, and your training capacity decide the exact number. The ranges below are the frame; message me and we'll land on yours in a couple of messages.",
       fxNote: "EGP pricing is fixed at roughly 50 EGP per $1, reviewed monthly.",
-      minimum: "12 weeks ",
-      perMonth: "",
+      minimum: "3-month minimum",
+      perMonth: "/ month",
       bestForTitle: "Best for",
-      waitlistBadge: "Full waitlist open",
+      waitlistBadge: "Full — waitlist open",
       waitlistCta: "Join waitlist",
     },
     products: {
@@ -204,21 +204,21 @@ const CONTENT = {
     about: {
       title: "About the coach",
       body: [
-        "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline, it's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
-        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed, and rebuilt every four weeks around what the sessions and the numbers actually show never guesswork.",
-        "I coach the way I train obsessively, honestly, with zero patience for wasted effort.",
+        "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline — it's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
+        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed, and rebuilt every four weeks around what the sessions and the numbers actually show — never guesswork.",
+        "I coach the way I train — obsessively, honestly, with zero patience for wasted effort.",
       ],
     },
     results: {
       title: "Results",
-      body: "Real athletes, real numbers case studies are on their way. Message me directly and I'll walk you through current client progress.",
+      body: "Real athletes, real numbers — case studies are on their way. Message me directly and I'll walk you through current client progress.",
     },
     contact: {
       title: "Ready to start?",
       sub: "Tell me your goal and I'll tell you which bundle fits. No pressure, no sales script.",
-      cta: "Start with Instagram",
+      cta: "Message me on Instagram",
       or: "or",
-      whatsappCta: "Start with WhatsApp",
+      whatsappCta: "Message on WhatsApp",
     },
     footer: {
       tagline: "Built to perform · Built to last",
@@ -230,14 +230,14 @@ const CONTENT = {
       themeToDark: "Dark mode",
       menuOpen: "Menu",
       menuClose: "Close",
-      copiedToast: "Message copied, paste it when Instagram opens",
+      copiedToast: "Message copied — paste it when Instagram opens",
     },
   },
 
   ar: {
     dir: "rtl",
-    metaTitle: "VSHVDOW | تدريب رياضي",
-    metaDescription: "تدريب رياضي أولًا. نظام تدريبي واحد، وثلاث باقات، مبني ليؤدي وليستمر.",
+    metaTitle: "VSHVDOW — تدريب رياضي",
+    metaDescription: "تدريب رياضي لكرة القدم أولًا. نظام تدريبي واحد، وثلاث باقات، مبني ليؤدي وليستمر.",
     nav: { method: "المنهج", bundles: "الباقات", included: "المحتوى", coach: "المدرب", contact: "تواصل", cta: "راسلني" },
     hero: {
       line1: "ابنِ الرياضي أولًا.",
