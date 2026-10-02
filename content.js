@@ -18,7 +18,6 @@ const CONFIG = {
   instagramHandle: "vshvdow",
   instagramUrl: "https://www.instagram.com/vshvdow/",
   tiktokUrl: "https://www.tiktok.com/@vshvdow?is_from_webapp=1&sender_device=pc",
-  whatsappNumber: "201022067934",
   defaultLang: "en", // "en" or "ar" — which language loads first for new visitors
 };
 
