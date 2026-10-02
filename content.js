@@ -17,7 +17,7 @@ const CONFIG = {
   brand: "VSHVDOW",
   instagramHandle: "vshvdow",
   instagramUrl: "https://www.instagram.com/vshvdow/",
-  facebookUrl: "https://www.facebook.com/profile.php?id=61564790279263",
+  tiktokUrl: "https://www.tiktok.com/@vshvdow?is_from_webapp=1&sender_device=pc",
   whatsappNumber: "201022067934",
   defaultLang: "en", // "en" or "ar" — which language loads first for new visitors
 };
@@ -143,37 +143,32 @@ const BUNDLES = [
 ];
 
 /* ---------- 3. WHAT'S INCLUDED (bundle products) ---------- */
+/* Each product is a swipeable "book cover": big title + one line.
+   The artwork on each cover is picked by its id (welcome / training /
+   nutrition / tracker) — keep those four ids as they are. */
 const PRODUCTS = [
-  { id: "welcome", name: { en: "Welcome Pack", ar: "حزمة الترحيب" }, items: {
-    en: ["Coaching philosophy explained", "Your weekly rhythm & schedule", "Communication standards", "Week 1, step-by-step", "Everything you need to start day 1"],
-    ar: ["شرح فلسفة التدريب", "إيقاعك وجدولك الأسبوعي", "معايير التواصل", "الأسبوع الأول خطوة بخطوة", "كل ما تحتاجه لتبدأ من اليوم الأول"],
-  }},
-  { id: "training", name: { en: "Training Plan", ar: "خطة التدريب" }, items: {
-    en: ["2–6 sessions per week", "Built around the athletic pyramid", "Progressive overload, 4 phases", "Every set, rep, and cue written out", "Updated every 4 weeks"],
-    ar: ["من 2 إلى 6 حصص أسبوعيًا", "مبنية حول الهرم الرياضي", "حمل تدريجي على 4 مراحل", "كل مجموعة وتكرار وتلميح مكتوب بالتفصيل", "تحديث كل 4 أسابيع"],
-  }},
-  { id: "nutrition", name: { en: "Nutrition System", ar: "نظام التغذية" }, items: {
-    en: ["TDEE — total daily energy expenditure", "Your macros, set by phase", "Country-specific food guide", "Pre/post-training timing", "Meal alternatives", "Adjusts every 4 weeks"],
-    ar: ["حساب TDEE (إجمالي الطاقة اليومية)", "الماكروز الخاصة بك حسب كل مرحلة", "دليل أطعمة حسب بلدك", "توقيت الأكل قبل وبعد التدريب", "بدائل للوجبات", "تعديل كل 4 أسابيع"],
-  }},
-  { id: "tracker", name: { en: "Athlete Tracker", ar: "متتبع الأداء" }, items: {
-    en: ["Google Sheet shared on day 1", "1RM auto-load calculator", "12-week strength log", "Body composition tracker", "Speed and power benchmarks", "Weekly check-in log"],
-    ar: ["ملف Google Sheet يُشارَك من اليوم الأول", "حاسبة تحميل تلقائية لأقصى تكرار (1RM)", "سجل قوة لمدة 12 أسبوعًا", "متتبع تكوين الجسم", "معايير السرعة والقدرة الانفجارية", "سجل متابعة أسبوعي"],
-  }},
+  { id: "welcome",   name: { en: "Welcome Pack",     ar: "حزمة الترحيب" },
+    line: { en: "Everything you need to start on day one.",        ar: "كل ما تحتاجه لتبدأ من اليوم الأول." } },
+  { id: "training",  name: { en: "Training Plan",    ar: "خطة التدريب" },
+    line: { en: "Every set, rep, and cue — rebuilt every 4 weeks.", ar: "كل مجموعة وتكرار وتلميح — تُعاد كتابتها كل 4 أسابيع." } },
+  { id: "nutrition", name: { en: "Nutrition System", ar: "نظام التغذية" },
+    line: { en: "Your macros and meals, dialed in by phase.",       ar: "الماكروز والوجبات الخاصة بك، مضبوطة حسب كل مرحلة." } },
+  { id: "tracker",   name: { en: "Athlete Tracker",  ar: "متتبع الأداء" },
+    line: { en: "Every number that matters, in one sheet.",         ar: "كل رقم مهم في ملف واحد." } },
 ];
 
 /* ---------- 4. ALL OTHER TEXT ---------- */
 const CONTENT = {
   en: {
     dir: "ltr",
-    metaTitle: "VSHVDOW | 3la zby",
+    metaTitle: "VSHVDOW — Athletic Coaching",
     metaDescription: "Football-first athletic coaching. One training system, three bundles, built to perform and built to last.",
-    nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Message me" },
+    nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Start Now" },
     hero: {
       line1: "Build an athlete first.",
       line2: "The physique follows.",
       sub: "Football-first athletic coaching, built around one training system — the Pyramid.",
-      cta: "Message me on Instagram",
+      cta: "Start Now",
     },
     pyramid: {
       title: "The Pyramid",
@@ -215,10 +210,8 @@ const CONTENT = {
     },
     contact: {
       title: "Ready to start?",
-      sub: "Tell me your goal and I'll tell you which bundle fits. No pressure, no sales script.",
-      cta: "Message me on Instagram",
-      or: "or",
-      whatsappCta: "Message on WhatsApp",
+      sub: "Every bundle is right above — pick the one that fits and I'll walk you through the rest.",
+      cta: "Start Now",
     },
     footer: {
       tagline: "Built to perform · Built to last",
@@ -231,6 +224,8 @@ const CONTENT = {
       menuOpen: "Menu",
       menuClose: "Close",
       copiedToast: "Message copied — paste it when Instagram opens",
+      railPrev: "Previous",
+      railNext: "Next",
     },
   },
 
@@ -238,12 +233,12 @@ const CONTENT = {
     dir: "rtl",
     metaTitle: "VSHVDOW — تدريب رياضي",
     metaDescription: "تدريب رياضي لكرة القدم أولًا. نظام تدريبي واحد، وثلاث باقات، مبني ليؤدي وليستمر.",
-    nav: { method: "المنهج", bundles: "الباقات", included: "المحتوى", coach: "المدرب", contact: "تواصل", cta: "راسلني" },
+    nav: { method: "المنهج", bundles: "الباقات", included: "المحتوى", coach: "المدرب", contact: "تواصل", cta: "ابدأ الآن" },
     hero: {
       line1: "ابنِ الرياضي أولًا.",
       line2: "والقوام يتبعه.",
       sub: "تدريب رياضي لكرة القدم، مبني حول نظام تدريبي واحد — الهرم.",
-      cta: "راسلني على إنستغرام",
+      cta: "ابدأ الآن",
     },
     pyramid: {
       title: "الهرم",
@@ -285,10 +280,8 @@ const CONTENT = {
     },
     contact: {
       title: "جاهز تبدأ؟",
-      sub: "أخبرني بهدفك، وسأخبرك بالباقة الأنسب لك. بلا ضغط ولا أسلوب مبيعات.",
-      cta: "راسلني على إنستغرام",
-      or: "أو",
-      whatsappCta: "راسلني على واتساب",
+      sub: "كل الباقات موجودة بالأعلى — اختر ما يناسبك وسأتولى الباقي.",
+      cta: "ابدأ الآن",
     },
     footer: {
       tagline: "بُني ليؤدي · بُني ليستمر",
@@ -301,6 +294,8 @@ const CONTENT = {
       menuOpen: "القائمة",
       menuClose: "إغلاق",
       copiedToast: "تم نسخ الرسالة — الصقها عند فتح إنستغرام",
+      railPrev: "السابق",
+      railNext: "التالي",
     },
   },
 };

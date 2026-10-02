@@ -103,7 +103,7 @@ It's all in `content.js`, split into `en:` (English) and `ar:`
 marks and commas exactly as they are; only change the words between
 the quote marks.
 
-**Changing your WhatsApp/Instagram/Facebook links**
+**Changing your WhatsApp/Instagram/TikTok links**
 Right at the top of `content.js`, in the `CONFIG` block.
 
 **Swapping a photo**
@@ -119,14 +119,31 @@ working, the most common cause is a missing comma or quotation mark
 
 ## 4. A few things worth knowing about how it behaves
 
+- **"Start Now" buttons**: the hero, the header, and the bottom
+  "Ready to start?" section all just scroll down to the Bundles —
+  they don't open a chat. The only buttons that actually open a DM
+  are the "Join [bundle]" buttons on each of the three bundle cards,
+  so you always know which bundle someone's asking about.
 - **Instagram DM button**: Instagram doesn't let outside websites
   pre-fill a DM's text (WhatsApp allows this; Instagram doesn't), so
-  clicking "Join [bundle]" copies a bundle-specific message to the
+  clicking "Join [bundle]" copies a ready-written message to the
   clipboard and opens your DMs — the visitor just pastes it in. A
   little toast on screen tells them what happened.
-- **WhatsApp button**: this one *can* pre-fill text, so the "Message
-  on WhatsApp" button in the contact section opens a chat with your
-  number and the message already typed in.
+- **Social icons** (footer): Instagram, WhatsApp, and TikTok. The
+  WhatsApp one opens a chat directly with your number.
+- **Transparent header**: no background at all — it sits directly on
+  top of whatever's scrolled behind it. script.js watches the scroll
+  position and switches the text between white and black so it stays
+  readable over the dark hero/photo bands versus the plain page
+  sections. If you add another full-bleed dark section later and want
+  the header to go white over it too, add its class name to the
+  `DARK_ZONES` line near the top of script.js.
+- **What's Included**: the four cards are a swipeable row now (drag,
+  swipe, or use the arrow buttons) rather than a fixed grid. Each
+  card's little line icon is picked by its id (`welcome` / `training`
+  / `nutrition` / `tracker`) in the `COVER_ART` object in script.js —
+  you won't need to touch that for text changes, only if you want to
+  change the artwork itself.
 - **Language and dark/light mode**: both remember the visitor's last
   choice (stored in their own browser), and both default to their
   system's preference the first time they visit.

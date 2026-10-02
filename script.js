@@ -64,26 +64,38 @@ function bundleCardHTML(b, lang) {
     </article>`;
 }
 
-function productCardHTML(p, lang) {
+// Simple line artwork for each cover, picked by product id.
+const COVER_ART = {
+  welcome:   '<circle cx="60" cy="60" r="7" fill="currentColor" stroke="none"/><circle cx="60" cy="60" r="24"/><circle cx="60" cy="60" r="42"/>',
+  training:  '<line x1="8" y1="60" x2="112" y2="60"/><rect x="24" y="30" width="9" height="60" rx="2"/><rect x="37" y="40" width="9" height="40" rx="2"/><rect x="87" y="30" width="9" height="60" rx="2"/><rect x="74" y="40" width="9" height="40" rx="2"/>',
+  nutrition: '<circle cx="60" cy="60" r="40"/><line x1="60" y1="60" x2="60" y2="20"/><line x1="60" y1="60" x2="94.6" y2="80"/><line x1="60" y1="60" x2="25.4" y2="80"/>',
+  tracker:   '<line x1="10" y1="100" x2="110" y2="100"/><polyline points="14,88 40,66 62,74 88,40 108,24"/><circle cx="40" cy="66" r="3.5" fill="currentColor" stroke="none"/><circle cx="62" cy="74" r="3.5" fill="currentColor" stroke="none"/><circle cx="88" cy="40" r="3.5" fill="currentColor" stroke="none"/><circle cx="108" cy="24" r="3.5" fill="currentColor" stroke="none"/>',
+};
+
+function coverHTML(p, lang, i) {
+  const art = COVER_ART[p.id] || '';
   return `
-    <div class="product-card">
-      <div class="product-name">${p.name[lang]}</div>
-      <ul class="product-list">${p.items[lang].map(x => `<li>${x}</li>`).join('')}</ul>
-    </div>`;
+    <article class="cover">
+      <span class="cover-num">0${i + 1}</span>
+      <svg class="cover-art" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${art}</svg>
+      <div>
+        <h3 class="cover-title">${p.name[lang]}</h3>
+        <p class="cover-line">${p.line[lang]}</p>
+      </div>
+    </article>`;
 }
 
 /* ---------- DM / WhatsApp messages ---------- */
 
-function genericMessage(lang) {
-  return lang === 'ar'
-    ? 'مرحبًا! أريد أن أبدأ مع VSHVDOW 💪'
-    : "Hi! I'd like to get started with VSHVDOW 💪";
-}
 function bundleMessage(lang, name, isWaitlist) {
   if (lang === 'ar') {
-    return isWaitlist ? `مرحبًا! أريد الانضمام لقائمة انتظار ${name} 💪` : `مرحبًا! أنا مهتم بباقة ${name} 💪`;
+    return isWaitlist
+      ? `مرحبًا! باقة ${name} مكتملة حاليًا — أرغب في الانضمام لقائمة الانتظار، من فضلك.`
+      : `مرحبًا! أرغب في البدء بباقة ${name} — هل يمكنك إخباري بالخطوات التالية؟`;
   }
-  return isWaitlist ? `Hi! I'd like to join the waitlist for ${name} 💪` : `Hi! I'm interested in the ${name} bundle 💪`;
+  return isWaitlist
+    ? `Hi! I see ${name} is full right now — I'd like to join the waitlist, please.`
+    : `Hi! I'd like to start the ${name} bundle — could you walk me through the next steps?`;
 }
 
 /* Instagram links can't be pre-filled with text the way WhatsApp
@@ -105,21 +117,15 @@ function wireDmButton(el, message) {
 }
 
 function wireDynamicButtons(lang) {
-  const msg = genericMessage(lang);
-  wireDmButton(document.getElementById('heroCta'), msg);
-  wireDmButton(document.getElementById('navCta'), msg);
-  wireDmButton(document.getElementById('contactCta'), msg);
-
+  // Hero, nav, and contact CTAs all point at the Bundles section rather
+  // than opening a chat directly — hrefs are already #bundles in the HTML,
+  // nothing to wire here. Only the per-bundle buttons open a DM.
   document.querySelectorAll('.dm-btn').forEach(btn => {
     wireDmButton(btn, bundleMessage(lang, btn.dataset.bundleName, btn.dataset.waitlist === 'true'));
   });
 
-  const waMsg = lang === 'ar' ? 'مرحبًا! أريد الاستفسار عن التدريب مع VSHVDOW' : "Hi! I'd like to ask about coaching with VSHVDOW";
-  const wa = document.getElementById('whatsappCta');
-  if (wa) wa.href = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(waMsg)}`;
-
   document.getElementById('igLink').href = CONFIG.instagramUrl;
-  document.getElementById('fbLink').href = CONFIG.facebookUrl;
+  document.getElementById('ttLink').href = CONFIG.tiktokUrl;
   document.getElementById('waLink').href = `https://wa.me/${CONFIG.whatsappNumber}`;
 }
 
@@ -169,7 +175,13 @@ function render(lang) {
 
   document.getElementById('productsTitle').textContent = C.products.title;
   document.getElementById('productsSub').textContent = C.products.sub;
-  document.getElementById('productsGrid').innerHTML = PRODUCTS.map(p => productCardHTML(p, lang)).join('');
+  const rail = document.getElementById('productsRail');
+  rail.innerHTML = PRODUCTS.map((p, i) => coverHTML(p, lang, i)).join('');
+  rail.setAttribute('aria-label', C.products.title);
+  rail.scrollLeft = 0;
+  document.getElementById('railPrev').setAttribute('aria-label', C.ui.railPrev);
+  document.getElementById('railNext').setAttribute('aria-label', C.ui.railNext);
+  updateRailButtons();
 
   document.getElementById('aboutTitle').textContent = C.about.title;
   document.getElementById('aboutBody').innerHTML = C.about.body.map(p => `<p>${p}</p>`).join('');
@@ -180,14 +192,96 @@ function render(lang) {
   document.getElementById('contactTitle').textContent = C.contact.title;
   document.getElementById('contactSub').textContent = C.contact.sub;
   document.getElementById('contactCta').textContent = C.contact.cta;
-  document.getElementById('contactOr').textContent = C.contact.or;
-  document.getElementById('whatsappCta').textContent = C.contact.whatsappCta;
 
   document.getElementById('footerTagline').textContent = C.footer.tagline;
   document.getElementById('footerRights').textContent = C.footer.rights;
 
   wireDynamicButtons(lang);
+  updateHeaderTone();
 }
+
+/* ---------- transparent header: keep the text readable ---------- */
+
+// Sections that are always a dark photo (regardless of light/dark theme).
+const DARK_ZONES = '.hero, .band, .contact-section';
+
+function updateHeaderTone() {
+  const header = document.getElementById('siteHeader');
+  if (!header) return;
+  const y = header.getBoundingClientRect().height / 2; // header's centre line
+  const covers = (el) => {
+    const r = el.getBoundingClientRect();
+    return r.top <= y && r.bottom >= y;
+  };
+
+  let tone = null;
+  for (const el of document.querySelectorAll(DARK_ZONES)) {
+    if (covers(el)) { tone = 'dark'; break; }
+  }
+  if (!tone) {
+    // the featured bundle card is black in light theme and white in dark theme
+    const featured = document.querySelector('.bundle-card.featured');
+    if (featured && covers(featured)) {
+      tone = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    }
+  }
+  header.classList.toggle('on-dark', tone === 'dark');
+  header.classList.toggle('on-light', tone === 'light');
+}
+
+let toneTicking = false;
+function queueHeaderTone() {
+  if (toneTicking) return;
+  toneTicking = true;
+  requestAnimationFrame(() => { toneTicking = false; updateHeaderTone(); });
+}
+window.addEventListener('scroll', queueHeaderTone, { passive: true });
+window.addEventListener('resize', queueHeaderTone);
+
+/* ---------- swipeable "book cover" rail (What's Included) ---------- */
+
+function updateRailButtons() {
+  const rail = document.getElementById('productsRail');
+  if (!rail) return;
+  const max = rail.scrollWidth - rail.clientWidth;
+  const pos = Math.abs(rail.scrollLeft); // scrollLeft goes negative in RTL
+  document.getElementById('railPrev').disabled = pos <= 2;
+  document.getElementById('railNext').disabled = max <= 2 || pos >= max - 2;
+}
+
+function scrollRail(direction) { // +1 = next, -1 = previous (reading direction)
+  const rail = document.getElementById('productsRail');
+  const cover = rail.querySelector('.cover');
+  const gap = parseFloat(getComputedStyle(rail).columnGap) || 24;
+  const step = cover ? cover.getBoundingClientRect().width + gap : rail.clientWidth * 0.8;
+  const rtl = document.documentElement.dir === 'rtl';
+  rail.scrollBy({ left: direction * (rtl ? -1 : 1) * step, behavior: 'smooth' });
+}
+
+document.getElementById('railPrev').addEventListener('click', () => scrollRail(-1));
+document.getElementById('railNext').addEventListener('click', () => scrollRail(1));
+document.getElementById('productsRail').addEventListener('scroll', updateRailButtons, { passive: true });
+window.addEventListener('resize', updateRailButtons);
+
+// Mouse drag-to-swipe (touch and trackpads already swipe natively).
+(function railDrag() {
+  const rail = document.getElementById('productsRail');
+  let down = false, startX = 0, startLeft = 0;
+  rail.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    down = true; startX = e.clientX; startLeft = rail.scrollLeft;
+    rail.classList.add('dragging');
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    rail.scrollLeft = startLeft - (e.clientX - startX);
+  });
+  window.addEventListener('pointerup', () => {
+    if (!down) return;
+    down = false;
+    rail.classList.remove('dragging');
+  });
+})();
 
 /* ---------- theme + language controls ---------- */
 
@@ -197,6 +291,7 @@ function setTheme(theme) {
   const label = theme === 'dark' ? CONTENT[currentLang].ui.themeToLight : CONTENT[currentLang].ui.themeToDark;
   document.getElementById('themeToggle').setAttribute('aria-label', label);
   document.getElementById('themeToggleMobile').textContent = label;
+  updateHeaderTone();
 }
 
 function toggleTheme() {
