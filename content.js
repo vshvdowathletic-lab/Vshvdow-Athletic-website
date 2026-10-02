@@ -150,7 +150,7 @@ const PRODUCTS = [
   { id: "welcome",   name: { en: "Welcome Pack",     ar: "حزمة الترحيب" },
     line: { en: "Everything you need to start on day one.",        ar: "كل ما تحتاجه لتبدأ من اليوم الأول." } },
   { id: "training",  name: { en: "Training Plan",    ar: "خطة التدريب" },
-    line: { en: "Every set, rep, and cue — rebuilt every 4 weeks.", ar: "كل مجموعة وتكرار وتلميح — تُعاد كتابتها كل 4 أسابيع." } },
+    line: { en: "Every set, rep, and cue rebuilt every 4 weeks.", ar: "كل مجموعة وتكرار وتلميح — تُعاد كتابتها كل 4 أسابيع." } },
   { id: "nutrition", name: { en: "Nutrition System", ar: "نظام التغذية" },
     line: { en: "Your macros and meals, dialed in by phase.",       ar: "الماكروز والوجبات الخاصة بك، مضبوطة حسب كل مرحلة." } },
   { id: "tracker",   name: { en: "Athlete Tracker",  ar: "متتبع الأداء" },
@@ -161,18 +161,18 @@ const PRODUCTS = [
 const CONTENT = {
   en: {
     dir: "ltr",
-    metaTitle: "VSHVDOW — Athletic Coaching",
-    metaDescription: "Football-first athletic coaching. One training system, three bundles, built to perform and built to last.",
+    metaTitle: "VSHVDOW ATHLETIC ",
+    metaDescription: "Athletic coaching. One training system, three bundles, built to perform and built to last.",
     nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Start Now" },
     hero: {
       line1: "Build an athlete first.",
       line2: "The physique follows.",
-      sub: "Football-first athletic coaching, built around one training system — the Pyramid.",
+      sub: "Athletic coaching, built around one training system, the Pyramid.",
       cta: "Start Now",
     },
     pyramid: {
       title: "The Pyramid",
-      sub: "Every client, every goal, every session — the pyramid is always the process.",
+      sub: "Every client, every goal, every session, the pyramid is always the process.",
     },
     layers: [
       { n: 5, name: "Peak expression", detail: "Physique, performance, and mindset" },
@@ -184,7 +184,7 @@ const CONTENT = {
     bundles: {
       title: "Bundle System",
       sub: "All three bundles are athletic first. Your goal changes the apex, not the process.",
-      pricingNote: "Every price is set for the individual athlete — your level, your goals, and your training capacity decide the exact number. The ranges below are the frame; message me and we'll land on yours in a couple of messages.",
+      pricingNote: "Every price is set for the individual athlete your level, your goals, and your training capacity decide the exact number. The ranges below are the frame; message me and we'll land on yours in a couple of messages.",
       fxNote: "EGP pricing is fixed at roughly 50 EGP per $1, reviewed monthly.",
       minimum: "3-month minimum",
       perMonth: "/ month",
@@ -199,18 +199,18 @@ const CONTENT = {
     about: {
       title: "About the coach",
       body: [
-        "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline — it's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
-        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed, and rebuilt every four weeks around what the sessions and the numbers actually show — never guesswork.",
-        "I coach the way I train — obsessively, honestly, with zero patience for wasted effort.",
+        "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline, it's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
+        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed, and rebuilt every four weeks around what the sessions and the numbers actually show, never guesswork.",
+        "I coach the way I train obsessively, honestly, with zero patience for wasted effort.",
       ],
     },
     results: {
       title: "Results",
-      body: "Real athletes, real numbers — case studies are on their way. Message me directly and I'll walk you through current client progress.",
+      body: "Real athletes, real numbers, case studies are on their way. Message me directly and I'll walk you through current client progress.",
     },
     contact: {
       title: "Ready to start?",
-      sub: "Every bundle is right above — pick the one that fits and I'll walk you through the rest.",
+      sub: "Every bundle is right above, pick the one that fits and I'll walk you through the rest.",
       cta: "Start Now",
     },
     footer: {
