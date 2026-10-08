@@ -1,9 +1,9 @@
 /* ==========================================================
-   VSHVDOW — script.js
+   VSHVDOW · script.js
    Renders everything from content.js into the page, and wires
    up language / theme toggles, mobile nav, and the DM buttons.
    You shouldn't need to edit this file to update text or
-   prices — see content.js for that.
+   prices. See content.js for that.
    ========================================================== */
 
 let currentLang = document.documentElement.getAttribute('lang') || CONFIG.defaultLang;
@@ -31,6 +31,20 @@ function spotsLeftLabel(lang, n) {
   return `${n} spot${n === 1 ? '' : 's'} left`;
 }
 
+/* Prices live in content.js as [low, high] numbers and are written out
+   in words here, so there's no dash anywhere: "$16 to $20", "799 to 999 EGP",
+   or in Arabic "16 إلى 20 دولار". A single number shows on its own. */
+function priceRange(lang, value, currency) {
+  const t = CONTENT[lang].bundles;
+  const [lo, hi] = Array.isArray(value) ? value : [value, value];
+  const num = (n) => Number(n).toLocaleString('en-US');
+  if (currency === 'usd' && lang !== 'ar') {
+    return lo === hi ? `$${num(lo)}` : `$${num(lo)} ${t.rangeWord} $${num(hi)}`;
+  }
+  const unit = currency === 'usd' ? t.currencyUSD : t.currencyEGP;
+  return lo === hi ? `${num(lo)} ${unit}` : `${num(lo)} ${t.rangeWord} ${num(hi)} ${unit}`;
+}
+
 function bundleCardHTML(b, lang) {
   const t = CONTENT[lang].bundles;
   const isFull = b.spotsLeft <= 0;
@@ -49,7 +63,7 @@ function bundleCardHTML(b, lang) {
       <div class="bundle-badge">${b.badge[lang]}</div>
       <div>
         <div class="bundle-name">${b.name}</div>
-        <div class="bundle-price">${b.priceUSD}<small>${t.perMonth}</small><span class="egp">${b.priceEGP} EGP</span></div>
+        <div class="bundle-price">${priceRange(lang, b.priceUSD, 'usd')}<small>${t.perMonth}</small><span class="egp">${priceRange(lang, b.priceEGP, 'egp')}</span></div>
         <div class="bundle-minimum">${t.minimum}</div>
       </div>
       <div class="spots-row${isFull ? ' is-full' : ''}">
@@ -90,7 +104,7 @@ function bundleMessage(lang, bundleId, isWaitlist) {
   const b = BUNDLES.find(x => x.id === bundleId);
   if (!b) return '';
   const tpl = DM_MESSAGES[lang][isWaitlist ? 'waitlist' : 'join'];
-  const price = lang === 'ar' ? b.priceEGP : b.priceUSD;
+  const price = lang === 'ar' ? priceRange(lang, b.priceEGP, 'egp') : priceRange(lang, b.priceUSD, 'usd');
   return tpl.replace(/\{name\}/g, b.name).replace(/\{price\}/g, price);
 }
 
@@ -120,7 +134,7 @@ function copyText(text) {
 
 /* Instagram doesn't let websites pre-type a DM, so the bundle button
    copies a ready-written message, then opens the DM thread straight
-   away — the visitor just pastes and sends. */
+   away. The visitor just pastes and sends. */
 function wireDmButton(el) {
   if (!el) return;
   el.href = `https://ig.me/m/${CONFIG.instagramHandle}`;
@@ -129,7 +143,7 @@ function wireDmButton(el) {
   el.onclick = function () {
     const msg = bundleMessage(currentLang, el.dataset.bundleId, el.dataset.waitlist === 'true');
     if (msg && copyText(msg)) showToast(CONTENT[currentLang].ui.copiedToast);
-    // no preventDefault — the link opens the DM in the same tap
+    // no preventDefault: the link opens the DM in the same tap
   };
 }
 
@@ -142,9 +156,15 @@ function wireDynamicButtons() {
 }
 
 /* ---------- "Join the Shadow" signup ---------- */
-/* Sends the email to CONFIG.signupEndpoint (FormSubmit), which forwards it
-   to your Gmail. No page reload; the button and a short line of text show
-   what happened. A hidden "_honey" field quietly drops spam bots. */
+/* Sends the email to CONFIG.signupEndpoint (FormSubmit), which emails it to
+   your Gmail. It's sent as a plain form post, exactly the way FormSubmit
+   documents it, so the browser doesn't need an extra permission check
+   (a CORS "preflight") before sending. No page reload; a short line under
+   the box says what happened. A hidden "_honey" field quietly drops bots.
+
+   The very first signup only triggers FormSubmit's activation email to
+   vshvdowathletic@gmail.com. Until "Activate Form" in that email is pressed,
+   the box says so (join.activate in content.js) instead of a vague error. */
 function setJoinStatus(text, state) {
   const el = document.getElementById('joinStatus');
   el.textContent = text;
@@ -164,31 +184,31 @@ function setJoinStatus(text, state) {
     if (!EMAIL.test(email)) { setJoinStatus(t.invalid, 'error'); input.focus(); return; }
     if (form.elements._honey.value) { setJoinStatus(t.success, 'ok'); form.reset(); return; }
 
+    const body = new URLSearchParams({
+      email,
+      language: currentLang === 'ar' ? 'Arabic' : 'English',
+      _subject: 'New VSHVDOW signup',
+      _template: 'table',
+      _captcha: 'false',
+    });
+
     btn.disabled = true; btn.textContent = t.sending; setJoinStatus('', '');
+    let result = 'error';
     try {
       const res = await fetch(CONFIG.signupEndpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          email,
-          language: currentLang === 'ar' ? 'Arabic' : 'English',
-          _subject: 'New VSHVDOW signup',
-          _template: 'table',
-          _captcha: 'false',
-        }),
+        headers: { Accept: 'application/json' },
+        body,
       });
       const data = await res.json().catch(() => ({}));
-      if (res.ok && String(data.success) === 'true') {
-        setJoinStatus(CONTENT[currentLang].join.success, 'ok');
-        form.reset();
-      } else {
-        setJoinStatus(CONTENT[currentLang].join.error, 'error');
-      }
-    } catch (err) {
-      setJoinStatus(CONTENT[currentLang].join.error, 'error');
-    } finally {
-      btn.disabled = false; btn.textContent = CONTENT[currentLang].join.button;
-    }
+      if (res.ok && String(data.success) === 'true') result = 'ok';
+      else if (/activat/i.test(String(data.message || ''))) result = 'activate';
+    } catch (err) { /* offline, or the request was blocked */ }
+
+    const T = CONTENT[currentLang].join;
+    if (result === 'ok') { setJoinStatus(T.success, 'ok'); form.reset(); }
+    else setJoinStatus(result === 'activate' ? T.activate : T.error, 'error');
+    btn.disabled = false; btn.textContent = T.button;
   });
   input.addEventListener('input', () => { if (document.getElementById('joinStatus').dataset.state === 'error') setJoinStatus('', ''); });
 })();
@@ -211,7 +231,7 @@ const REVEAL_SELECTORS = [
   '.section-inner > h2', '.section-sub', '.pricing-note', '.fx-note', '.band-line',
   '.bundle-card', '.layer', '.products-banner-copy', '.product-rail',
   '.about-media', '.about-copy', '.results-media', '.results-copy', '.contact-inner > *',
-  '.section-inner > .eyebrow', '.signup-inner > *',
+  '.signup-inner > *',
 ];
 const revealObserver = ('IntersectionObserver' in window)
   ? new IntersectionObserver((entries) => {
@@ -283,17 +303,6 @@ function render(lang) {
   document.getElementById('contactSub').textContent = C.contact.sub;
   document.getElementById('contactCta').textContent = C.contact.cta;
 
-  // section labels ("01 — The method" …) — the number is set in Aileron
-  Object.entries(C.eyebrows).forEach(([key, text]) => {
-    const el = document.getElementById(`${key}Eyebrow`);
-    if (!el) return;
-    const cut = text.indexOf(' — ');
-    if (cut < 1) { el.textContent = text; return; }
-    const num = document.createElement('span');
-    num.className = 'num';
-    num.textContent = text.slice(0, cut);
-    el.replaceChildren(num, text.slice(cut));
-  });
   document.getElementById('scrollCue').setAttribute('aria-label', C.ui.scrollCue);
 
   // signup
@@ -305,7 +314,6 @@ function render(lang) {
   if (!joinBtn.disabled) joinBtn.textContent = C.join.button;
   setJoinStatus('', '');
 
-  document.getElementById('footerTagline').textContent = C.footer.tagline;
   document.getElementById('footerRights').textContent = C.footer.rights;
 
   wireDynamicButtons();
@@ -317,7 +325,7 @@ function render(lang) {
 
 // Sections that are always a dark photo (regardless of light/dark theme).
 // The number is how much of the top/bottom edge melts into the page
-// colour — the header only turns white once it's over the dark middle.
+// colour. The header only turns white once it's over the dark middle.
 const DARK_ZONES = [['.hero', 0], ['.band', 0.2], ['.contact-section', 0.2]];
 
 function updateHeaderTone() {
@@ -407,7 +415,7 @@ setTheme(document.documentElement.getAttribute('data-theme') || 'light');
 // Only load the hero video on wider screens (saves mobile data) and only
 // if the visitor hasn't asked for reduced motion. On narrow screens or
 // with reduced motion on, the <video poster="hero.jpg"> just shows the
-// still photo forever — nothing extra to load, nothing to break.
+// still photo forever. Nothing extra to load, nothing to break.
 (function initHeroVideo() {
   const isWide = window.matchMedia('(min-width: 768px)').matches;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

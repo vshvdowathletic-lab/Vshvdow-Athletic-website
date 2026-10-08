@@ -1,5 +1,5 @@
 /* ==========================================================
-   VSHVDOW — styles.css
+   VSHVDOW · styles.css
    Design tokens live at the top. Layout/section rules follow.
    RTL (Arabic) is handled mostly by CSS logical properties, so
    most rules do not need a separate [dir="rtl"] override.
@@ -9,7 +9,7 @@
 /* Aileron (free, CC0) is hosted with the site and used for numbers only. */
 @font-face { font-family: 'Aileron'; src: url('aileron-300.woff2') format('woff2'); font-weight: 300; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Aileron'; src: url('aileron-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-/* "VSH Numerals" only contains the digits 0–9 (unicode-range), so putting it
+/* "VSH Numerals" only contains the digits 0 to 9 (unicode-range), so putting it
    first in the font stack draws every number on the site in Aileron while
    all the letters stay Raleway (or Cairo in Arabic). */
 @font-face { font-family: 'VSH Numerals'; src: url('aileron-300.woff2') format('woff2'); font-weight: 1 350; font-style: normal; font-display: swap; unicode-range: U+0030-0039; }
@@ -46,6 +46,7 @@ h1, h2, h3, h4, strong, b, th { font-weight: var(--w-heavy); }
   --invert-text: var(--c-paper);
   --invert-muted: #b5b5b5;
   --scrim: rgba(10,10,10,.5);
+  color-scheme: light;
 
   --font-display: 'VSH Numerals', 'Raleway', sans-serif;
   --font-body: 'VSH Numerals', 'Raleway', sans-serif;
@@ -82,6 +83,7 @@ html[data-theme="dark"] {
   --invert-text: var(--c-void);
   --invert-muted: #575757;
   --scrim: rgba(0,0,0,.6);
+  color-scheme: dark;
 }
 
 /* ---------- Base ---------- */
@@ -103,9 +105,9 @@ section[id] { scroll-margin-top: 84px; }
 
 h2 { font-family: var(--font-display); font-weight: var(--w-heavy); font-size: var(--text-3xl); line-height: 1.15; letter-spacing: -.2px; }
 html[lang="ar"] h2 { letter-spacing: 0; }
-.eyebrow { font-family: var(--font-body); font-size: .7rem; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 var(--sp-4); }
-.eyebrow .num { font-family: var(--font-mono); font-weight: 400; letter-spacing: .12em; }
-html[lang="ar"] .eyebrow { letter-spacing: .02em; font-size: .82rem; }
+/* balanced headlines and no lonely last words in paragraphs */
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 ::selection { background: var(--text); color: var(--bg); }
 .section-sub { max-width: 46ch; color: var(--text-muted); font-size: var(--text-lg); margin-top: var(--sp-3); }
@@ -195,7 +197,7 @@ html { scroll-behavior: smooth; }
   display: block; line-height: 0; text-decoration: none; color: var(--text); position: relative;
   grid-column: 2; justify-self: center;
 }
-/* the header logo is outlined SVG — Raleway Bold with letter spacing -130 (the Canva logo) — so it looks identical everywhere and follows the text colour */
+/* the header logo is outlined SVG (the Canva logo: Raleway Bold, letter spacing -130), so it looks identical everywhere and follows the text colour */
 .wordmark svg { display: block; height: 18px; width: auto; }
 @media (max-width: 860px) { .wordmark svg { height: 15px; } }
 .main-nav { display: flex; align-items: center; gap: var(--sp-6); grid-column: 1; justify-self: start; }
@@ -358,7 +360,6 @@ html[lang="ar"] .band-line { letter-spacing: 0; font-size: clamp(1.15rem, 2.2vw,
 .bundle-card.featured .bundle-badge,
 .bundle-card.featured .bundle-minimum,
 .bundle-card.featured .spots-label { color: var(--invert-muted); }
-.bundle-card.featured .bundle-list li::before { color: var(--invert-muted); }
 .bundle-card.featured .btn-primary.is-waitlist { opacity: .6; }
 
 .bundle-badge { font-family: var(--font-body); font-weight: 500; font-size: var(--text-xs); letter-spacing: .3px; color: var(--text-muted); }
@@ -373,9 +374,8 @@ html[lang="ar"] .band-line { letter-spacing: 0; font-size: clamp(1.15rem, 2.2vw,
 .spots-row.is-full .spots-dot { background: var(--text-faint); }
 
 .bundle-list-title { font-size: var(--text-xs); font-weight: 500; text-transform: none; color: var(--text-faint); margin-top: var(--sp-2); }
-.bundle-list { display: flex; flex-direction: column; gap: 6px; margin-top: var(--sp-2); }
-.bundle-list li { font-size: var(--text-sm); padding-inline-start: var(--sp-4); position: relative; }
-.bundle-list li::before { content: "—"; position: absolute; inset-inline-start: 0; color: var(--text-faint); }
+.bundle-list { display: flex; flex-direction: column; gap: 8px; margin-top: var(--sp-2); }
+.bundle-list li { font-size: var(--text-sm); line-height: 1.45; }
 .bundle-best { margin-top: auto; padding-top: var(--sp-4); border-top: 1px solid var(--border); }
 .bundle-card.featured .bundle-best { border-color: rgba(250,249,247,.18); }
 .bundle-best-list { display: block; margin-top: var(--sp-2); font-size: var(--text-xs); line-height: 1.8; color: var(--text-muted); }
@@ -463,10 +463,17 @@ html[lang="ar"] .product-title { letter-spacing: 0; }
 @media (max-width: 820px) { .about-grid, .results-grid { grid-template-columns: 1fr; gap: var(--sp-6); } .about-media, .results-media { max-width: 320px; justify-self: start; } }
 .about-media, .results-media { max-width: 380px; width: 100%; justify-self: start; }
 .about-media img, .results-media img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+/* Results mirrors About (photo on the other side) and sits closer to it,
+   so the coach story and the proof read as one continuous chapter */
+.results-section { padding-top: 0; }
+@media (min-width: 821px) {
+  .results-grid { grid-template-columns: 1.2fr .8fr; }
+  .results-media { order: 2; justify-self: end; }
+}
 .results-media img { aspect-ratio: 4/5; }
 .about-body { margin-top: var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-4); color: var(--text-muted); font-size: var(--text-base); line-height: 1.7; max-width: 54ch; }
 .about-body p:first-child { color: var(--text); font-size: var(--text-lg); line-height: 1.6; }
-.results-copy p:not(.eyebrow) { margin-top: var(--sp-4); color: var(--text-muted); font-size: var(--text-base); line-height: 1.7; max-width: 48ch; }
+.results-copy p { margin-top: var(--sp-4); color: var(--text-muted); font-size: var(--text-base); line-height: 1.7; max-width: 48ch; }
 
 /* ---------- Contact ---------- */
 .contact-section { position: relative; padding-block: clamp(8rem, 14vw, 11rem); overflow: hidden; }
@@ -474,8 +481,7 @@ html[lang="ar"] .product-title { letter-spacing: 0; }
 .contact-scrim { position: absolute; inset: 0; background: var(--scrim); }
 .contact-inner { position: relative; z-index: 1; text-align: center; color: #fff; display: flex; flex-direction: column; align-items: center; }
 .contact-inner h2 { font-size: clamp(2rem, 4.2vw, 2.8rem); }
-.contact-inner .eyebrow { color: rgba(255,255,255,.7); }
-.contact-inner p:not(.eyebrow) { max-width: 50ch; color: rgba(255,255,255,.82); margin-top: var(--sp-4); font-size: var(--text-base); line-height: 1.7; }
+.contact-inner p { max-width: 50ch; color: rgba(255,255,255,.82); margin-top: var(--sp-4); font-size: var(--text-base); line-height: 1.7; }
 .contact-actions { display: flex; align-items: center; gap: var(--sp-4); margin-top: var(--sp-7); flex-wrap: wrap; justify-content: center; }
 .contact-actions { flex-direction: column; gap: var(--sp-5); }
 .contact-section .hero-cta { margin-top: 0; }
@@ -492,24 +498,40 @@ html[lang="ar"] .product-title { letter-spacing: 0; }
 .signup-input { flex: 1 1 auto; min-width: 0; background: transparent; border: 0; padding: 1.3em 1.4em; font: inherit; font-size: var(--text-base); color: var(--text); }
 .signup-input:focus, .signup-input:focus-visible { outline: none; }
 .signup-input::placeholder { color: var(--text-faint); }
+.signup-input:-webkit-autofill,
+.signup-input:-webkit-autofill:hover,
+.signup-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text); caret-color: var(--text);
+  -webkit-box-shadow: 0 0 0 100px var(--bg) inset; box-shadow: 0 0 0 100px var(--bg) inset;
+  transition: background-color 9999s ease 0s;
+}
 .signup-btn { flex: none; border-inline-start: 1px solid var(--border); padding: 0 2.6em; font-size: .72rem; font-weight: 500; letter-spacing: .26em; text-transform: uppercase; color: var(--text); transition: background .3s var(--ease), color .3s var(--ease); }
 .signup-btn:hover, .signup-btn:focus-visible { background: var(--text); color: var(--bg); outline: none; }
 .signup-btn:disabled { opacity: .6; cursor: default; background: transparent; color: var(--text); }
 html[lang="ar"] .signup-btn { letter-spacing: 0; font-size: .9rem; }
 .signup-hp { position: absolute; top: 0; inset-inline-start: 0; width: 1px; height: 1px; padding: 0; border: 0; opacity: 0; pointer-events: none; overflow: hidden; clip-path: inset(50%); }
-.signup-status { min-height: 1.7em; margin-top: var(--sp-4); font-size: var(--text-sm); color: var(--text-muted); transition: opacity .3s var(--ease); }
+.signup-status { min-height: 1.7em; max-width: 52ch; margin-top: var(--sp-4); font-size: var(--text-sm); line-height: 1.6; color: var(--text-muted); transition: opacity .3s var(--ease); }
 .signup-status[data-state="error"] { color: var(--text); }
 @media (max-width: 520px) { .signup-btn { padding: 0 1.5em; } .signup-input { padding: 1.15em 1.1em; } }
 
 /* ---------- Footer ---------- */
-.site-footer { padding-block: var(--sp-8); border-top: 1px solid var(--border); }
-.footer-inner { max-width: var(--container); margin-inline: auto; padding-inline: var(--sp-5); text-align: center; display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); }
-.footer-brand { color: var(--text); font-size: var(--text-sm); font-weight: 500; letter-spacing: .5em; padding-inline-start: .5em; text-transform: uppercase; }
-.footer-tagline { color: var(--text-muted); font-size: var(--text-sm); }
-.footer-social { display: flex; gap: var(--sp-4); margin-block: var(--sp-2); }
-.footer-social a { color: var(--text-muted); }
+/* one slim row: name on the left, socials in the middle, rights on the right */
+.site-footer { border-top: 1px solid var(--border); }
+.footer-inner {
+  max-width: var(--container); margin-inline: auto; padding: var(--sp-6) var(--sp-5);
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: var(--sp-5);
+}
+.footer-brand { justify-self: start; color: var(--text); font-size: .7rem; font-weight: 500; letter-spacing: .42em; text-transform: uppercase; white-space: nowrap; }
+.footer-social { justify-self: center; display: flex; gap: var(--sp-4); }
+.footer-social a { display: inline-flex; color: var(--text-muted); transition: color .2s var(--ease); }
 .footer-social a:hover { color: var(--text); }
-.footer-rights { color: var(--text-faint); font-size: var(--text-xs); }
+.footer-social .icon { width: 18px; height: 18px; }
+.footer-rights { justify-self: end; color: var(--text-faint); font-size: var(--text-xs); white-space: nowrap; }
+@media (max-width: 640px) {
+  .footer-inner { grid-template-columns: 1fr auto; row-gap: var(--sp-3); padding-block: var(--sp-5); }
+  .footer-social { justify-self: end; }
+  .footer-rights { grid-column: 1 / -1; justify-self: start; }
+}
 
 /* ---------- Toast ---------- */
 .toast {
