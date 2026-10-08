@@ -16,6 +16,10 @@ favicon-180.png       icon used when saved to a phone home screen
 favicon-512.png       larger version of the same icon
 hero.mp4              looping hero background video (desktop/tablet only)
 hero.jpg, about.jpg, momentum.jpg, results.jpg, closing.jpg   the five photos
+product-welcome.jpg, product-training.jpg,
+product-nutrition.jpg, product-tracker.jpg    the four Products card photos
+products-light.jpg, products-dark.jpg         Products banner (light / dark mode)
+vshvdow-mark.png      your V logo mark, transparent (used in Products)
 ```
 
 Every file sits flat in one folder now — nothing is inside a
@@ -28,10 +32,10 @@ sub-folder. That's deliberate (see the troubleshooting note below).
    Keep it **Public** (Cloudflare Pages' free tier wants that) and
    don't add a README/gitignore when it asks — just click **Create**.
 2. On the empty repo page, click **"uploading an existing file"**.
-3. Drag in **all 15 files** — select them all at once in your file
+3. Drag in **all 22 files** — select them all at once in your file
    browser (click the first, shift-click the last) and drag that
    whole selection in together. Don't drag a folder.
-4. Wait until you can see all 15 file names listed on the upload
+4. Wait until you can see all 22 file names listed on the upload
    screen before committing — if you only see a handful, the drag
    didn't pick everything up; clear it and try again.
 5. Scroll down, click **Commit changes**.
@@ -99,12 +103,21 @@ ready to expand.
 
 **Editing the About text, headline, or any other wording**
 It's all in `content.js`, split into `en:` (English) and `ar:`
-(Arabic) — change either language independently. Keep the quotation
+(Egyptian Arabic) — change either language independently. Keep the quotation
 marks and commas exactly as they are; only change the words between
 the quote marks.
 
-**Changing your WhatsApp/Instagram/TikTok links**
+**Changing your Instagram/TikTok links**
 Right at the top of `content.js`, in the `CONFIG` block.
+
+**Changing the DM message a bundle button copies**
+`DM_MESSAGES` in `content.js` — one for joining, one for the waitlist,
+in each language. `{name}` and `{price}` are filled in automatically.
+
+**Changing a Products photo**
+Each product in `PRODUCTS` (content.js) has an `image:` file name —
+upload a new photo and point it there, or replace the file with the
+same name.
 
 **Swapping a photo**
 Replace the file with a new one **using the exact same file name**
@@ -125,31 +138,34 @@ working, the most common cause is a missing comma or quotation mark
   are the "Join [bundle]" buttons on each of the three bundle cards,
   so you always know which bundle someone's asking about.
 - **Instagram DM button**: Instagram doesn't let outside websites
-  pre-fill a DM's text (WhatsApp allows this; Instagram doesn't), so
-  clicking "Join [bundle]" copies a ready-written message to the
-  clipboard and opens your DMs — the visitor just pastes it in. A
-  little toast on screen tells them what happened.
-- **Social icons** (footer): Instagram, WhatsApp, and TikTok. The
-  WhatsApp one opens a chat directly with your number.
-- **Transparent header**: no background at all — it sits directly on
-  top of whatever's scrolled behind it. script.js watches the scroll
-  position and switches the text between white and black so it stays
-  readable over the dark hero/photo bands versus the plain page
-  sections. If you add another full-bleed dark section later and want
+  type a message into a DM for the visitor, so clicking "Join
+  [bundle]" copies a clean, ready-written message (bundle name +
+  price) the instant it's tapped and opens your Instagram DM in the
+  same tap — the visitor just pastes and hits send. A small toast
+  tells them the message is copied.
+- **Social icons** (footer): Instagram and TikTok.
+- **Header**: transparent over the top of the hero video; as soon as
+  the page scrolls, a frosted blur fades in behind it so the nav
+  stays readable over anything. script.js also switches the text
+  between white and black over the dark hero/photo bands versus the
+  plain page sections. If you add another full-bleed dark section later and want
   the header to go white over it too, add its class name to the
   `DARK_ZONES` line near the top of script.js.
-- **What's Included**: the four cards are a swipeable row now (drag,
-  swipe, or use the arrow buttons) rather than a fixed grid. Each
-  card's little line icon is picked by its id (`welcome` / `training`
-  / `nutrition` / `tracker`) in the `COVER_ART` object in script.js —
-  you won't need to touch that for text changes, only if you want to
-  change the artwork itself.
+- **Products**: a wide photo banner (it swaps to the inverted, dark
+  version of the photo in dark mode) with four photo cards under it —
+  a 4-across grid on desktop, 2-across on tablet, and a swipeable row
+  on phones.
+- **Hero**: "PERFORMANCE UNDER PRESSURE" / "VSHVDOW ATHLETIC" sit in
+  the exact centre of the video. The video gets a high-contrast black
+  & white grade, a vignette and light film grain. The hero "Start
+  Now" is an outline button (transparent, white edge).
+- **Font weight**: every headline, title, the wordmark and the body
+  text use Medium (500) — nothing on the site is bold.
 - **Language and dark/light mode**: both remember the visitor's last
   choice (stored in their own browser), and both default to their
   system's preference the first time they visit.
-- **Arabic**: I used Modern Standard Arabic throughout rather than
-  Egyptian colloquial, for a more universal, professional tone across
-  MENA — happy to shift the tone if you'd prefer it more colloquial.
+- **Arabic**: written in Egyptian Arabic throughout, with training
+  terms people actually use (فورم، باور، سبرنتات، ماكروز).
 - **Hero video**: plays on tablet/desktop only — phones show the
   still `hero.jpg` instead, both to save mobile data and because a
   moving background is harder to read text over on a small screen.
@@ -158,7 +174,7 @@ working, the most common cause is a missing comma or quotation mark
   `hero.mp4` with a new file of the same name (keep it short, muted,
   and under ~10MB so it stays fast).
 - **Fonts**: Raleway (headlines and body text) and Cairo (Arabic),
-  with Aileron on the pyramid numbers and bundle prices specifically
+  with Aileron (Medium) on the pyramid numbers, product numbers and bundle prices specifically
   — everywhere else stays Raleway/Cairo. All load automatically from
   Google Fonts and cdnjs — no setup needed, this just works once the
   site is live on the internet.

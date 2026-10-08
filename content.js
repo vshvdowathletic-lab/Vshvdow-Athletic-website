@@ -3,16 +3,16 @@
    ------------------------------------------------------------
    This is the ONLY file you should need to edit day-to-day.
    Change prices, spots left, links, or any text (English or
-   Arabic) right here — the page rebuilds itself from this file.
+   Egyptian Arabic) right here — the page rebuilds itself from
+   this file.
 
    Do NOT touch index.html or script.js unless you're changing
    layout or behaviour, not words or numbers.
    ============================================================ */
 
 /* ---------- 1. BUSINESS INFO ---------- */
-/* Your contact links and WhatsApp number. whatsappNumber must be
-   in international format with no +, spaces, or leading 0
-   (Egypt: drop the first 0 and add 20 in front). */
+/* Your social links. The bundle buttons open an Instagram DM
+   with instagramHandle. */
 const CONFIG = {
   brand: "VSHVDOW",
   instagramHandle: "vshvdow",
@@ -29,76 +29,76 @@ const BUNDLES = [
   {
     id: "foundation",
     name: "Athlete Foundation",
-    badge: { en: "Best value", ar: "الأفضل من حيث القيمة" },
+    badge: { en: "Best value", ar: "أحسن قيمة" },
     priceUSD: "$16–20",
     priceEGP: "799–999",
     spotsTotal: 4,
     spotsLeft: 4,
     featured: false,
     sections: [
-      { title: { en: "Training", ar: "التدريب" }, items: [
-        { en: "Monthly program block", ar: "برنامج تدريبي شهري" },
-        { en: "Pyramid layers 1–3", ar: "مستويات الهرم 1–3" },
-        { en: "2× form reviews / month", ar: "مراجعتان لتقنية الأداء شهريًا" },
+      { title: { en: "Training", ar: "التمرين" }, items: [
+        { en: "Monthly program block", ar: "برنامج تمرين شهري" },
+        { en: "Pyramid layers 1–3", ar: "مستويات الهرم من 1 لـ 3" },
+        { en: "2× form reviews / month", ar: "مراجعتين للفورم في الشهر" },
         { en: "Check-in every 2 weeks", ar: "متابعة كل أسبوعين" },
       ]},
       { title: { en: "Athletic components", ar: "العناصر الرياضية" }, items: [
-        { en: "Mobility protocol", ar: "بروتوكول المرونة" },
+        { en: "Mobility protocol", ar: "بروتوكول مرونة" },
         { en: "Movement quality foundation", ar: "أساسيات جودة الحركة" },
-        { en: "General conditioning base", ar: "قاعدة اللياقة العامة" },
-        { en: "Basic power work", ar: "تمارين قوة أساسية" },
+        { en: "General conditioning base", ar: "قاعدة لياقة عامة" },
+        { en: "Basic power work", ar: "تمارين باور أساسية" },
       ]},
       { title: { en: "Nutrition", ar: "التغذية" }, items: [
-        { en: "Calorie + macro framework", ar: "إطار السعرات والماكروز" },
-        { en: "Performance eating guide", ar: "دليل التغذية للأداء" },
+        { en: "Calorie + macro framework", ar: "إطار للسعرات والماكروز" },
+        { en: "Performance eating guide", ar: "دليل أكل للأداء" },
       ]},
       { title: { en: "Assessment", ar: "التقييم" }, items: [
-        { en: "InBody scan", ar: "فحص InBody" },
-        { en: "Lifestyle + habit intake form", ar: "استمارة نمط الحياة والعادات" },
-        { en: "Video movement screen", ar: "تقييم الحركة بالفيديو" },
+        { en: "InBody scan", ar: "قياس InBody" },
+        { en: "Lifestyle + habit intake form", ar: "استمارة عن نمط حياتك وعاداتك" },
+        { en: "Video movement screen", ar: "تقييم حركة بالفيديو" },
       ]},
     ],
     bestFor: {
       en: ["General fitness", "Muscle gain & fat loss", "Beginners", "Body shape recomposition"],
-      ar: ["اللياقة العامة", "بناء العضلات وحرق الدهون", "المبتدئون", "إعادة تشكيل الجسم"],
+      ar: ["لياقة عامة", "بناء عضل وحرق دهون", "المبتدئين", "إعادة تشكيل الجسم"],
     },
   },
   {
     id: "performance",
     name: "Performance",
-    badge: { en: "Most popular", ar: "الأكثر طلبًا" },
+    badge: { en: "Most popular", ar: "الأكتر طلبًا" },
     priceUSD: "$30–40",
     priceEGP: "1,499–1,999",
     spotsTotal: 3,
     spotsLeft: 3,
     featured: true,
     sections: [
-      { title: { en: "Training", ar: "التدريب" }, items: [
-        { en: "Custom monthly block", ar: "برنامج شهري مخصص" },
-        { en: "Full pyramid layers 1–4", ar: "الهرم كاملًا: مستويات 1–4" },
-        { en: "Unlimited form reviews", ar: "مراجعات تقنية غير محدودة" },
-        { en: "Weekly check-in", ar: "متابعة أسبوعية" },
+      { title: { en: "Training", ar: "التمرين" }, items: [
+        { en: "Custom monthly block", ar: "برنامج شهري مخصوص ليك" },
+        { en: "Full pyramid layers 1–4", ar: "الهرم كامل: مستويات 1 لـ 4" },
+        { en: "Unlimited form reviews", ar: "مراجعات فورم مفتوحة" },
+        { en: "Weekly check-in", ar: "متابعة كل أسبوع" },
       ]},
       { title: { en: "Athletic components", ar: "العناصر الرياضية" }, items: [
-        { en: "Speed block every cycle", ar: "وحدة سرعة في كل دورة" },
-        { en: "Power training", ar: "تدريب القدرة الانفجارية" },
-        { en: "Agility work + change of direction", ar: "تدريب الرشاقة وتغيير الاتجاه" },
-        { en: "Lactate threshold + sprint work", ar: "عتبة اللاكتات وتمارين السرعة" },
+        { en: "Speed block every cycle", ar: "بلوك سرعة في كل دورة" },
+        { en: "Power training", ar: "تمارين باور" },
+        { en: "Agility work + change of direction", ar: "رشاقة وتغيير اتجاه" },
+        { en: "Lactate threshold + sprint work", ar: "عتبة اللاكتات وسبرنتات" },
       ]},
       { title: { en: "Nutrition", ar: "التغذية" }, items: [
-        { en: "Phase-synced macros", ar: "ماكروز متزامنة مع مرحلة التدريب" },
-        { en: "Training-day carb cycling", ar: "تدوير الكربوهيدرات في أيام التدريب" },
+        { en: "Phase-synced macros", ar: "ماكروز ماشية مع مرحلة التمرين" },
+        { en: "Training-day carb cycling", ar: "تدوير الكارب في أيام التمرين" },
       ]},
       { title: { en: "Assessment", ar: "التقييم" }, items: [
         { en: "All Foundation assessments", ar: "كل تقييمات Athlete Foundation" },
-        { en: "Strength testing", ar: "اختبار القوة" },
-        { en: "Sprint + jump benchmark", ar: "معايير السرعة والقفز" },
+        { en: "Strength testing", ar: "اختبارات قوة" },
+        { en: "Sprint + jump benchmark", ar: "قياسات سرعة وقفز" },
         { en: "Basic injury history review", ar: "مراجعة أساسية لتاريخ الإصابات" },
       ]},
     ],
     bestFor: {
       en: ["Serious gym-goers", "Recreational footballers", "Athletes who want to look and perform"],
-      ar: ["رواد الجيم الجادّون", "لاعبو كرة القدم الهواة", "الراغبون في الجمع بين المظهر والأداء"],
+      ar: ["اللي بيتمرنوا في الجيم بجد", "لاعيبة الكورة الهواة", "اللي عايز يبان كويس ويأدّي كويس"],
     },
   },
   {
@@ -111,67 +111,84 @@ const BUNDLES = [
     spotsLeft: 2,
     featured: false,
     sections: [
-      { title: { en: "Training", ar: "التدريب" }, items: [
-        { en: "Bespoke weekly plan", ar: "خطة أسبوعية مصممة خصيصًا لك" },
-        { en: "Full pyramid, all 5 layers", ar: "الهرم كاملًا بمستوياته الخمسة" },
-        { en: "Unlimited form reviews", ar: "مراجعات تقنية غير محدودة" },
-        { en: "2× weekly check-in", ar: "متابعتان أسبوعيًا" },
+      { title: { en: "Training", ar: "التمرين" }, items: [
+        { en: "Bespoke weekly plan", ar: "خطة أسبوعية متفصّلة عليك" },
+        { en: "Full pyramid, all 5 layers", ar: "الهرم كامل بالخمس مستويات" },
+        { en: "Unlimited form reviews", ar: "مراجعات فورم مفتوحة" },
+        { en: "2× weekly check-in", ar: "متابعتين في الأسبوع" },
         { en: "Graduation report at week 12", ar: "تقرير ختامي في الأسبوع 12" },
       ]},
       { title: { en: "Athletic components", ar: "العناصر الرياضية" }, items: [
         { en: "Full athletic periodisation", ar: "تخطيط رياضي متكامل (Periodisation)" },
-        { en: "Football season integration", ar: "دمج مع موسم كرة القدم" },
-        { en: "Mindset + psychology work", ar: "العمل على العقلية والجانب النفسي" },
-        { en: "Full aerobic / anaerobic conditioning", ar: "لياقة هوائية ولا هوائية كاملة" },
+        { en: "Football season integration", ar: "مظبوط على موسم الكورة" },
+        { en: "Mindset + psychology work", ar: "شغل على العقلية والجانب النفسي" },
+        { en: "Full aerobic / anaerobic conditioning", ar: "لياقة هوائية ولاهوائية كاملة" },
       ]},
       { title: { en: "Nutrition", ar: "التغذية" }, items: [
-        { en: "Full personalised plan", ar: "خطة تغذية شخصية كاملة" },
-        { en: "Weekly nutrition review", ar: "مراجعة تغذية أسبوعية" },
+        { en: "Full personalised plan", ar: "خطة أكل شخصية كاملة" },
+        { en: "Weekly nutrition review", ar: "مراجعة تغذية كل أسبوع" },
       ]},
       { title: { en: "Assessment", ar: "التقييم" }, items: [
-        { en: "Injury screening + range of motion", ar: "فحص الإصابات ومدى الحركة" },
-        { en: "7-day nutrition log review", ar: "مراجعة سجل تغذية لمدة 7 أيام" },
-        { en: "Speed & agility screening", ar: "فحص السرعة والرشاقة" },
+        { en: "Injury screening + range of motion", ar: "فحص إصابات ومدى حركة" },
+        { en: "7-day nutrition log review", ar: "مراجعة سجل أكل 7 أيام" },
+        { en: "Speed & agility screening", ar: "تقييم سرعة ورشاقة" },
       ]},
     ],
     bestFor: {
       en: ["Hybrid athletes", "Semi-pro footballers", "MENA / international"],
-      ar: ["الرياضيون الهجينون", "لاعبو كرة القدم شبه المحترفين", "الشرق الأوسط ودوليًا"],
+      ar: ["الرياضيين الهايبرد", "لاعيبة كورة شبه محترفين", "الشرق الأوسط وبرّه"],
     },
   },
 ];
 
-/* ---------- 3. WHAT'S INCLUDED (bundle products) ---------- */
-/* Each product is a swipeable "book cover": big title + one line.
-   The artwork on each cover is picked by its id (welcome / training /
-   nutrition / tracker) — keep those four ids as they are. */
+/* ---------- 3. PRODUCTS ---------- */
+/* Each product is a photo card: number, title, one line.
+   "image" is the photo file name (same folder as everything else) —
+   swap it for any other photo to change that card. */
 const PRODUCTS = [
-  { id: "welcome",   name: { en: "Welcome Pack",     ar: "حزمة الترحيب" },
-    line: { en: "Everything you need to start on day one.",        ar: "كل ما تحتاجه لتبدأ من اليوم الأول." } },
-  { id: "training",  name: { en: "Training Plan",    ar: "خطة التدريب" },
-    line: { en: "Every set, rep, and cue rebuilt every 4 weeks.", ar: "كل مجموعة وتكرار وتلميح — تُعاد كتابتها كل 4 أسابيع." } },
-  { id: "nutrition", name: { en: "Nutrition System", ar: "نظام التغذية" },
-    line: { en: "Your macros and meals, dialed in by phase.",       ar: "الماكروز والوجبات الخاصة بك، مضبوطة حسب كل مرحلة." } },
-  { id: "tracker",   name: { en: "Athlete Tracker",  ar: "متتبع الأداء" },
-    line: { en: "Every number that matters, in one sheet.",         ar: "كل رقم مهم في ملف واحد." } },
+  { id: "welcome",   image: "product-welcome.jpg",
+    name: { en: "Welcome Pack",     ar: "باكدج الترحيب" },
+    line: { en: "Everything you need to start on day one.",        ar: "كل اللي محتاجه عشان تبدأ من أول يوم." } },
+  { id: "training",  image: "product-training.jpg",
+    name: { en: "Training Plan",    ar: "خطة التمرين" },
+    line: { en: "Every set, rep, and cue — rebuilt every 4 weeks.", ar: "كل مجموعة وعدّة وملاحظة — بتتكتب من جديد كل 4 أسابيع." } },
+  { id: "nutrition", image: "product-nutrition.jpg",
+    name: { en: "Nutrition System", ar: "سيستم التغذية" },
+    line: { en: "Your macros and meals, dialed in by phase.",       ar: "الماكروز والوجبات بتاعتك، مظبوطة على كل مرحلة." } },
+  { id: "tracker",   image: "product-tracker.jpg",
+    name: { en: "Athlete Tracker",  ar: "متابعة الأداء" },
+    line: { en: "Every number that matters, in one sheet.",         ar: "كل رقم مهم، في شيت واحد." } },
 ];
 
-/* ---------- 4. ALL OTHER TEXT ---------- */
+/* ---------- 4. DM MESSAGES ---------- */
+/* What gets copied when someone taps a bundle button.
+   {name} = bundle name, {price} = USD price (English) or EGP price (Arabic). */
+const DM_MESSAGES = {
+  en: {
+    join:     "Hi Coach,\nI'd like to join the {name} bundle ({price} / month).\nCould you walk me through the next steps to get started?\nThanks!",
+    waitlist: "Hi Coach,\nI saw the {name} bundle is currently full.\nI'd like to join the waitlist — please let me know as soon as a spot opens.\nThanks!",
+  },
+  ar: {
+    join:     "أهلاً كابتن،\nحابب أشترك في باقة {name} ({price} جنيه في الشهر).\nممكن تقولي الخطوات الجاية عشان نبدأ؟\nشكرًا!",
+    waitlist: "أهلاً كابتن،\nشفت إن باقة {name} كاملة دلوقتي.\nحابب أسجّل في قائمة الانتظار — ياريت تبلغني أول ما يفضى مكان.\nشكرًا!",
+  },
+};
+
+/* ---------- 5. ALL OTHER TEXT ---------- */
 const CONTENT = {
   en: {
     dir: "ltr",
-    metaTitle: "VSHVDOW ATHLETIC ",
-    metaDescription: "Athletic coaching. One training system, three bundles, built to perform and built to last.",
-    nav: { method: "Method", bundles: "Bundles", included: "Included", coach: "Coach", contact: "Contact", cta: "Start Now" },
+    metaTitle: "VSHVDOW — Athletic Coaching",
+    metaDescription: "Football-first athletic coaching. One training system, three bundles, built to perform and built to last.",
+    nav: { pyramid: "Pyramid", bundles: "Bundles", products: "Products", coach: "Coach", contact: "Contact", cta: "Start Now" },
     hero: {
-      line1: "Build an athlete first.",
-      line2: "The physique follows.",
-      sub: "Athletic coaching, built around one training system, the Pyramid.",
+      line1: "PERFORMANCE UNDER PRESSURE",
+      line2: "VSHVDOW ATHLETIC",
       cta: "Start Now",
     },
     pyramid: {
       title: "The Pyramid",
-      sub: "Every client, every goal, every session, the pyramid is always the process.",
+      sub: "Every client, every goal, every session — the pyramid is always the process.",
     },
     layers: [
       { n: 5, name: "Peak expression", detail: "Physique, performance, and mindset" },
@@ -183,33 +200,34 @@ const CONTENT = {
     bundles: {
       title: "Bundle System",
       sub: "All three bundles are athletic first. Your goal changes the apex, not the process.",
-      pricingNote: "Every price is set for the individual athlete your level, your goals, and your training capacity decide the exact number. The ranges below are the frame; message me and we'll land on yours in a couple of messages.",
+      pricingNote: "Every price is set for the individual athlete — your level, your goals, and your training capacity decide the exact number. The ranges below are the frame; message me and we'll land on yours in a couple of messages.",
       fxNote: "EGP pricing is fixed at roughly 50 EGP per $1, reviewed monthly.",
       minimum: "3-month minimum",
       perMonth: "/ month",
       bestForTitle: "Best for",
       waitlistBadge: "Full — waitlist open",
       waitlistCta: "Join waitlist",
+      joinWord: "Join",
     },
     products: {
-      title: "What's Included",
+      title: "Products",
       sub: "Everything you need. Nothing you don't.",
     },
     about: {
       title: "About the coach",
       body: [
-        "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline, it's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
-        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed, and rebuilt every four weeks around what the sessions and the numbers actually show, never guesswork.",
-        "I coach the way I train obsessively, honestly, with zero patience for wasted effort.",
+        "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline — it's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
+        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed, and rebuilt every four weeks around what the sessions and the numbers actually show — never guesswork.",
+        "I coach the way I train — obsessively, honestly, with zero patience for wasted effort.",
       ],
     },
     results: {
       title: "Results",
-      body: "Real athletes, real numbers, case studies are on their way. Message me directly and I'll walk you through current client progress.",
+      body: "Real athletes, real numbers — case studies are on their way. Message me directly and I'll walk you through current client progress.",
     },
     contact: {
       title: "Ready to start?",
-      sub: "Every bundle is right above, pick the one that fits and I'll walk you through the rest.",
+      sub: "Every bundle is right above — pick the one that fits and I'll walk you through the rest.",
       cta: "Start Now",
     },
     footer: {
@@ -217,84 +235,80 @@ const CONTENT = {
       rights: "All rights reserved.",
     },
     ui: {
-      langSwitch: "العربية",
+      langSwitch: "عربي",
       themeToLight: "Light mode",
       themeToDark: "Dark mode",
       menuOpen: "Menu",
       menuClose: "Close",
-      copiedToast: "Message copied — paste it when Instagram opens",
-      railPrev: "Previous",
-      railNext: "Next",
+      copiedToast: "Message copied — just paste it in the chat and send",
     },
   },
 
   ar: {
     dir: "rtl",
     metaTitle: "VSHVDOW — تدريب رياضي",
-    metaDescription: "تدريب رياضي لكرة القدم أولًا. نظام تدريبي واحد، وثلاث باقات، مبني ليؤدي وليستمر.",
-    nav: { method: "المنهج", bundles: "الباقات", included: "المحتوى", coach: "المدرب", contact: "تواصل", cta: "ابدأ الآن" },
+    metaDescription: "تدريب رياضي مبني على الكورة. سيستم تمرين واحد، وتلات باقات، متبني للأداء ومتبني للاستمرار.",
+    nav: { pyramid: "الهرم", bundles: "الباقات", products: "المنتجات", coach: "الكوتش", contact: "تواصل", cta: "ابدأ دلوقتي" },
     hero: {
-      line1: "ابنِ الرياضي أولًا.",
-      line2: "والقوام يتبعه.",
-      sub: "تدريب رياضي لكرة القدم، مبني حول نظام تدريبي واحد — الهرم.",
-      cta: "ابدأ الآن",
+      line1: "أداء تحت الضغط",
+      line2: "VSHVDOW ATHLETIC",
+      cta: "ابدأ دلوقتي",
     },
     pyramid: {
       title: "الهرم",
-      sub: "كل عميل، كل هدف، كل حصة تدريبية — الهرم هو الطريقة دائمًا.",
+      sub: "كل عميل، كل هدف، كل تمرينة — الهرم هو الطريقة، دايمًا.",
     },
     layers: [
-      { n: 5, name: "القمة", detail: "القوام، والأداء، والعقلية" },
-      { n: 4, name: "السرعة والرشاقة", detail: "أقصى سرعة، تغيير الاتجاه، الرشاقة التفاعلية" },
-      { n: 3, name: "القوة والقدرة الانفجارية", detail: "الحمل التدريجي، الانفجارية، وإنتاج القوة" },
-      { n: 2, name: "اللياقة الرياضية", detail: "القاعدة الهوائية، عتبة اللاكتات، وتحمل السرعات المتكررة" },
-      { n: 1, name: "أساس الحركة", detail: "المرونة، صحة المفاصل، جودة الحركة، الوقاية من الإصابات، القوام" },
+      { n: 5, name: "القمة", detail: "الشكل، والأداء، والعقلية" },
+      { n: 4, name: "السرعة والرشاقة", detail: "أقصى سرعة، تغيير الاتجاه، ورد الفعل السريع" },
+      { n: 3, name: "القوة والانفجارية", detail: "زيادة الأحمال بالتدريج، الانفجارية، وإنتاج القوة" },
+      { n: 2, name: "اللياقة الرياضية", detail: "قاعدة هوائية، عتبة اللاكتات، وتكرار السبرنتات" },
+      { n: 1, name: "أساس الحركة", detail: "المرونة، صحة المفاصل، جودة الحركة، الوقاية من الإصابات، والقوام" },
     ],
     bundles: {
       title: "نظام الباقات",
-      sub: "الباقات الثلاث كلها رياضية في الأساس. هدفك يغيّر القمة، لا الطريقة.",
-      pricingNote: "يتحدد كل سعر حسب الرياضي نفسه — مستواك، وأهدافك، وقدرتك على التدريب. الأرقام أدناه هي الإطار العام، وسنحدد رقمك بالضبط خلال رسالة أو رسالتين.",
-      fxNote: "سعر الجنيه المصري ثابت عند حوالي 50 جنيهًا لكل دولار، ويُراجَع شهريًا.",
-      minimum: "الحد الأدنى 3 أشهر",
-      perMonth: "/ شهريًا",
-      bestForTitle: "الأنسب لـ",
-      waitlistBadge: "مكتمل — قائمة الانتظار مفتوحة",
-      waitlistCta: "انضم لقائمة الانتظار",
+      sub: "التلات باقات أساسهم رياضي. هدفك بيغيّر القمة، مش الطريقة.",
+      pricingNote: "كل سعر بيتحدد على حسب اللاعب نفسه — مستواك، وأهدافك، وقدرتك على التمرين. الأرقام اللي تحت دي هي الإطار العام، وهنوصل لرقمك بالظبط في رسالة أو اتنين.",
+      fxNote: "سعر الجنيه ثابت على حوالي 50 جنيه للدولار، وبيتراجع كل شهر.",
+      minimum: "أقل مدة 3 شهور",
+      perMonth: "/ في الشهر",
+      bestForTitle: "مناسبة لـ",
+      waitlistBadge: "كاملة — قائمة الانتظار مفتوحة",
+      waitlistCta: "سجّل في قائمة الانتظار",
+      joinWord: "اشترك في",
     },
     products: {
-      title: "ماذا يشمل الاشتراك",
-      sub: "كل ما تحتاجه. ولا شيء غير ذلك.",
+      title: "المنتجات",
+      sub: "كل اللي محتاجه. ومفيش حاجة زيادة.",
     },
     about: {
-      title: "عن المدرب",
+      title: "عن الكوتش",
       body: [
-        "كل رياضي أدرّبه يمر بنفس النظام: خمسة مستويات، مبنية بالترتيب، بلا تخطي لأي منها. هذا ليس شعارًا — إنه الأسلوب الوحيد الذي رأيته يبني أداءً حقيقيًا ومستمرًا، بعد سنوات في الملعب وصالة التدريب.",
-        "VSHVDOW هو المعيار الذي أطبّقه على نفسي، ونفسه يُطبَّق على كل رياضي أدرّبه. يُتابَع برنامجك ويُراجَع ويُعاد بناؤه كل أربعة أسابيع بناءً على ما تُظهره الحصص والأرقام فعليًا — لا تخمينًا.",
-        "أدرّب كما أتمرّن: بهوس، وبصدق، وبلا صبر على أي مجهود يُهدر.",
+        "كل لاعب بدرّبه بيمشي على نفس السيستم: خمس مستويات، بتتبني بالترتيب، من غير ما نفوّت ولا واحد فيهم. ده مش شعار — دي الطريقة الوحيدة اللي شفتها بتبني أداء حقيقي بيستمر، واتجربت سنين في الملعب والجيم.",
+        "VSHVDOW هو المستوى اللي بحاسب نفسي عليه، ونفس المستوى اللي بحاسب عليه كل لاعب معايا. برنامجك بيتتابع وبيتراجع وبيتبني من جديد كل أربع أسابيع على حسب اللي التمرين والأرقام بيقولوه فعلًا — مفيش تخمين.",
+        "بدرّب زي ما بتمرّن: بهوس، وبصدق، ومن غير أي صبر على مجهود بيضيع على الفاضي.",
       ],
     },
     results: {
-      title: "النتائج",
-      body: "رياضيون حقيقيون، وأرقام حقيقية — دراسات الحالة في الطريق. راسلني مباشرة وسأطلعك على تقدّم العملاء الحاليين.",
+      title: "النتايج",
+      body: "لاعيبة حقيقيين وأرقام حقيقية — الـ case studies جاية قريب. ابعتلي على طول وهوريك تقدّم العملاء الحاليين.",
     },
     contact: {
       title: "جاهز تبدأ؟",
-      sub: "كل الباقات موجودة بالأعلى — اختر ما يناسبك وسأتولى الباقي.",
-      cta: "ابدأ الآن",
+      sub: "كل الباقات موجودة فوق — اختار اللي تناسبك وأنا هكمّل معاك الباقي.",
+      cta: "ابدأ دلوقتي",
     },
     footer: {
-      tagline: "بُني ليؤدي · بُني ليستمر",
-      rights: "جميع الحقوق محفوظة.",
+      tagline: "متبني للأداء · متبني للاستمرار",
+      rights: "كل الحقوق محفوظة.",
     },
     ui: {
       langSwitch: "English",
       themeToLight: "الوضع الفاتح",
-      themeToDark: "الوضع الداكن",
+      themeToDark: "الوضع الغامق",
       menuOpen: "القائمة",
-      menuClose: "إغلاق",
-      copiedToast: "تم نسخ الرسالة — الصقها عند فتح إنستغرام",
-      railPrev: "السابق",
-      railNext: "التالي",
+      menuClose: "اقفل",
+      copiedToast: "الرسالة اتنسخت — الصقها في الشات وابعت",
     },
   },
 };
