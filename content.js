@@ -228,7 +228,7 @@ const CONTENT = {
     contact: {
       title: "Ready to start?",
       sub: "Every bundle is right above — pick the one that fits and I'll walk you through the rest.",
-      cta: "Start Now",
+      cta: "Into the Shadow",
     },
     footer: {
       tagline: "Built to perform · Built to last",
@@ -296,7 +296,7 @@ const CONTENT = {
     contact: {
       title: "جاهز تبدأ؟",
       sub: "كل الباقات موجودة فوق — اختار اللي تناسبك وأنا هكمّل معاك الباقي.",
-      cta: "ابدأ دلوقتي",
+      cta: "يلا نبدأ",
     },
     footer: {
       tagline: "متبني للأداء · متبني للاستمرار",

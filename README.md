@@ -132,8 +132,8 @@ working, the most common cause is a missing comma or quotation mark
 
 ## 4. A few things worth knowing about how it behaves
 
-- **Hero button ("ENTER THE SHADOW")** and the bottom "Ready to start?"
-  button scroll down to the Bundles. The header no longer has a button.
+- **Hero button ("ENTER THE SHADOW")** and the bottom "INTO THE SHADOW"
+  button (same outline style) scroll down to the Bundles. The header no longer has a button.
   The only buttons that open a DM are the "Join [bundle]" buttons on the
   three bundle cards, so you always know which bundle someone wants.
 - **Instagram DM button**: Instagram doesn't let websites type a message
@@ -144,7 +144,8 @@ working, the most common cause is a missing comma or quotation mark
   bundle. Please send me the full details and how I can start. Thanks!";
   Arabic — the same in Egyptian Arabic. Edit it in `DM_MESSAGES`
   (content.js).
-- **Social icons** (footer): Instagram and TikTok.
+- **Social icons** (footer): Instagram and TikTok. Your email
+  (vshvdowathletic@gmail.com) sits under the "Ready to start?" button.
 - **Header**: transparent over the top of the hero video; as soon as
   the page scrolls, a frosted blur fades in behind it so the nav
   stays readable over anything. script.js also switches the text
@@ -179,13 +180,13 @@ working, the most common cause is a missing comma or quotation mark
   `hero.mp4` with a new file of the same name (keep it short, muted,
   and under ~10MB so it stays fast).
 - **Logo**: the header logo and the footer sign-off ("VSHVDOW ATHLETIC")
-  are outlined SVG drawn from Archivo Expanded Light, written straight
+  are outlined SVG drawn from Raleway SemiBold (header) , written straight
   into index.html, so they look identical on every device and switch
   black/white with the header automatically. The crescent-V icon is
   `vshvdow-icon.svg` (used in the Products section) and the favicons.
-- **Fonts**: Archivo for everything (Medium for text and headings,
-  Expanded Light for the hero line and the big numbers), Cairo for
-  Arabic. Both load from Google Fonts — no setup needed.
+- **Fonts**: Raleway for all text, Aileron for the numbers only (pyramid
+  layers, prices, product numbers), Cairo for Arabic. They load from
+  Google Fonts and cdnjs — no setup needed.
 - **The pyramid** is drawn with real angled edges (via CSS clip-path)
   so the five tiers connect into one continuous pyramid shape, widest
   at the bottom, instead of separate stacked cards.
