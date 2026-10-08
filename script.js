@@ -12,9 +12,10 @@ let toastTimer;
 /* ---------- small template helpers ---------- */
 
 function layerHTML(layer) {
-  const w = 40 + (5 - layer.n) * 15; // Layer 5 = 40% (peak) ... Layer 1 = 100% (base)
+  // --step: 0 = Layer 5 (peak, narrowest) ... 4 = Layer 1 (base, full width).
+  // styles.css turns it into the width, with a gentler slope on phones.
   return `
-    <div class="layer" style="width:${w}%">
+    <div class="layer" style="--step:${5 - layer.n}">
       <span class="layer-num">0${layer.n}</span>
       <div class="layer-name">${layer.name}</div>
       <div class="layer-detail">${layer.detail}</div>
@@ -140,6 +141,58 @@ function wireDynamicButtons() {
   document.getElementById('ttLink').href = CONFIG.tiktokUrl;
 }
 
+/* ---------- "Join the Shadow" signup ---------- */
+/* Sends the email to CONFIG.signupEndpoint (FormSubmit), which forwards it
+   to your Gmail. No page reload; the button and a short line of text show
+   what happened. A hidden "_honey" field quietly drops spam bots. */
+function setJoinStatus(text, state) {
+  const el = document.getElementById('joinStatus');
+  el.textContent = text;
+  el.dataset.state = state || '';
+}
+
+(function initSignup() {
+  const form = document.getElementById('joinForm');
+  const input = document.getElementById('joinEmail');
+  const btn = document.getElementById('joinBtn');
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const t = CONTENT[currentLang].join;
+    const email = input.value.trim();
+    if (!EMAIL.test(email)) { setJoinStatus(t.invalid, 'error'); input.focus(); return; }
+    if (form.elements._honey.value) { setJoinStatus(t.success, 'ok'); form.reset(); return; }
+
+    btn.disabled = true; btn.textContent = t.sending; setJoinStatus('', '');
+    try {
+      const res = await fetch(CONFIG.signupEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          email,
+          language: currentLang === 'ar' ? 'Arabic' : 'English',
+          _subject: 'New VSHVDOW signup',
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && String(data.success) === 'true') {
+        setJoinStatus(CONTENT[currentLang].join.success, 'ok');
+        form.reset();
+      } else {
+        setJoinStatus(CONTENT[currentLang].join.error, 'error');
+      }
+    } catch (err) {
+      setJoinStatus(CONTENT[currentLang].join.error, 'error');
+    } finally {
+      btn.disabled = false; btn.textContent = CONTENT[currentLang].join.button;
+    }
+  });
+  input.addEventListener('input', () => { if (document.getElementById('joinStatus').dataset.state === 'error') setJoinStatus('', ''); });
+})();
+
 /* ---------- toast ---------- */
 
 function showToast(msg) {
@@ -158,6 +211,7 @@ const REVEAL_SELECTORS = [
   '.section-inner > h2', '.section-sub', '.pricing-note', '.fx-note', '.band-line',
   '.bundle-card', '.layer', '.products-banner-copy', '.product-rail',
   '.about-media', '.about-copy', '.results-media', '.results-copy', '.contact-inner > *',
+  '.section-inner > .eyebrow', '.signup-inner > *',
 ];
 const revealObserver = ('IntersectionObserver' in window)
   ? new IntersectionObserver((entries) => {
@@ -229,6 +283,28 @@ function render(lang) {
   document.getElementById('contactSub').textContent = C.contact.sub;
   document.getElementById('contactCta').textContent = C.contact.cta;
 
+  // section labels ("01 — The method" …) — the number is set in Aileron
+  Object.entries(C.eyebrows).forEach(([key, text]) => {
+    const el = document.getElementById(`${key}Eyebrow`);
+    if (!el) return;
+    const cut = text.indexOf(' — ');
+    if (cut < 1) { el.textContent = text; return; }
+    const num = document.createElement('span');
+    num.className = 'num';
+    num.textContent = text.slice(0, cut);
+    el.replaceChildren(num, text.slice(cut));
+  });
+  document.getElementById('scrollCue').setAttribute('aria-label', C.ui.scrollCue);
+
+  // signup
+  document.getElementById('joinTitle').textContent = C.join.title;
+  document.getElementById('joinSub').textContent = C.join.sub;
+  document.getElementById('joinLabel').textContent = C.join.label;
+  document.getElementById('joinEmail').placeholder = C.join.placeholder;
+  const joinBtn = document.getElementById('joinBtn');
+  if (!joinBtn.disabled) joinBtn.textContent = C.join.button;
+  setJoinStatus('', '');
+
   document.getElementById('footerTagline').textContent = C.footer.tagline;
   document.getElementById('footerRights').textContent = C.footer.rights;
 
@@ -240,20 +316,23 @@ function render(lang) {
 /* ---------- transparent header: keep the text readable ---------- */
 
 // Sections that are always a dark photo (regardless of light/dark theme).
-const DARK_ZONES = '.hero, .band, .contact-section';
+// The number is how much of the top/bottom edge melts into the page
+// colour — the header only turns white once it's over the dark middle.
+const DARK_ZONES = [['.hero', 0], ['.band', 0.2], ['.contact-section', 0.2]];
 
 function updateHeaderTone() {
   const header = document.getElementById('siteHeader');
   if (!header) return;
   const y = header.getBoundingClientRect().height / 2; // header's centre line
-  const covers = (el) => {
+  const covers = (el, edge) => {
     const r = el.getBoundingClientRect();
-    return r.top <= y && r.bottom >= y;
+    const pad = r.height * edge;
+    return r.top + pad <= y && r.bottom - pad >= y;
   };
 
   let tone = null;
-  for (const el of document.querySelectorAll(DARK_ZONES)) {
-    if (covers(el)) { tone = 'dark'; break; }
+  for (const [sel, edge] of DARK_ZONES) {
+    if ([...document.querySelectorAll(sel)].some((el) => covers(el, edge))) { tone = 'dark'; break; }
   }
   header.classList.toggle('scrolled', window.scrollY > 8);
   header.classList.toggle('on-dark', tone === 'dark');

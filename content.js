@@ -19,6 +19,10 @@ const CONFIG = {
   instagramUrl: "https://www.instagram.com/vshvdow/",
   tiktokUrl: "https://www.tiktok.com/@vshvdow?is_from_webapp=1&sender_device=pc",
   defaultLang: "en", // "en" or "ar" — which language loads first for new visitors
+  // Where the "Join the Shadow" signup sends each new email (it arrives in
+  // your Gmail). After you activate it once, you can swap the email part
+  // for the random code FormSubmit gives you, to hide your address.
+  signupEndpoint: "https://formsubmit.co/ajax/vshvdowathletic@gmail.com",
 };
 
 /* ---------- 2. BUNDLES ---------- */
@@ -230,6 +234,26 @@ const CONTENT = {
       sub: "Every bundle is right above — pick the one that fits and I'll walk you through the rest.",
       cta: "Into the Shadow",
     },
+    eyebrows: {
+      pyramid: "01 — The method",
+      bundles: "02 — Coaching",
+      products: "03 — Inside every bundle",
+      about: "04 — The coach",
+      results: "05 — Proof",
+      contact: "06 — Start",
+      join: "07 — The Shadow",
+    },
+    join: {
+      title: "Join the Shadow",
+      sub: "The work happens in the dark. New programs, drops and open spots reach the shadow first — no noise.",
+      label: "Email address",
+      placeholder: "Email address",
+      button: "Join",
+      sending: "Joining…",
+      success: "You're in. See you in the dark.",
+      error: "Couldn't sign you up right now. Try again in a moment.",
+      invalid: "Enter a valid email address.",
+    },
     footer: {
       tagline: "Built to perform · Built to last",
       rights: "All rights reserved.",
@@ -241,6 +265,7 @@ const CONTENT = {
       menuOpen: "Menu",
       menuClose: "Close",
       copiedToast: "Message copied — paste it in the chat and hit send",
+      scrollCue: "Scroll down",
     },
   },
 
@@ -298,6 +323,26 @@ const CONTENT = {
       sub: "كل الباقات موجودة فوق — اختار اللي تناسبك وأنا هكمّل معاك الباقي.",
       cta: "يلا نبدأ",
     },
+    eyebrows: {
+      pyramid: "01 — المنهج",
+      bundles: "02 — التدريب",
+      products: "03 — جوه كل باقة",
+      about: "04 — الكوتش",
+      results: "05 — النتايج",
+      contact: "06 — ابدأ",
+      join: "07 — الظل",
+    },
+    join: {
+      title: "انضم للظل",
+      sub: "الشغل الحقيقي بيتعمل في الضلمة. البرامج الجديدة والأماكن اللي بتفضى بتوصل للي في الظل الأول — من غير دوشة.",
+      label: "الإيميل",
+      placeholder: "الإيميل بتاعك",
+      button: "انضم",
+      sending: "ثانية واحدة…",
+      success: "خلاص، انت معانا. نشوفك في الضلمة.",
+      error: "معرفناش نسجّلك دلوقتي. جرّب تاني كمان شوية.",
+      invalid: "اكتب إيميل صحيح.",
+    },
     footer: {
       tagline: "متبني للأداء · متبني للاستمرار",
       rights: "كل الحقوق محفوظة.",
@@ -309,6 +354,7 @@ const CONTENT = {
       menuOpen: "القائمة",
       menuClose: "اقفل",
       copiedToast: "الرسالة اتنسخت — الصقها في الشات وابعت",
+      scrollCue: "انزل لتحت",
     },
   },
 };

@@ -20,6 +20,7 @@ product-welcome.jpg, product-training.jpg,
 product-nutrition.jpg, product-tracker.jpg    the four Products card photos
 products-light.jpg, products-dark.jpg         Products banner (light / dark mode)
 vshvdow-icon.svg      the crescent-V icon (used in Products)
+aileron-300.woff2, aileron-400.woff2          the Aileron font (all the numbers)
 ```
 
 Every file sits flat in one folder now — nothing is inside a
@@ -32,10 +33,10 @@ sub-folder. That's deliberate (see the troubleshooting note below).
    Keep it **Public** (Cloudflare Pages' free tier wants that) and
    don't add a README/gitignore when it asks — just click **Create**.
 2. On the empty repo page, click **"uploading an existing file"**.
-3. Drag in **all 22 files** — select them all at once in your file
+3. Drag in **all 24 files** — select them all at once in your file
    browser (click the first, shift-click the last) and drag that
    whole selection in together. Don't drag a folder.
-4. Wait until you can see all 22 file names listed on the upload
+4. Wait until you can see all 24 file names listed on the upload
    screen before committing — if you only see a handful, the drag
    didn't pick everything up; clear it and try again.
 5. Scroll down, click **Commit changes**.
@@ -75,6 +76,9 @@ Go to your repo on github.com, and for each file that changed here
 paste in the new version → **Commit changes**. Or delete the old
 files and upload the new ones fresh, same as step 1. Either way,
 Cloudflare redeploys automatically within a minute of the commit.
+This round also adds two new files — `aileron-300.woff2` and
+`aileron-400.woff2` — upload them next to the others (Add file →
+Upload files).
 
 ### Adding your own domain later
 Whenever you're ready: Cloudflare Pages project → **Custom domains**
@@ -130,12 +134,60 @@ If you ever break something in `content.js` and the site stops
 working, the most common cause is a missing comma or quotation mark
 — feel free to paste the file back to me and I'll fix it.
 
-## 4. A few things worth knowing about how it behaves
+## 4. Turn on the "Join the Shadow" email signup (one time)
 
-- **Hero button ("ENTER THE SHADOW")** and the bottom "INTO THE SHADOW"
-  button (same outline style) scroll down to the Bundles. The header no longer has a button.
-  The only buttons that open a DM are the "Join [bundle]" buttons on the
-  three bundle cards, so you always know which bundle someone wants.
+The signup at the bottom of the page sends every email address to
+**vshvdowathletic@gmail.com** through FormSubmit (free, no account,
+no code to run). It needs one confirmation before it starts delivering:
+
+1. After this update is live, open your site, scroll to **Join the
+   Shadow**, type your own email and press **JOIN**. (This first time
+   the page may say "Couldn't sign you up right now" — that's normal,
+   the form isn't confirmed yet.)
+2. Open vshvdowathletic@gmail.com — check Spam too — find the email
+   from FormSubmit and click the button to **confirm / activate** it.
+3. Done. Every signup now lands in your inbox as "New VSHVDOW signup",
+   with the address and the language the visitor was reading in.
+
+Optional: FormSubmit can also give you a random code that stands in for
+your email address. If you get one, open `content.js` → `CONFIG` →
+`signupEndpoint` and replace `vshvdowathletic@gmail.com` at the end of
+the link with that code (keep `https://formsubmit.co/ajax/` in front).
+
+Visitors see "You're in. See you in the dark." when it works, and a
+short message under the box if the email is mistyped. A hidden trap
+field quietly drops spam bots. All of the wording (both languages) is
+in `content.js` under `join:`.
+
+## 5. A few things worth knowing about how it behaves
+
+- **Header logo**: the exact Canva logo — Raleway **Bold**, letter
+  spacing −130, so the letters touch. It's drawn as an outlined SVG
+  inside index.html, so it looks identical on every device (no font
+  needed) and turns white over the dark photo areas automatically.
+- **Header**: transparent over the hero; once you scroll, a soft fog
+  fades in behind it. It turns white only when it's over the dark middle
+  of a photo section (the hero, the "Built to perform" band and the
+  "Ready to start?" section), and stays black over their faded edges and
+  the plain sections. To add another dark section later, add its class
+  to the `DARK_ZONES` line in script.js.
+- **Section labels**: each section opens with a small numbered label
+  ("01 — The method", "02 — Coaching" …). Change them in `content.js`
+  under `eyebrows:` in each language.
+- **Photo sections melt into the page**: the band and the "Ready to
+  start?" photo fade into the page colour at the top and bottom
+  instead of ending on a hard edge — in dark mode they dissolve into
+  black.
+- **Hero**: fills the whole screen. "PERFORMANCE UNDER PRESSURE" in
+  small Medium caps over two lines, "VSHVDOW ATHLETIC" under it, the
+  square outline "ENTER THE SHADOW" button, and a thin animated line at
+  the bottom that hints to scroll. The video gets a black & white grade,
+  a vignette and light grain.
+- **Buttons**: "ENTER THE SHADOW" (hero) and "INTO THE SHADOW" (bottom)
+  are transparent outline buttons that scroll to the Bundles. The header
+  has no button. The only buttons that open a DM are the "Join [bundle]"
+  buttons on the three bundle cards, so you always know which bundle
+  someone wants.
 - **Instagram DM button**: Instagram doesn't let websites type a message
   into a DM, so tapping "Join [bundle]" copies a short, ready message to
   the visitor's clipboard and opens your Instagram DM in the same tap.
@@ -144,29 +196,23 @@ working, the most common cause is a missing comma or quotation mark
   bundle. Please send me the full details and how I can start. Thanks!";
   Arabic — the same in Egyptian Arabic. Edit it in `DM_MESSAGES`
   (content.js).
-- **Social icons** (footer): Instagram and TikTok. Your email
-  (vshvdowathletic@gmail.com) sits under the "Ready to start?" button.
-- **Header**: transparent over the top of the hero video; as soon as
-  the page scrolls, a frosted blur fades in behind it so the nav
-  stays readable over anything. script.js also switches the text
-  between white and black over the dark hero/photo bands versus the
-  plain page sections. If you add another full-bleed dark section later and want
-  the header to go white over it too, add its class name to the
-  `DARK_ZONES` line near the top of script.js.
-- **Products**: a photo banner and the four product cards in one calm row
-  (it swipes sideways on phones).
-- **Motion**: sections and cards fade up as you scroll to them, the
-  pyramid builds itself from the base up, and bundle cards and buttons
+- **The pyramid** is drawn with hairlines that widen towards the base,
+  with lots of space between the five layers. On phones the slope is
+  gentler so every layer stays readable.
+- **Products**: a photo banner and the four product cards in one calm
+  row (it swipes sideways on phones).
+- **Motion**: sections, labels and cards fade up as you scroll to them,
+  the pyramid builds itself from the base up, and cards and buttons
   respond on hover. All of it switches off with "reduce motion".
-- **Hero**: fills the whole screen. "PERFORMANCE UNDER PRESSURE" in
-  normal-width Medium caps over two lines, "VSHVDOW ATHLETIC" under it,
-  and a wide, square-cornered outline button. The video gets a
-  high-contrast black & white grade, a vignette and light grain.
-- **Header**: transparent over the hero; once you scroll, a soft fog
-  fades in behind it (blurred at the top, dissolving downward, no edge
-  line). The header logo is a slightly narrower SemiBold version.
-- **Font weight**: every headline, title, the wordmark and the body
-  text use Medium (500) — nothing on the site is bold.
+- **Fonts**: Raleway for every letter, Aileron for every number on the
+  site (prices, pyramid layers, labels, spots left, the year…), Cairo
+  for Arabic. Aileron is hosted with the site (the two `.woff2` files),
+  so it always loads; Raleway and Cairo load from Google Fonts.
+- **Font weight**: headlines, titles and body text use Medium (500).
+  The only bold thing on the site is the header logo.
+- **Footer**: "VSHVDOW ATHLETIC" in wide spaced capitals, the tagline,
+  Instagram and TikTok, and the © year (updates itself). Your email
+  sits under the "Into the Shadow" button in the contact section.
 - **Language and dark/light mode**: both remember the visitor's last
   choice (stored in their own browser), and both default to their
   system's preference the first time they visit.
@@ -179,23 +225,10 @@ working, the most common cause is a missing comma or quotation mark
   on in their system settings. To swap the clip later, replace
   `hero.mp4` with a new file of the same name (keep it short, muted,
   and under ~10MB so it stays fast).
-- **Logo**: the header logo and the footer sign-off ("VSHVDOW ATHLETIC")
-  are outlined SVG drawn from Raleway SemiBold (header) , written straight
-  into index.html, so they look identical on every device and switch
-  black/white with the header automatically. The crescent-V icon is
-  `vshvdow-icon.svg` (used in the Products section) and the favicons.
-- **Fonts**: Raleway for all text, Aileron for the numbers only (pyramid
-  layers, prices, product numbers), Cairo for Arabic. They load from
-  Google Fonts and cdnjs — no setup needed.
-- **The pyramid** is drawn with real angled edges (via CSS clip-path)
-  so the five tiers connect into one continuous pyramid shape, widest
-  at the bottom, instead of separate stacked cards.
-- **Footer wordmark**: now a large hollow/outlined "VSHVDOW", centered,
-  sitting behind the tagline and social links as a quiet signature.
-- **Favicon**: the new crescent-V icon, white on black, drawn a little
+- **Favicon**: the crescent-V icon, white on black, drawn a little
   heavier at small sizes so it stays clear in a browser tab.
 
-## 5. Small copy fixes I made while building this
+## 6. Small copy fixes I made while building this
 
 A few things from the original graphics that I cleaned up for the
 permanent site text — flag anything you'd rather I revert:
