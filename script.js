@@ -86,10 +86,15 @@ function bundleCardHTML(b, lang) {
 }
 
 function productCardHTML(p, lang, i) {
+  // the still (first frame of the film) sits underneath; the film fades in over it once it plays
+  const film = p.video
+    ? `<video class="product-video" data-src="${p.video}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture disableremoteplayback></video>`
+    : '';
   return `
     <article class="product-card" role="listitem">
       <div class="product-media">
-        <img src="${p.image}" alt="" loading="lazy" decoding="async">
+        <img class="product-still" src="${p.image}" alt="" loading="lazy" decoding="async">
+        ${film}
       </div>
       <div class="product-overlay">
         <div class="product-top">
@@ -263,6 +268,48 @@ function setupReveal() {
   document.querySelectorAll('.contact-inner > *').forEach((el, i) => el.style.setProperty('--d', `${i * 0.08}s`));
 }
 
+/* ---------- product films ---------- */
+/* Every product card plays a short silent film on a seamless loop (graded
+   to match each other, slowed to 80%). A film only downloads when its card
+   comes into view, plays while it's on screen and pauses when it isn't, so
+   phones only ever load the cards someone actually reaches. Visitors with
+   reduced motion or data saver turned on see the still frame instead, and
+   if a phone refuses to autoplay (low power mode) the still simply stays. */
+const FILMS_OK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  && !(navigator.connection && navigator.connection.saveData)
+  && 'IntersectionObserver' in window;
+
+let filmObserver = null;
+
+function playFilm(v) {
+  if (document.hidden) return;
+  if (!v.getAttribute('src')) {
+    v.muted = true;
+    v.addEventListener('playing', () => v.classList.add('is-playing'), { once: true });
+    v.src = v.dataset.src;
+  }
+  const p = v.play();
+  if (p && p.catch) p.catch(() => {});
+}
+
+function initProductFilms(root) {
+  if (!FILMS_OK) return;
+  if (!filmObserver) {
+    filmObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        e.target.inView = e.isIntersecting;
+        if (e.isIntersecting) playFilm(e.target); else e.target.pause();
+      });
+    }, { rootMargin: '160px 0px', threshold: 0.01 });
+    document.addEventListener('visibilitychange', () => {
+      document.querySelectorAll('video.product-video').forEach((v) => {
+        if (document.hidden) v.pause(); else if (v.inView) playFilm(v);
+      });
+    });
+  }
+  root.querySelectorAll('video.product-video').forEach((v) => filmObserver.observe(v));
+}
+
 /* ---------- main render ---------- */
 
 function render(lang) {
@@ -320,7 +367,18 @@ function renderHome(C, lang) {
   setText('productsSub', C.products.sub);
   const grid = $('productsGrid');
   if (grid) {
-    grid.innerHTML = PRODUCTS.map((p, i) => productCardHTML(p, lang, i)).join('');
+    // Built once. Switching language only swaps the words, so the films keep
+    // playing without a restart or a flash.
+    const cards = grid.querySelectorAll('.product-card');
+    if (cards.length === PRODUCTS.length) {
+      cards.forEach((card, i) => {
+        card.querySelector('.product-title').textContent = PRODUCTS[i].name[lang];
+        card.querySelector('.product-line').textContent = PRODUCTS[i].line[lang];
+      });
+    } else {
+      grid.innerHTML = PRODUCTS.map((p, i) => productCardHTML(p, lang, i)).join('');
+      initProductFilms(grid);
+    }
     grid.setAttribute('aria-label', C.products.title);
   }
 

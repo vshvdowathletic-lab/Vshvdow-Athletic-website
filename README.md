@@ -17,8 +17,10 @@ favicon-180.png       icon used when saved to a phone home screen
 favicon-512.png       larger version of the same icon
 hero.mp4              looping hero background video (desktop and tablet only)
 hero.jpg, about.jpg, momentum.jpg, results.jpg, closing.jpg    the five photos
+product-welcome.mp4, product-training.mp4,
+product-nutrition.mp4, product-tracker.mp4      the four Products card films
 product-welcome.jpg, product-training.jpg,
-product-nutrition.jpg, product-tracker.jpg      the four Products card photos
+product-nutrition.jpg, product-tracker.jpg      their stills (the first frame of each film)
 products-light.jpg, products-dark.jpg           Products banner (light and dark mode)
 vshvdow-icon.svg      the crescent icon (used in Products)
 vshvdow-icon-small.svg  the same icon with a heavier body, for small sizes
@@ -34,7 +36,7 @@ folder, so keeping everything flat avoids that.
 
 1. Open your repository on github.com.
 2. Click **Add file**, then **Upload files**.
-3. Drag in all 22 files from the zip at once (select them all, then
+3. Drag in all 26 files from the zip at once (select them all, then
    drag the selection; don't drag a folder). Files with the same name
    are replaced.
 4. Wait until every file name shows in the list, then click
@@ -102,14 +104,9 @@ At the top of `content.js`, in `CONFIG`.
 `DM_MESSAGES` in `content.js`: one for joining, one for the waitlist, in
 each language. `{name}` is filled in automatically.
 
-**Changing a Products photo.**
-Each product in `PRODUCTS` has an `image:` file name. Upload a new photo
-and point it there, or replace the file using the same name.
-
-**Swapping any photo.**
-Upload a new file with the exact same name (for example `hero.jpg`) to
-the same place as the others. Keep photos under about 500KB so the site
-stays fast (squoosh.app does that in one click).
+**Changing a photo or a video.**
+Part 5 below walks through it step by step: which file is where, the
+right size for each, and how to prepare a new film for a Products card.
 
 **Adding real testimonials.**
 The Results section says case studies are on their way. When you have
@@ -128,7 +125,7 @@ me and I'll fix it.
   identical on every device. The browser tab icons (favicons) are the
   crescent too.
 - **Header**: transparent over the hero. Once you scroll, a soft fog
-  fades in behind it. It turns white only over the dark middle of a
+  with a light blur fades in behind it. It turns white only over the dark middle of a
   photo section and stays black over the faded edges and the plain
   sections.
 - **Hero**: fills the screen. "PERFORMANCE UNDER PRESSURE" over two
@@ -137,6 +134,15 @@ me and I'll fix it.
   scroll.
 - **Photo sections** fade into the page at the top and bottom instead
   of ending on a hard edge. In dark mode they dissolve into black.
+- **Products**: four cards, each a short silent film in black and
+  white: the welcome pack, rows for the training plan, pulldowns for
+  nutrition, dips for the tracker. They're graded to match each other and
+  the hero, slowed to 80%, and each one loops without a visible seam. A
+  film only downloads when its card comes into view, plays while it's on
+  screen and pauses when it isn't, so phones only load what someone
+  actually reaches (all four together are about 2.3 MB). Switching
+  language doesn't restart them. Visitors with reduced motion or data
+  saver turned on see each card's still instead.
 - **Bundles**: prices written out in words, clean lists with no bullet
   marks, and thin square "Join" buttons.
 - **Instagram DM**: Instagram doesn't let websites type into a DM, so
@@ -153,8 +159,9 @@ me and I'll fix it.
   mode too and sinks into black at the bottom. It's in the menu as
   "Mission" (underlined while you're on it), and the coach section on
   the home page links to it.
-- **Moving between pages** cross-fades with the header standing still,
-  in browsers that support it.
+- **Moving between pages** cross-fades, in browsers that support it.
+  The header looks the same on both pages, so it holds still through the
+  fade.
 - **Menu**: with six links, the header switches to the menu button on
   screens narrower than about 1140px (tablets and small laptops).
 - **Footer**: one slim line with the name, Instagram and TikTok, and the
@@ -170,3 +177,157 @@ me and I'll fix it.
   start from their phone or computer setting on the first visit.
 - **Hero video** plays on tablets and computers only. Phones show the
   still `hero.jpg`, which saves data and keeps the text easy to read.
+
+## 5. Replacing a photo or a video
+
+Every photo and video on the site is a single file in your GitHub
+repository. To change one, you upload a new file with **exactly the same
+name**. GitHub swaps it, Cloudflare publishes it, and nothing else needs
+to change. You never touch the code for this.
+
+### Step by step
+
+1. Get the new file ready (the table below gives the right shape and size
+   for each spot, and the sections after it explain how).
+2. Rename it to exactly the name of the file it replaces, ending
+   included: `about.jpg`, not `About.jpg`, `about.JPG` or `about.jpeg`.
+   Capitals count.
+3. Open your repository on github.com.
+4. Click **Add file**, then **Upload files**.
+5. Drag the new file in. Because the name already exists, it replaces the
+   old one. You can drag several at once.
+6. Wait until the file name shows in the list, then click **Commit
+   changes**.
+7. Give Cloudflare a minute or two, then open the site and refresh.
+
+If you still see the old picture, your browser kept a copy. On a
+computer press **Ctrl + Shift + R** (Windows) or **Cmd + Shift + R**
+(Mac). On a phone, close the tab and open the site again, or open it in a
+private tab.
+
+### Which file is where
+
+| File | Where it shows | Shape | Best size |
+|---|---|---|---|
+| `hero.mp4` | Home page, the full screen video behind "PERFORMANCE UNDER PRESSURE" (tablets and computers) | landscape 16:9 | 1920 × 1080, 8 to 15 seconds, under 8 MB |
+| `hero.jpg` | The same spot on phones, the still before the video starts, and the picture shown when someone shares your link | landscape 16:9 | 1920 × 1080, under 400 KB |
+| `momentum.jpg` | The dark band with "BUILT TO PERFORM · BUILT TO LAST" | landscape | 1920 × 1080 |
+| `products-light.jpg` | Products banner in light mode | wide landscape | 2000 × 1125 |
+| `products-dark.jpg` | Products banner in dark mode | wide landscape | 2000 × 1125 |
+| `product-welcome.mp4` and `.jpg` | Products card 01, Welcome Pack: the film and its still | portrait 4:5 | 640 × 800, under 1 MB |
+| `product-training.mp4` and `.jpg` | Card 02, Training Plan | portrait 4:5 | 640 × 800, under 1 MB |
+| `product-nutrition.mp4` and `.jpg` | Card 03, Nutrition System | portrait 4:5 | 640 × 800, under 1 MB |
+| `product-tracker.mp4` and `.jpg` | Card 04, Athlete Tracker | portrait 4:5 | 640 × 800, under 1 MB |
+| `about.jpg` | About the coach | shows as a tall 4:5 crop of the middle | 1200 × 1500 portrait is ideal |
+| `results.jpg` | Results | shows as a tall 4:5 crop of the middle | 1200 × 1500 portrait is ideal |
+| `closing.jpg` | Behind "Ready to start?" at the bottom of the home page | landscape | 1920 × 1080 |
+| `mission-hero.jpg` | The Mission page photo on computers | nearly square | 2000 wide |
+| `mission-hero-1200.jpg` | The same photo, smaller, for phones | nearly square | 1200 wide |
+
+### Replacing a photo
+
+1. Use a JPG. Keep it under about 500 KB so the page stays fast. The
+   free site **squoosh.app** does it in one go: drop the photo in, set
+   the size from the table under Resize, choose MozJPEG with quality
+   75 to 80, and download.
+2. Name it exactly like the photo it replaces and upload it (steps
+   above).
+
+Things that keep each spot looking right:
+
+* **Black and white**: only the hero video is turned black and white by
+  the site itself. Every other photo shows exactly as you upload it, so
+  use black and white versions to keep the look.
+* **Hero, band and the closing photo**: the words sit in the middle over
+  a dark tint, so a calm centre reads best.
+* **Products banner**: the title sits on the right, so keep the right
+  side open (fog, sky, empty space). You can upload the same photo under
+  both names if you don't want a separate dark mode version.
+* **About and Results**: the site shows the middle of the photo as a tall
+  4:5 crop, so keep the person near the centre.
+* **Mission**: upload both sizes of the same photo, the big one as
+  `mission-hero.jpg` and a 1200 wide copy as `mission-hero-1200.jpg`.
+  "Built in the dark." sits over the upper part, so a light, foggy sky
+  there works best.
+* **The hero video** plays on tablets and computers only. When you
+  change `hero.mp4`, also save one frame of it as `hero.jpg`, so phones
+  and the moment before it starts show the same scene.
+
+### Replacing a Products film
+
+Each card has two files that belong together:
+
+* the **film**: `product-welcome.mp4`, `product-training.mp4`,
+  `product-nutrition.mp4`, `product-tracker.mp4`
+* its **still**: `product-welcome.jpg`, `product-training.jpg`, and so
+  on. It's the very first frame of the film.
+
+The still shows for the moment the film is loading, then the film fades
+in over it. Because the still is the film's own first frame, nobody sees
+the switch. So when you replace a film, replace its still too.
+
+**What a film needs to be**
+
+* **MP4 in H.264.** This plays everywhere. iPhones film in HEVC ("High
+  Efficiency"), which some browsers can't play, so export as H.264 (or
+  set Settings > Camera > Formats > Most Compatible before filming). Turn
+  HDR off too (Settings > Camera > Record Video > HDR Video), because HDR
+  looks washed out on websites.
+* **Portrait, 4:5**, 640 × 800. A normal tall phone video also works;
+  the card shows its middle.
+* **5 to 12 seconds**, no sound (the cards are always silent, so remove
+  the audio track; it only adds weight).
+* **Under about 1 MB.**
+* **Black and white**, if you want it to sit with the other three.
+
+**Preparing one for free with HandBrake** (handbrake.fr, Windows and Mac)
+
+1. Open the video in HandBrake.
+2. **Summary** tab: Format **MP4**, and tick **Web Optimized**.
+3. **Dimensions** tab: Cropping **Custom**, then crop the top and bottom
+   until the size reads 4:5 (for a 1080 wide video, 1350 tall). Set the
+   width to **640**; the height becomes 800.
+4. **Filters** tab: tick **Grayscale** for black and white.
+5. **Video** tab: Video Encoder **H.264 (x264)**, Framerate **Same as
+   source** with **Constant Framerate**, Quality **RF 26** (a higher RF
+   makes a smaller file).
+6. **Audio** tab: remove the audio track.
+7. Click **Start**, then rename the result to the card's film name, for
+   example `product-training.mp4`.
+
+**Making its still**
+
+1. Open the finished film in **VLC** (free, videolan.org) and pause it on
+   the very first frame (press **E** to step one frame at a time).
+2. Click **Video**, then **Take Snapshot**. VLC saves a picture of that
+   frame in your Pictures folder (on a Mac, on the Desktop).
+3. Put it through squoosh.app as a JPG (640 × 800, quality 80) and name
+   it like the film with `.jpg` at the end, for example
+   `product-training.jpg`.
+4. Upload both files together.
+
+If preparing films sounds like too much, send me the raw videos like you
+did this time. I'll grade them to match the others, slow them, make each
+one loop without a seam, and give you the film and its still with the
+right names.
+
+**Using different file names, or a photo only**
+
+The names live in `content.js`, in `PRODUCTS`: `video:` is the film and
+`image:` is the still. Point them at new names if you upload files
+called something else. To make a card a plain photo with no film, write
+`video: ""` and put the photo's name in `image:`.
+
+### If something looks wrong
+
+* **The old picture is still there**: refresh with Ctrl + Shift + R (or
+  Cmd + Shift + R), or wait a few minutes for Cloudflare.
+* **A card shows its still but never moves**: the film's name doesn't
+  match `content.js` exactly (capitals too), or the film is HEVC. Export
+  it as H.264 and upload it again.
+* **A card is blank**: the still's name doesn't match.
+* **It plays on a computer but not on an iPhone**: export with Web
+  Optimized ticked, in H.264, with HDR off.
+* **Low power mode on iPhones** stops every website's videos from
+  playing by themselves. The cards show their stills then, which is
+  expected.

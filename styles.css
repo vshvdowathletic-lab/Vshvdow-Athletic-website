@@ -122,9 +122,11 @@ p { text-wrap: pretty; }
 }
 html { scroll-behavior: smooth; }
 /* Moving between the home page and the Mission page cross-fades instead of
-   flashing white, and the header stays put (browsers that support it). */
+   flashing white (browsers that support it). The header is identical on both
+   pages, so it holds still through the fade. It must NOT get its own
+   view-transition-name: that turns it into a "backdrop root" and switches
+   off the blur behind it. */
 @view-transition { navigation: auto; }
-.site-header { view-transition-name: site-header; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .45s; animation-timing-function: cubic-bezier(.22,.61,.36,1); }
 @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
 
@@ -274,9 +276,11 @@ html[data-theme="dark"] .icon-moon { display: block; }
     linear-gradient(180deg, rgba(10,10,10,.45) 0%, rgba(10,10,10,0) 22%, rgba(10,10,10,0) 70%, rgba(10,10,10,.5) 100%),
     rgba(10,10,10,.2);
 }
+/* one fine film grain, shared by the hero and the product films so they read as one reel */
+:root { --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .hero-grain {
   position: absolute; inset: 0; opacity: .14; mix-blend-mode: overlay; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: var(--grain);
 }
 .hero-content {
   position: relative; z-index: 1; width: 100%; max-width: var(--container);
@@ -439,9 +443,21 @@ html[lang="ar"] .products-banner-copy h2 { letter-spacing: 0; }
   transition: transform .45s var(--ease), box-shadow .45s var(--ease);
 }
 .product-card:hover { transform: translateY(-6px); box-shadow: 0 22px 40px -26px rgba(0,0,0,.55); }
-.product-media, .product-media img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.product-media img { object-fit: cover; filter: grayscale(1) contrast(1.08); transition: transform .8s var(--ease); }
-.product-card:hover .product-media img { transform: scale(1.045); }
+/* The still (the film's own first frame) fills the card; the film fades in
+   over it once it's playing, so the switch can't be seen. Both are already
+   graded, so no filters here. */
+.product-media { position: absolute; inset: 0; overflow: hidden; }
+.product-still, .product-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.product-video { opacity: 0; transition: opacity 1.2s var(--ease); }
+.product-video.is-playing { opacity: 1; }
+/* the four films wake one after another, a beat apart */
+.product-card:nth-child(2) .product-video { transition-delay: .15s; }
+.product-card:nth-child(3) .product-video { transition-delay: .3s; }
+.product-card:nth-child(4) .product-video { transition-delay: .45s; }
+.product-media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  opacity: .12; mix-blend-mode: overlay; background-image: var(--grain);
+}
 .product-overlay {
   position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
   padding: var(--sp-4);

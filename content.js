@@ -146,20 +146,23 @@ const BUNDLES = [
 ];
 
 /* ---------- 3. PRODUCTS ---------- */
-/* Each product is a photo card: number, title, one line.
-   "image" is the photo file name (same folder as everything else).
-   Swap it for any other photo to change that card. */
+/* Each product is a card with a short silent film: number, title, one line.
+   "video" is the film (an .mp4 in the same folder as everything else).
+   "image" is its still: the very first frame of the film. It shows while the
+   film loads, and it's all that visitors with reduced motion or data saver
+   see. To show a photo only, write video: "" and the card stays still.
+   README.md, part 5, explains how to swap either one. */
 const PRODUCTS = [
-  { id: "welcome",   image: "product-welcome.jpg",
+  { id: "welcome",   image: "product-welcome.jpg",   video: "product-welcome.mp4",
     name: { en: "Welcome Pack",     ar: "باكدج الترحيب" },
     line: { en: "Everything you need to start on day one.",        ar: "كل اللي محتاجه عشان تبدأ من أول يوم." } },
-  { id: "training",  image: "product-training.jpg",
+  { id: "training",  image: "product-training.jpg",  video: "product-training.mp4",
     name: { en: "Training Plan",    ar: "خطة التمرين" },
     line: { en: "Every set, rep and cue, rebuilt every 4 weeks.", ar: "كل مجموعة وعدّة وملاحظة، بتتكتب من جديد كل 4 أسابيع." } },
-  { id: "nutrition", image: "product-nutrition.jpg",
+  { id: "nutrition", image: "product-nutrition.jpg", video: "product-nutrition.mp4",
     name: { en: "Nutrition System", ar: "سيستم التغذية" },
     line: { en: "Your macros and meals, dialed in by phase.",       ar: "الماكروز والوجبات بتاعتك، مظبوطة على كل مرحلة." } },
-  { id: "tracker",   image: "product-tracker.jpg",
+  { id: "tracker",   image: "product-tracker.jpg",   video: "product-tracker.mp4",
     name: { en: "Athlete Tracker",  ar: "متابعة الأداء" },
     line: { en: "Every number that matters, in one sheet.",         ar: "كل رقم مهم، في شيت واحد." } },
 ];
