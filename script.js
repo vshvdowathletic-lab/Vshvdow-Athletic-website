@@ -147,8 +147,105 @@ function showToast(msg) {
   el.textContent = msg;
   el.classList.add('show');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 4200);
 }
+
+/* ---------- scroll reveal ---------- */
+/* Tags sections, cards and the pyramid with .rv and adds .in as each one
+   reaches the screen (styles.css does the motion). The pyramid builds up
+   from its base; bundle cards come in one after another. */
+const REVEAL_SELECTORS = [
+  '.section-inner > h2', '.section-sub', '.pricing-note', '.fx-note', '.band-line',
+  '.bundle-card', '.layer', '.products-banner-copy', '.product-rail',
+  '.about-media', '.about-copy', '.results-media', '.results-copy', '.contact-inner > *',
+];
+const revealObserver = ('IntersectionObserver' in window)
+  ? new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 })
+  : null;
+
+function setupReveal() {
+  if (!revealObserver) return;
+  document.querySelectorAll(REVEAL_SELECTORS.join(',')).forEach((el) => {
+    if (el.classList.contains('rv')) return;
+    el.classList.add('rv');
+    revealObserver.observe(el);
+  });
+  // pyramid: base (last in the list) first, peak last
+  const layers = [...document.querySelectorAll('#pyramidLayers .layer')];
+  layers.forEach((el, i) => el.style.setProperty('--d', `${(layers.length - 1 - i) * 0.12}s`));
+  document.querySelectorAll('#bundleGrid .bundle-card').forEach((el, i) => el.style.setProperty('--d', `${i * 0.1}s`));
+  document.querySelectorAll('.contact-inner > *').forEach((el, i) => el.style.setProperty('--d', `${i * 0.08}s`));
+}
+
+/* ---------- products row: glides on its own, drag / swipe any time ---------- */
+const productRail = (function () {
+  const rail = document.getElementById('productsRail');
+  const track = document.getElementById('productsGrid');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SPEED = 0.35;          // px per frame (~20px a second)
+  let setW = 0, pos = 0, hover = false, touchHold = false, dragging = false, focused = false, onScreen = true;
+  let resumeTimer, raf;
+
+  function measure() {
+    const n = PRODUCTS.length, cards = track.children;
+    setW = cards.length > n ? cards[n].offsetLeft - cards[0].offsetLeft : 0;
+  }
+  function wrap() {           // keep the scroll inside the middle copy so it never ends
+    if (!setW) return;
+    if (pos >= setW * 2) pos -= setW;
+    else if (pos < setW * 0.5) pos += setW;
+  }
+  function tick() {
+    if (Math.abs(rail.scrollLeft - pos) > 1.5) pos = rail.scrollLeft;   // the visitor moved it
+    if (!reduceMotion && !hover && !touchHold && !dragging && !focused && onScreen) pos += SPEED;
+    wrap();
+    if (Math.abs(rail.scrollLeft - pos) > 0.5) rail.scrollLeft = pos;   // only write when it actually moves (keeps touch momentum smooth)
+    raf = requestAnimationFrame(tick);
+  }
+  function reset() {
+    measure();
+    pos = setW; rail.scrollLeft = pos;
+  }
+
+  rail.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
+  rail.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hover = false; });
+  rail.addEventListener('touchstart', () => { touchHold = true; clearTimeout(resumeTimer); }, { passive: true });
+  rail.addEventListener('touchend', () => { clearTimeout(resumeTimer); resumeTimer = setTimeout(() => { touchHold = false; }, 2500); }, { passive: true });
+  rail.addEventListener('focusin', () => { focused = true; });
+  rail.addEventListener('focusout', () => { focused = false; });
+
+  // mouse drag
+  let startX = 0, startPos = 0, moved = false;
+  rail.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    dragging = true; moved = false; startX = e.clientX; startPos = rail.scrollLeft;
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) { moved = true; rail.classList.add('dragging'); }
+    pos = startPos - dx; wrap(); rail.scrollLeft = pos;
+  });
+  window.addEventListener('pointerup', () => {
+    if (!dragging) return;
+    dragging = false;
+    setTimeout(() => rail.classList.remove('dragging'), 0);
+  });
+  rail.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((en) => { onScreen = en[0].isIntersecting; }).observe(rail);
+  }
+  window.addEventListener('resize', () => { const ratio = setW ? (pos - setW) / setW : 0; measure(); pos = setW + ratio * setW; });
+  window.addEventListener('load', reset);
+
+  raf = requestAnimationFrame(tick);
+  return { reset };
+})();
 
 /* ---------- main render ---------- */
 
@@ -163,7 +260,6 @@ function render(lang) {
   if (metaDesc) metaDesc.setAttribute('content', C.metaDescription);
 
   document.querySelectorAll('[data-nav]').forEach(a => { a.textContent = C.nav[a.dataset.nav]; });
-  document.getElementById('navCta').textContent = C.nav.cta;
   document.getElementById('langToggle').textContent = C.ui.langSwitch;
   document.getElementById('langToggleMobile').textContent = C.ui.langSwitch;
 
@@ -185,8 +281,12 @@ function render(lang) {
 
   document.getElementById('productsTitle').textContent = C.products.title;
   document.getElementById('productsSub').textContent = C.products.sub;
+  // The row is drawn three times over so it can glide endlessly; only the
+  // first copy is read out by screen readers.
   const grid = document.getElementById('productsGrid');
-  grid.innerHTML = PRODUCTS.map((p, i) => productCardHTML(p, lang, i)).join('');
+  const set = PRODUCTS.map((p, i) => productCardHTML(p, lang, i)).join('');
+  const hiddenSet = set.replace(/<article class="product-card" role="listitem">/g, '<article class="product-card" aria-hidden="true">');
+  grid.innerHTML = set + hiddenSet + hiddenSet;
   grid.setAttribute('aria-label', C.products.title);
 
   document.getElementById('aboutTitle').textContent = C.about.title;
@@ -204,6 +304,8 @@ function render(lang) {
 
   wireDynamicButtons();
   updateHeaderTone();
+  setupReveal();
+  productRail.reset();
 }
 
 /* ---------- transparent header: keep the text readable ---------- */

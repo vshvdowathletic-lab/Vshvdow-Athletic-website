@@ -132,17 +132,18 @@ working, the most common cause is a missing comma or quotation mark
 
 ## 4. A few things worth knowing about how it behaves
 
-- **"Start Now" buttons**: the hero, the header, and the bottom
-  "Ready to start?" section all just scroll down to the Bundles —
-  they don't open a chat. The only buttons that actually open a DM
-  are the "Join [bundle]" buttons on each of the three bundle cards,
-  so you always know which bundle someone's asking about.
-- **Instagram DM button**: Instagram doesn't let outside websites
-  type a message into a DM for the visitor, so clicking "Join
-  [bundle]" copies a clean, ready-written message (bundle name +
-  price) the instant it's tapped and opens your Instagram DM in the
-  same tap — the visitor just pastes and hits send. A small toast
-  tells them the message is copied.
+- **Hero button ("ENTER THE SHADOW")** and the bottom "Ready to start?"
+  button scroll down to the Bundles. The header no longer has a button.
+  The only buttons that open a DM are the "Join [bundle]" buttons on the
+  three bundle cards, so you always know which bundle someone wants.
+- **Instagram DM button**: Instagram doesn't let websites type a message
+  into a DM, so tapping "Join [bundle]" copies a short, ready message to
+  the visitor's clipboard and opens your Instagram DM in the same tap.
+  They paste and send. The message follows the language they're using:
+  English — "Hi Coach, I'd like to subscribe to the Private Athlete
+  bundle. Please send me the full details and how I can start. Thanks!";
+  Arabic — the same in Egyptian Arabic. Edit it in `DM_MESSAGES`
+  (content.js).
 - **Social icons** (footer): Instagram and TikTok.
 - **Header**: transparent over the top of the hero video; as soon as
   the page scrolls, a frosted blur fades in behind it so the nav
@@ -151,14 +152,20 @@ working, the most common cause is a missing comma or quotation mark
   plain page sections. If you add another full-bleed dark section later and want
   the header to go white over it too, add its class name to the
   `DARK_ZONES` line near the top of script.js.
-- **Products**: a wide photo banner (it swaps to the inverted, dark
-  version of the photo in dark mode) with four photo cards under it —
-  a 4-across grid on desktop, 2-across on tablet, and a swipeable row
-  on phones.
-- **Hero**: "PERFORMANCE UNDER PRESSURE" / "VSHVDOW ATHLETIC" sit in
-  the exact centre of the video. The video gets a high-contrast black
-  & white grade, a vignette and light film grain. The hero "Start
-  Now" is an outline button (transparent, white edge).
+- **Products**: a photo banner, then one row of small cards that glides
+  slowly on its own, loops endlessly, pauses when you hover or touch it,
+  and can be dragged (desktop) or swiped (phone) any time. It stays still
+  for anyone with "reduce motion" turned on.
+- **Motion**: sections and cards fade up as you scroll to them, the
+  pyramid builds itself from the base up, and bundle cards and buttons
+  respond on hover. All of it switches off with "reduce motion".
+- **Hero**: fills the whole screen. "PERFORMANCE UNDER PRESSURE" in
+  normal-width Medium caps over two lines, "VSHVDOW ATHLETIC" under it,
+  and a wide, square-cornered outline button. The video gets a
+  high-contrast black & white grade, a vignette and light grain.
+- **Header**: transparent over the hero; once you scroll, a soft fog
+  fades in behind it (blurred at the top, dissolving downward, no edge
+  line). The header logo is a slightly narrower SemiBold version.
 - **Font weight**: every headline, title, the wordmark and the body
   text use Medium (500) — nothing on the site is bold.
 - **Language and dark/light mode**: both remember the visitor's last

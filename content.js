@@ -162,15 +162,15 @@ const PRODUCTS = [
 
 /* ---------- 4. DM MESSAGES ---------- */
 /* What gets copied when someone taps a bundle button.
-   {name} = bundle name, {price} = USD price (English) or EGP price (Arabic). */
+   {name} = bundle name. The message follows the visitor's language (English / Arabic). */
 const DM_MESSAGES = {
   en: {
-    join:     "Hi Coach,\nI'd like to join the {name} bundle ({price} / month).\nCould you walk me through the next steps to get started?\nThanks!",
-    waitlist: "Hi Coach,\nI saw the {name} bundle is currently full.\nI'd like to join the waitlist — please let me know as soon as a spot opens.\nThanks!",
+    join:     "Hi Coach,\nI'd like to subscribe to the {name} bundle.\nPlease send me the full details and how I can start.\nThanks!",
+    waitlist: "Hi Coach,\nI'd like to join the waitlist for the {name} bundle.\nPlease let me know as soon as a spot opens.\nThanks!",
   },
   ar: {
-    join:     "أهلاً كابتن،\nحابب أشترك في باقة {name} ({price} جنيه في الشهر).\nممكن تقولي الخطوات الجاية عشان نبدأ؟\nشكرًا!",
-    waitlist: "أهلاً كابتن،\nشفت إن باقة {name} كاملة دلوقتي.\nحابب أسجّل في قائمة الانتظار — ياريت تبلغني أول ما يفضى مكان.\nشكرًا!",
+    join:     "أهلاً كابتن،\nحابب أشترك في باقة {name}.\nياريت تبعتلي كل التفاصيل وإزاي أقدر أبدأ.\nشكرًا!",
+    waitlist: "أهلاً كابتن،\nحابب أسجّل في قائمة الانتظار لباقة {name}.\nياريت تبلغني أول ما يفضى مكان.\nشكرًا!",
   },
 };
 
@@ -184,7 +184,7 @@ const CONTENT = {
     hero: {
       line1: "PERFORMANCE UNDER PRESSURE",
       line2: "VSHVDOW ATHLETIC",
-      cta: "Start Now",
+      cta: "Enter the Shadow",
     },
     pyramid: {
       title: "The Pyramid",
@@ -240,7 +240,7 @@ const CONTENT = {
       themeToDark: "Dark mode",
       menuOpen: "Menu",
       menuClose: "Close",
-      copiedToast: "Message copied — just paste it in the chat and send",
+      copiedToast: "Message copied — paste it in the chat and hit send",
     },
   },
 
@@ -252,7 +252,7 @@ const CONTENT = {
     hero: {
       line1: "أداء تحت الضغط",
       line2: "VSHVDOW ATHLETIC",
-      cta: "ابدأ دلوقتي",
+      cta: "ابدأ التحدي",
     },
     pyramid: {
       title: "الهرم",
