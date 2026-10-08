@@ -73,7 +73,7 @@ function productCardHTML(p, lang, i) {
       <div class="product-overlay">
         <div class="product-top">
           <span class="product-num">0${i + 1}</span>
-          <img src="vshvdow-mark.png" alt="" class="product-mark">
+          <img src="vshvdow-icon.svg" alt="" class="product-mark">
         </div>
         <div class="product-bottom">
           <h3 class="product-title">${p.name[lang]}</h3>

@@ -19,7 +19,7 @@ hero.jpg, about.jpg, momentum.jpg, results.jpg, closing.jpg   the five photos
 product-welcome.jpg, product-training.jpg,
 product-nutrition.jpg, product-tracker.jpg    the four Products card photos
 products-light.jpg, products-dark.jpg         Products banner (light / dark mode)
-vshvdow-mark.png      your V logo mark, transparent (used in Products)
+vshvdow-icon.svg      the crescent-V icon (used in Products)
 ```
 
 Every file sits flat in one folder now — nothing is inside a
@@ -173,19 +173,21 @@ working, the most common cause is a missing comma or quotation mark
   on in their system settings. To swap the clip later, replace
   `hero.mp4` with a new file of the same name (keep it short, muted,
   and under ~10MB so it stays fast).
-- **Fonts**: Raleway (headlines and body text) and Cairo (Arabic),
-  with Aileron (Medium) on the pyramid numbers, product numbers and bundle prices specifically
-  — everywhere else stays Raleway/Cairo. All load automatically from
-  Google Fonts and cdnjs — no setup needed, this just works once the
-  site is live on the internet.
+- **Logo**: the header logo and the footer sign-off ("VSHVDOW ATHLETIC")
+  are outlined SVG drawn from Archivo Expanded Light, written straight
+  into index.html, so they look identical on every device and switch
+  black/white with the header automatically. The crescent-V icon is
+  `vshvdow-icon.svg` (used in the Products section) and the favicons.
+- **Fonts**: Archivo for everything (Medium for text and headings,
+  Expanded Light for the hero line and the big numbers), Cairo for
+  Arabic. Both load from Google Fonts — no setup needed.
 - **The pyramid** is drawn with real angled edges (via CSS clip-path)
   so the five tiers connect into one continuous pyramid shape, widest
   at the bottom, instead of separate stacked cards.
 - **Footer wordmark**: now a large hollow/outlined "VSHVDOW", centered,
   sitting behind the tagline and social links as a quiet signature.
-- **Favicon**: now your V/lightning-bolt mark, with the white square
-  behind it removed so it sits cleanly on both light and dark browser
-  tabs.
+- **Favicon**: the new crescent-V icon, white on black, drawn a little
+  heavier at small sizes so it stays clear in a browser tab.
 
 ## 5. Small copy fixes I made while building this
 
