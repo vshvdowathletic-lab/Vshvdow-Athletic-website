@@ -182,7 +182,7 @@ const DM_MESSAGES = {
 const CONTENT = {
   en: {
     dir: "ltr",
-    metaTitle: "VSHVDOW — Athletic Coaching",
+    metaTitle: "VSHVDOW ATHLETIC",
     metaDescription: "Football-first athletic coaching. One training system, three bundles, built to perform and built to last.",
     nav: { pyramid: "Pyramid", bundles: "Bundles", products: "Products", coach: "Coach", contact: "Contact", cta: "Start Now" },
     hero: {
@@ -322,15 +322,6 @@ const CONTENT = {
       title: "جاهز تبدأ؟",
       sub: "كل الباقات موجودة فوق — اختار اللي تناسبك وأنا هكمّل معاك الباقي.",
       cta: "يلا نبدأ",
-    },
-    eyebrows: {
-      pyramid: "01 — المنهج",
-      bundles: "02 — التدريب",
-      products: "03 — جوه كل باقة",
-      about: "04 — الكوتش",
-      results: "05 — النتايج",
-      contact: "06 — ابدأ",
-      join: "07 — الظل",
     },
     join: {
       title: "انضم للظل",
