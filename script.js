@@ -181,72 +181,6 @@ function setupReveal() {
   document.querySelectorAll('.contact-inner > *').forEach((el, i) => el.style.setProperty('--d', `${i * 0.08}s`));
 }
 
-/* ---------- products row: glides on its own, drag / swipe any time ---------- */
-const productRail = (function () {
-  const rail = document.getElementById('productsRail');
-  const track = document.getElementById('productsGrid');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const SPEED = 0.35;          // px per frame (~20px a second)
-  let setW = 0, pos = 0, hover = false, touchHold = false, dragging = false, focused = false, onScreen = true;
-  let resumeTimer, raf;
-
-  function measure() {
-    const n = PRODUCTS.length, cards = track.children;
-    setW = cards.length > n ? cards[n].offsetLeft - cards[0].offsetLeft : 0;
-  }
-  function wrap() {           // keep the scroll inside the middle copy so it never ends
-    if (!setW) return;
-    if (pos >= setW * 2) pos -= setW;
-    else if (pos < setW * 0.5) pos += setW;
-  }
-  function tick() {
-    if (Math.abs(rail.scrollLeft - pos) > 1.5) pos = rail.scrollLeft;   // the visitor moved it
-    if (!reduceMotion && !hover && !touchHold && !dragging && !focused && onScreen) pos += SPEED;
-    wrap();
-    if (Math.abs(rail.scrollLeft - pos) > 0.5) rail.scrollLeft = pos;   // only write when it actually moves (keeps touch momentum smooth)
-    raf = requestAnimationFrame(tick);
-  }
-  function reset() {
-    measure();
-    pos = setW; rail.scrollLeft = pos;
-  }
-
-  rail.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') hover = true; });
-  rail.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hover = false; });
-  rail.addEventListener('touchstart', () => { touchHold = true; clearTimeout(resumeTimer); }, { passive: true });
-  rail.addEventListener('touchend', () => { clearTimeout(resumeTimer); resumeTimer = setTimeout(() => { touchHold = false; }, 2500); }, { passive: true });
-  rail.addEventListener('focusin', () => { focused = true; });
-  rail.addEventListener('focusout', () => { focused = false; });
-
-  // mouse drag
-  let startX = 0, startPos = 0, moved = false;
-  rail.addEventListener('pointerdown', (e) => {
-    if (e.pointerType !== 'mouse' || e.button !== 0) return;
-    dragging = true; moved = false; startX = e.clientX; startPos = rail.scrollLeft;
-  });
-  window.addEventListener('pointermove', (e) => {
-    if (!dragging) return;
-    const dx = e.clientX - startX;
-    if (Math.abs(dx) > 4) { moved = true; rail.classList.add('dragging'); }
-    pos = startPos - dx; wrap(); rail.scrollLeft = pos;
-  });
-  window.addEventListener('pointerup', () => {
-    if (!dragging) return;
-    dragging = false;
-    setTimeout(() => rail.classList.remove('dragging'), 0);
-  });
-  rail.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
-
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((en) => { onScreen = en[0].isIntersecting; }).observe(rail);
-  }
-  window.addEventListener('resize', () => { const ratio = setW ? (pos - setW) / setW : 0; measure(); pos = setW + ratio * setW; });
-  window.addEventListener('load', reset);
-
-  raf = requestAnimationFrame(tick);
-  return { reset };
-})();
-
 /* ---------- main render ---------- */
 
 function render(lang) {
@@ -281,12 +215,8 @@ function render(lang) {
 
   document.getElementById('productsTitle').textContent = C.products.title;
   document.getElementById('productsSub').textContent = C.products.sub;
-  // The row is drawn three times over so it can glide endlessly; only the
-  // first copy is read out by screen readers.
   const grid = document.getElementById('productsGrid');
-  const set = PRODUCTS.map((p, i) => productCardHTML(p, lang, i)).join('');
-  const hiddenSet = set.replace(/<article class="product-card" role="listitem">/g, '<article class="product-card" aria-hidden="true">');
-  grid.innerHTML = set + hiddenSet + hiddenSet;
+  grid.innerHTML = PRODUCTS.map((p, i) => productCardHTML(p, lang, i)).join('');
   grid.setAttribute('aria-label', C.products.title);
 
   document.getElementById('aboutTitle').textContent = C.about.title;
@@ -305,7 +235,6 @@ function render(lang) {
   wireDynamicButtons();
   updateHeaderTone();
   setupReveal();
-  productRail.reset();
 }
 
 /* ---------- transparent header: keep the text readable ---------- */
@@ -325,13 +254,6 @@ function updateHeaderTone() {
   let tone = null;
   for (const el of document.querySelectorAll(DARK_ZONES)) {
     if (covers(el)) { tone = 'dark'; break; }
-  }
-  if (!tone) {
-    // the featured bundle card is black in light theme and white in dark theme
-    const featured = document.querySelector('.bundle-card.featured');
-    if (featured && covers(featured)) {
-      tone = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    }
   }
   header.classList.toggle('scrolled', window.scrollY > 8);
   header.classList.toggle('on-dark', tone === 'dark');

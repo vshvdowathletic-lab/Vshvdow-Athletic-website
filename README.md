@@ -152,10 +152,8 @@ working, the most common cause is a missing comma or quotation mark
   plain page sections. If you add another full-bleed dark section later and want
   the header to go white over it too, add its class name to the
   `DARK_ZONES` line near the top of script.js.
-- **Products**: a photo banner, then one row of small cards that glides
-  slowly on its own, loops endlessly, pauses when you hover or touch it,
-  and can be dragged (desktop) or swiped (phone) any time. It stays still
-  for anyone with "reduce motion" turned on.
+- **Products**: a photo banner and the four product cards in one calm row
+  (it swipes sideways on phones).
 - **Motion**: sections and cards fade up as you scroll to them, the
   pyramid builds itself from the base up, and bundle cards and buttons
   respond on hover. All of it switches off with "reduce motion".
