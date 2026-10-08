@@ -20,7 +20,8 @@ hero.jpg, about.jpg, momentum.jpg, results.jpg, closing.jpg    the five photos
 product-welcome.jpg, product-training.jpg,
 product-nutrition.jpg, product-tracker.jpg      the four Products card photos
 products-light.jpg, products-dark.jpg           Products banner (light and dark mode)
-vshvdow-icon.svg      the crescent V icon (used in Products)
+vshvdow-icon.svg      the crescent icon (used in Products)
+vshvdow-icon-small.svg  the same icon with a heavier body, for small sizes
 mission-hero.jpg, mission-hero-1200.jpg         the Mission page photo (big and phone sizes)
 aileron-300.woff2, aileron-400.woff2            the Aileron font (all the numbers)
 ```
@@ -33,7 +34,7 @@ folder, so keeping everything flat avoids that.
 
 1. Open your repository on github.com.
 2. Click **Add file**, then **Upload files**.
-3. Drag in all 21 files from the zip at once (select them all, then
+3. Drag in all 22 files from the zip at once (select them all, then
    drag the selection; don't drag a folder). Files with the same name
    are replaced.
 4. Wait until every file name shows in the list, then click
@@ -120,9 +121,12 @@ me and I'll fix it.
 
 ## 4. How it behaves
 
-- **Header logo**: your exact Canva logo (Raleway Bold, letter spacing set to
-  minus 130, letters touching), drawn as an outline so it looks identical on
-  every device. It turns white over the dark photo areas.
+- **Logo**: VSHVDOW in Raleway Semibold, every letter joined to the
+  next by exactly the same amount, and the crescent icon: the edge of a
+  shadow, four arcs meeting in one sharp point with a small arch cut
+  into it. Both are drawn as outlines inside the pages, so they look
+  identical on every device. The browser tab icons (favicons) are the
+  crescent too.
 - **Header**: transparent over the hero. Once you scroll, a soft fog
   fades in behind it. It turns white only over the dark middle of a
   photo section and stays black over the faded edges and the plain
