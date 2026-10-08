@@ -9,6 +9,12 @@
 let currentLang = document.documentElement.getAttribute('lang') || CONFIG.defaultLang;
 let toastTimer;
 
+// Both pages (index.html and mission.html) share this file. Anything that
+// isn't on the current page is simply skipped.
+const PAGE = document.body.dataset.page || 'home';
+const $ = (id) => document.getElementById(id);
+function setText(id, text) { const el = $(id); if (el && text != null) el.textContent = text; }
+
 /* ---------- small template helpers ---------- */
 
 function layerHTML(layer) {
@@ -151,8 +157,8 @@ function wireDynamicButtons() {
   // Hero, nav, and contact CTAs scroll to the Bundles section (plain
   // #bundles links). Only the per-bundle buttons open a DM.
   document.querySelectorAll('.dm-btn').forEach(wireDmButton);
-  document.getElementById('igLink').href = CONFIG.instagramUrl;
-  document.getElementById('ttLink').href = CONFIG.tiktokUrl;
+  if ($('igLink')) $('igLink').href = CONFIG.instagramUrl;
+  if ($('ttLink')) $('ttLink').href = CONFIG.tiktokUrl;
 }
 
 /* ---------- "Join the Shadow" signup ---------- */
@@ -167,12 +173,14 @@ function wireDynamicButtons() {
    the box says so (join.activate in content.js) instead of a vague error. */
 function setJoinStatus(text, state) {
   const el = document.getElementById('joinStatus');
+  if (!el) return;
   el.textContent = text;
   el.dataset.state = state || '';
 }
 
 (function initSignup() {
   const form = document.getElementById('joinForm');
+  if (!form) return;
   const input = document.getElementById('joinEmail');
   const btn = document.getElementById('joinBtn');
   const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -231,7 +239,7 @@ const REVEAL_SELECTORS = [
   '.section-inner > h2', '.section-sub', '.pricing-note', '.fx-note', '.band-line',
   '.bundle-card', '.layer', '.products-banner-copy', '.product-rail',
   '.about-media', '.about-copy', '.results-media', '.results-copy', '.contact-inner > *',
-  '.signup-inner > *',
+  '.signup-inner > *', '.mission-inner > *',
 ];
 const revealObserver = ('IntersectionObserver' in window)
   ? new IntersectionObserver((entries) => {
@@ -260,87 +268,109 @@ function setupReveal() {
 function render(lang) {
   currentLang = lang;
   const C = CONTENT[lang];
+  const meta = PAGE === 'mission' ? C.mission : C;
 
   document.documentElement.lang = lang;
   document.documentElement.dir = C.dir;
-  document.title = C.metaTitle;
+  document.title = meta.metaTitle;
   const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) metaDesc.setAttribute('content', C.metaDescription);
+  if (metaDesc) metaDesc.setAttribute('content', meta.metaDescription);
 
   document.querySelectorAll('[data-nav]').forEach(a => { a.textContent = C.nav[a.dataset.nav]; });
-  document.getElementById('langToggle').textContent = C.ui.langSwitch;
-  document.getElementById('langToggleMobile').textContent = C.ui.langSwitch;
+  setText('langToggle', C.ui.langSwitch);
+  setText('langToggleMobile', C.ui.langSwitch);
 
-  document.getElementById('heroLine1').textContent = C.hero.line1;
-  document.getElementById('heroLine2').textContent = C.hero.line2;
-  document.getElementById('heroCta').textContent = C.hero.cta;
+  if (PAGE === 'home') renderHome(C, lang);
+  if (PAGE === 'mission') renderMission(C);
 
-  document.getElementById('pyramidTitle').textContent = C.pyramid.title;
-  document.getElementById('pyramidSub').textContent = C.pyramid.sub;
-  document.getElementById('pyramidLayers').innerHTML = C.layers.map(layerHTML).join('');
-
-  document.getElementById('bandLine').textContent = C.footer.tagline;
-
-  document.getElementById('bundlesTitle').textContent = C.bundles.title;
-  document.getElementById('bundlesSub').textContent = C.bundles.sub;
-  document.getElementById('pricingNote').textContent = C.bundles.pricingNote;
-  document.getElementById('fxNote').textContent = C.bundles.fxNote;
-  document.getElementById('bundleGrid').innerHTML = BUNDLES.map(b => bundleCardHTML(b, lang)).join('');
-
-  document.getElementById('productsTitle').textContent = C.products.title;
-  document.getElementById('productsSub').textContent = C.products.sub;
-  const grid = document.getElementById('productsGrid');
-  grid.innerHTML = PRODUCTS.map((p, i) => productCardHTML(p, lang, i)).join('');
-  grid.setAttribute('aria-label', C.products.title);
-
-  document.getElementById('aboutTitle').textContent = C.about.title;
-  document.getElementById('aboutBody').innerHTML = C.about.body.map(p => `<p>${p}</p>`).join('');
-
-  document.getElementById('resultsTitle').textContent = C.results.title;
-  document.getElementById('resultsBody').textContent = C.results.body;
-
-  document.getElementById('contactTitle').textContent = C.contact.title;
-  document.getElementById('contactSub').textContent = C.contact.sub;
-  document.getElementById('contactCta').textContent = C.contact.cta;
-
-  document.getElementById('scrollCue').setAttribute('aria-label', C.ui.scrollCue);
-
-  // signup
-  document.getElementById('joinTitle').textContent = C.join.title;
-  document.getElementById('joinSub').textContent = C.join.sub;
-  document.getElementById('joinLabel').textContent = C.join.label;
-  document.getElementById('joinEmail').placeholder = C.join.placeholder;
-  const joinBtn = document.getElementById('joinBtn');
-  if (!joinBtn.disabled) joinBtn.textContent = C.join.button;
+  // signup (both pages)
+  setText('joinTitle', C.join.title);
+  setText('joinSub', C.join.sub);
+  setText('joinLabel', C.join.label);
+  if ($('joinEmail')) $('joinEmail').placeholder = C.join.placeholder;
+  const joinBtn = $('joinBtn');
+  if (joinBtn && !joinBtn.disabled) joinBtn.textContent = C.join.button;
   setJoinStatus('', '');
 
-  document.getElementById('footerRights').textContent = C.footer.rights;
+  setText('footerRights', C.footer.rights);
 
   wireDynamicButtons();
   updateHeaderTone();
   setupReveal();
 }
 
+function renderHome(C, lang) {
+  setText('heroLine1', C.hero.line1);
+  setText('heroLine2', C.hero.line2);
+  setText('heroCta', C.hero.cta);
+
+  setText('pyramidTitle', C.pyramid.title);
+  setText('pyramidSub', C.pyramid.sub);
+  if ($('pyramidLayers')) $('pyramidLayers').innerHTML = C.layers.map(layerHTML).join('');
+
+  setText('bandLine', C.footer.tagline);
+
+  setText('bundlesTitle', C.bundles.title);
+  setText('bundlesSub', C.bundles.sub);
+  setText('pricingNote', C.bundles.pricingNote);
+  setText('fxNote', C.bundles.fxNote);
+  if ($('bundleGrid')) $('bundleGrid').innerHTML = BUNDLES.map(b => bundleCardHTML(b, lang)).join('');
+
+  setText('productsTitle', C.products.title);
+  setText('productsSub', C.products.sub);
+  const grid = $('productsGrid');
+  if (grid) {
+    grid.innerHTML = PRODUCTS.map((p, i) => productCardHTML(p, lang, i)).join('');
+    grid.setAttribute('aria-label', C.products.title);
+  }
+
+  setText('aboutTitle', C.about.title);
+  setText('aboutMission', C.about.missionLink);
+  if ($('aboutBody')) $('aboutBody').innerHTML = C.about.body.map(p => `<p>${p}</p>`).join('');
+
+  setText('resultsTitle', C.results.title);
+  setText('resultsBody', C.results.body);
+
+  setText('contactTitle', C.contact.title);
+  setText('contactSub', C.contact.sub);
+  setText('contactCta', C.contact.cta);
+
+  if ($('scrollCue')) $('scrollCue').setAttribute('aria-label', C.ui.scrollCue);
+}
+
+function renderMission(C) {
+  const M = C.mission;
+  ['kicker', 'title', 'sub', 'lead', 'body', 'line', 'goal', 'note', 'statement', 'sign', 'cta']
+    .forEach((key) => setText('mission' + key[0].toUpperCase() + key.slice(1), M[key]));
+}
+
 /* ---------- transparent header: keep the text readable ---------- */
 
-// Sections that are always a dark photo (regardless of light/dark theme).
-// The number is how much of the top/bottom edge melts into the page
-// colour. The header only turns white once it's over the dark middle.
-const DARK_ZONES = [['.hero', 0], ['.band', 0.2], ['.contact-section', 0.2]];
+// Areas whose colour never changes with the theme: dark photos (header
+// turns white) and the light Mission hero (header stays black, even in dark
+// mode). top/bottom = how much of each edge melts into the page colour; the
+// header only switches once it's past that faded edge.
+const TONE_ZONES = [
+  { sel: '.hero', tone: 'dark', top: 0, bottom: 0 },
+  { sel: '.band', tone: 'dark', top: 0.2, bottom: 0.2 },
+  { sel: '.contact-section', tone: 'dark', top: 0.2, bottom: 0.2 },
+  { sel: '.mission-hero', tone: 'light', top: 0, bottom: 0, bottomDark: 0.17 },
+];
 
 function updateHeaderTone() {
   const header = document.getElementById('siteHeader');
   if (!header) return;
   const y = header.getBoundingClientRect().height / 2; // header's centre line
-  const covers = (el, edge) => {
+  const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const covers = (el, z) => {
     const r = el.getBoundingClientRect();
-    const pad = r.height * edge;
-    return r.top + pad <= y && r.bottom - pad >= y;
+    const bottom = dark && z.bottomDark != null ? z.bottomDark : z.bottom;
+    return r.top + r.height * z.top <= y && r.bottom - r.height * bottom >= y;
   };
 
   let tone = null;
-  for (const [sel, edge] of DARK_ZONES) {
-    if ([...document.querySelectorAll(sel)].some((el) => covers(el, edge))) { tone = 'dark'; break; }
+  for (const z of TONE_ZONES) {
+    if ([...document.querySelectorAll(z.sel)].some((el) => covers(el, z))) { tone = z.tone; break; }
   }
   header.classList.toggle('scrolled', window.scrollY > 8);
   header.classList.toggle('on-dark', tone === 'dark');
@@ -362,8 +392,8 @@ function setTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   try { localStorage.setItem('vshvdow-theme', theme); } catch (e) {}
   const label = theme === 'dark' ? CONTENT[currentLang].ui.themeToLight : CONTENT[currentLang].ui.themeToDark;
-  document.getElementById('themeToggle').setAttribute('aria-label', label);
-  document.getElementById('themeToggleMobile').textContent = label;
+  if ($('themeToggle')) $('themeToggle').setAttribute('aria-label', label);
+  setText('themeToggleMobile', label);
   updateHeaderTone();
 }
 
@@ -381,32 +411,40 @@ function toggleLang() {
   setLang(currentLang === 'ar' ? 'en' : 'ar');
 }
 
-document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-document.getElementById('themeToggleMobile').addEventListener('click', toggleTheme);
-document.getElementById('langToggle').addEventListener('click', toggleLang);
-document.getElementById('langToggleMobile').addEventListener('click', toggleLang);
+[['themeToggle', toggleTheme], ['themeToggleMobile', toggleTheme], ['langToggle', toggleLang], ['langToggleMobile', toggleLang]]
+  .forEach(([id, fn]) => { if ($(id)) $(id).addEventListener('click', fn); });
 
 /* ---------- mobile nav ---------- */
 
-const menuToggle = document.getElementById('menuToggle');
-const mainNav = document.getElementById('mainNav');
-
-function closeMenu() {
-  mainNav.classList.remove('open');
-  menuToggle.setAttribute('aria-expanded', 'false');
-}
-
-menuToggle.addEventListener('click', () => {
-  const open = mainNav.classList.toggle('open');
-  menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-});
-mainNav.addEventListener('click', (e) => { if (e.target.tagName === 'A') closeMenu(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+(function initMenu() {
+  const menuToggle = document.getElementById('menuToggle');
+  const mainNav = document.getElementById('mainNav');
+  if (!menuToggle || !mainNav) return;
+  const closeMenu = () => {
+    mainNav.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  };
+  menuToggle.addEventListener('click', () => {
+    const open = mainNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mainNav.addEventListener('click', (e) => { if (e.target.tagName === 'A') closeMenu(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+})();
 
 /* ---------- init ---------- */
 
 render(currentLang);
-document.getElementById('footerYear').textContent = new Date().getFullYear();
+setText('footerYear', new Date().getFullYear());
+
+// Arriving from the Mission page at index.html#bundles (etc.): the page is
+// built by JavaScript, so settle on the right section once everything has
+// loaded, without a long animated scroll.
+window.addEventListener('load', () => {
+  if (!location.hash || location.hash.length < 2) return;
+  const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' });
+});
 
 // Populate the theme button's label/aria-text for whichever theme the
 // inline head-script already applied, without actually toggling it.
@@ -422,6 +460,7 @@ setTheme(document.documentElement.getAttribute('data-theme') || 'light');
   if (!isWide || reduceMotion) return;
   const video = document.getElementById('heroVideo');
   const source = document.getElementById('heroVideoSource');
+  if (!video || !source) return;
   source.src = 'hero.mp4';
   video.load();
 })();

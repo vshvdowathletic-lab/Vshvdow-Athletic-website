@@ -121,6 +121,12 @@ p { text-wrap: pretty; }
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
 }
 html { scroll-behavior: smooth; }
+/* Moving between the home page and the Mission page cross-fades instead of
+   flashing white, and the header stays put (browsers that support it). */
+@view-transition { navigation: auto; }
+.site-header { view-transition-name: site-header; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .45s; animation-timing-function: cubic-bezier(.22,.61,.36,1); }
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
 
 .icon { width: 20px; height: 20px; }
 
@@ -166,6 +172,7 @@ html { scroll-behavior: smooth; }
 .site-header.scrolled::before { opacity: 1; }
 /* same strength over the dark photo bands, just a darker tint so white text stays readable */
 .site-header.on-dark::before { background: linear-gradient(180deg, rgba(10,10,10,.3) 0%, rgba(10,10,10,.1) 60%, rgba(10,10,10,0) 100%); }
+.site-header.on-light::before { background: linear-gradient(180deg, rgba(250,250,250,.5) 0%, rgba(250,250,250,.2) 60%, rgba(250,250,250,0) 100%); }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .site-header::before { background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 85%, transparent) 0%, transparent 100%); }
 }
@@ -180,8 +187,8 @@ html { scroll-behavior: smooth; }
 .site-header.on-light .wordmark,
 .site-header.on-light .pill-btn,
 .site-header.on-light .icon-btn { color: var(--c-void); }
-@media (min-width: 861px) {
-  /* on phones the nav links live inside the solid dropdown panel, so they keep theme colours */
+@media (min-width: 1141px) {
+  /* on smaller screens the nav links live inside the solid dropdown panel, so they keep theme colours */
   .site-header.on-dark .main-nav a { color: #fff; }
   .site-header.on-light .main-nav a { color: var(--c-void); }
 }
@@ -200,9 +207,10 @@ html { scroll-behavior: smooth; }
 /* the header logo is outlined SVG (the Canva logo: Raleway Bold, letter spacing -130), so it looks identical everywhere and follows the text colour */
 .wordmark svg { display: block; height: 18px; width: auto; }
 @media (max-width: 860px) { .wordmark svg { height: 15px; } }
-.main-nav { display: flex; align-items: center; gap: var(--sp-6); grid-column: 1; justify-self: start; }
+.main-nav { display: flex; align-items: center; gap: 28px; grid-column: 1; justify-self: start; }
 .main-nav a { text-decoration: none; color: var(--text-muted); font-size: var(--text-sm); font-weight: 500; transition: color .15s var(--ease); }
 .main-nav a:hover { color: var(--text); }
+.main-nav a[aria-current="page"] { color: var(--text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
 .header-actions { display: flex; align-items: center; gap: var(--sp-3); grid-column: 3; justify-self: end; }
 .pill-btn {
   border: 1px solid var(--border); border-radius: 999px; padding: .4em 1em;
@@ -227,7 +235,7 @@ html[data-theme="dark"] .icon-moon { display: block; }
 .nav-toggle[aria-expanded="true"] .burger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 .nav-utility { display: none; }
-@media (max-width: 860px) {
+@media (max-width: 1140px) {
   .header-inner { display: flex; justify-content: flex-end; align-items: center; position: relative; }
   .wordmark { position: absolute; left: 50%; transform: translateX(-50%); }
   .main-nav {
@@ -475,6 +483,12 @@ html[lang="ar"] .product-title { letter-spacing: 0; }
 .about-body p:first-child { color: var(--text); font-size: var(--text-lg); line-height: 1.6; }
 .results-copy p { margin-top: var(--sp-4); color: var(--text-muted); font-size: var(--text-base); line-height: 1.7; max-width: 48ch; }
 
+.text-link {
+  display: inline-block; margin-top: var(--sp-6); font-size: var(--text-sm); color: var(--text); text-decoration: none;
+  letter-spacing: .02em; padding-bottom: 3px; border-bottom: 1px solid var(--text-faint); transition: border-color .3s var(--ease);
+}
+.text-link:hover, .text-link:focus-visible { border-color: var(--text); }
+
 /* ---------- Contact ---------- */
 .contact-section { position: relative; padding-block: clamp(8rem, 14vw, 11rem); overflow: hidden; }
 .contact-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -513,6 +527,66 @@ html[lang="ar"] .signup-btn { letter-spacing: 0; font-size: .9rem; }
 .signup-status { min-height: 1.7em; max-width: 52ch; margin-top: var(--sp-4); font-size: var(--text-sm); line-height: 1.6; color: var(--text-muted); transition: opacity .3s var(--ease); }
 .signup-status[data-state="error"] { color: var(--text); }
 @media (max-width: 520px) { .signup-btn { padding: 0 1.5em; } .signup-input { padding: 1.15em 1.1em; } }
+
+/* ---------- Mission page ---------- */
+/* Hero: the foggy photo (sky extended above the athlete) runs up behind the
+   header. It stays light in both themes, so its text is always black, and
+   its bottom melts into the page colour. */
+.mission-hero {
+  position: relative; height: 100vh; height: 100svh; min-height: 560px; max-height: 1100px; margin-top: -68px;
+  overflow: hidden; background: #cfcfcf; color: var(--c-void); padding: 0;
+  display: flex; justify-content: center; align-items: flex-start;
+}
+.mission-hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 57% 38%; }
+.mission-hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 24%; pointer-events: none; background: linear-gradient(180deg, rgba(250,250,250,0) 0%, rgba(250,250,250,.35) 40%, rgba(250,250,250,.8) 75%, var(--bg) 100%); }
+/* in dark mode the fog slowly sinks into the night: a longer, eased fade so there's no horizon line */
+html[data-theme="dark"] .mission-hero::after {
+  height: 48%;
+  background: linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,.05) 18%, rgba(10,10,10,.18) 36%, rgba(10,10,10,.42) 56%, rgba(10,10,10,.72) 76%, rgba(10,10,10,.92) 90%, #0a0a0a 100%);
+}
+.mission-hero-content {
+  position: relative; z-index: 1; width: 100%; max-width: var(--container);
+  padding: clamp(150px, 25vh, 270px) var(--sp-5) 0; display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.mission-kicker { font-size: .62rem; font-weight: 500; letter-spacing: .42em; padding-inline-start: .42em; text-transform: uppercase; color: rgba(10,10,10,.6); }
+.mission-title { margin-top: var(--sp-5); font-family: var(--font-display); font-size: clamp(2.1rem, 4.2vw, 3.5rem); font-weight: 500; line-height: 1.05; letter-spacing: -.015em; }
+.mission-sub { margin-top: var(--sp-4); font-size: clamp(.92rem, 1.15vw, 1.05rem); color: rgba(10,10,10,.7); }
+html[lang="ar"] .mission-title { letter-spacing: 0; line-height: 1.35; }
+
+/* The statement: one calm centred column with a lot of air, like a letter */
+.mission-section { padding-block: clamp(5rem, 9vw, 8rem) clamp(4rem, 8vw, 6.5rem); }
+.mission-section + .signup-section { padding-top: clamp(4rem, 8vw, 6.5rem); }
+.mission-inner { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.mission-lead, .mission-line, .mission-statement { text-wrap: balance; }
+.mission-lead { max-width: 23em; font-family: var(--font-display); font-size: clamp(1.4rem, 2.3vw, 1.95rem); line-height: 1.32; letter-spacing: -.005em; }
+.mission-body, .mission-note { max-width: 33em; font-size: clamp(.95rem, 1.05vw, 1.03rem); line-height: 1.95; }
+.mission-body { margin-top: clamp(3rem, 6vw, 4.5rem); }
+.mission-line { margin-top: clamp(3rem, 6vw, 4.5rem); font-family: var(--font-display); font-size: clamp(1.3rem, 2vw, 1.7rem); line-height: 1.3; }
+.mission-goal { margin-top: var(--sp-5); max-width: 31em; font-size: var(--text-sm); line-height: 1.85; color: var(--text-muted); }
+/* the coach's own words, set apart by a short hairline */
+.mission-note { position: relative; margin-top: clamp(4rem, 8vw, 6rem); padding-top: clamp(3rem, 6vw, 4.5rem); color: var(--text-muted); }
+.mission-note::before { content: ""; position: absolute; top: 0; left: 50%; width: 40px; height: 1px; background: var(--text-faint); transform: translateX(-50%); }
+.mission-statement { margin-top: clamp(5rem, 11vw, 9rem); max-width: 11em; font-size: clamp(2.3rem, 5.2vw, 4rem); line-height: 1.06; letter-spacing: -.02em; }
+html[lang="ar"] .mission-lead, html[lang="ar"] .mission-statement { letter-spacing: 0; line-height: 1.4; }
+.mission-sign { margin-top: var(--sp-6); font-size: .66rem; font-weight: 500; letter-spacing: .5em; padding-inline-start: .5em; color: var(--text-muted); }
+.mission-cta { margin-top: clamp(3rem, 6vw, 4.5rem); }
+/* words arrive softly out of a blur as you read down */
+html.js .mission-inner > .rv.in { animation-name: rise-soft; animation-duration: 1.1s; }
+@keyframes rise-soft { from { opacity: 0; filter: blur(6px); transform: translateY(16px); } to { opacity: 1; filter: none; transform: none; } }
+
+/* thin square outline button on the page colour (same family as the hero button) */
+.line-btn {
+  display: inline-flex; align-items: center; justify-content: center; padding: 1.25em 2em;
+  border: 1px solid var(--text); background: transparent; color: var(--text);
+  font-size: .7rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; text-decoration: none;
+  transition: background .35s var(--ease), color .35s var(--ease);
+}
+.line-btn:hover, .line-btn:focus-visible { background: var(--text); color: var(--bg); }
+html[lang="ar"] .line-btn { letter-spacing: 0; font-size: .85rem; }
+@media (max-width: 640px) {
+  .mission-hero { height: 82svh; min-height: 520px; }
+  .mission-hero-content { padding-top: clamp(130px, 22vh, 200px); }
+}
 
 /* ---------- Footer ---------- */
 /* one slim row: name on the left, socials in the middle, rights on the right */

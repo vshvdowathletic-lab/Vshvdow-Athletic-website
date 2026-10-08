@@ -184,7 +184,7 @@ const CONTENT = {
     dir: "ltr",
     metaTitle: "VSHVDOW | Athletic Coaching",
     metaDescription: "Athletic coaching built around football. One training system, three bundles, built to perform and built to last.",
-    nav: { pyramid: "Pyramid", bundles: "Bundles", products: "Products", coach: "Coach", contact: "Contact", cta: "Start Now" },
+    nav: { pyramid: "Pyramid", bundles: "Bundles", products: "Products", coach: "Coach", mission: "Mission", contact: "Contact" },
     hero: {
       line1: "PERFORMANCE UNDER PRESSURE",
       line2: "VSHVDOW ATHLETIC",
@@ -226,6 +226,7 @@ const CONTENT = {
         "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed and rebuilt every four weeks around what the sessions and the numbers actually show. Never guesswork.",
         "I coach the way I train: obsessively, honestly, with zero patience for wasted effort.",
       ],
+      missionLink: "Read the mission",
     },
     results: {
       title: "Results",
@@ -248,6 +249,22 @@ const CONTENT = {
       activate: "Almost there. Open vshvdowathletic@gmail.com, press Activate Form in the email from FormSubmit, then sign up again.",
       invalid: "Enter a valid email address.",
     },
+    /* The Mission page (mission.html). Short on purpose, like a statement. */
+    mission: {
+      metaTitle: "VSHVDOW | The Mission",
+      metaDescription: "The VSHVDOW mission. One system that builds any athlete willing to carry the standard, wherever they train.",
+      kicker: "VSHVDOW ATHLETIC",
+      title: "Built in the dark.",
+      sub: "Proven under pressure.",
+      lead: "We build athletes who perform when it matters and stand apart when everyone else looks the same.",
+      body: "Most people train to feel good. We train to become hard to stop. Every athlete follows one system, built layer by layer, nothing skipped. The real work happens where nobody is watching. Early mornings. Empty pitches. The last set no one counts. That is where the gap is made. Match day only reveals it.",
+      line: "Be the one they can't prepare for.",
+      goal: "Our mission is to put that system and that standard in the hands of every athlete willing to carry it, wherever they train.",
+      note: "I built myself alone, in hours nobody saw. That taught me one thing. A real system builds anyone who refuses to quit on it. My goal is to prove it, one athlete at a time, and to bring that standard to anyone, anywhere, who wants it enough.",
+      statement: "Become the athlete nobody saw coming.",
+      sign: "VSHVDOW",
+      cta: "Enter the Shadow",
+    },
     footer: {
       tagline: "Built to perform · Built to last",
       rights: "All rights reserved.",
@@ -267,7 +284,7 @@ const CONTENT = {
     dir: "rtl",
     metaTitle: "VSHVDOW | تدريب رياضي",
     metaDescription: "تدريب رياضي مبني على الكورة. سيستم تمرين واحد، وتلات باقات، متبني للأداء ومتبني للاستمرار.",
-    nav: { pyramid: "الهرم", bundles: "الباقات", products: "المنتجات", coach: "الكوتش", contact: "تواصل", cta: "ابدأ دلوقتي" },
+    nav: { pyramid: "الهرم", bundles: "الباقات", products: "المنتجات", coach: "الكوتش", mission: "المهمة", contact: "تواصل" },
     hero: {
       line1: "أداء تحت الضغط",
       line2: "VSHVDOW ATHLETIC",
@@ -310,6 +327,7 @@ const CONTENT = {
         "VSHVDOW هو المستوى اللي بحاسب نفسي عليه، ونفس المستوى اللي بحاسب عليه كل لاعب معايا. برنامجك بيتتابع وبيتراجع وبيتبني من جديد كل أربع أسابيع على حسب اللي التمرين والأرقام بيقولوه فعلًا. مفيش تخمين.",
         "بدرّب زي ما بتمرّن: بهوس، وبصدق، ومن غير أي صبر على مجهود بيضيع على الفاضي.",
       ],
+      missionLink: "اقرأ المهمة",
     },
     results: {
       title: "النتايج",
@@ -331,6 +349,21 @@ const CONTENT = {
       error: "معرفناش نسجّلك دلوقتي. جرّب تاني كمان شوية.",
       activate: "فاضل خطوة: افتح vshvdowathletic@gmail.com ودوس Activate Form في إيميل FormSubmit، وبعدين سجّل تاني.",
       invalid: "اكتب إيميل صحيح.",
+    },
+    mission: {
+      metaTitle: "VSHVDOW | المهمة",
+      metaDescription: "مهمة VSHVDOW. سيستم واحد بيبني أي لاعب مستعد يشيل المستوى، في أي مكان بيتمرن فيه.",
+      kicker: "VSHVDOW ATHLETIC",
+      title: "اتبنى في الضلمة.",
+      sub: "واتثبت تحت الضغط.",
+      lead: "بنبني لاعيبة بتأدّي لما الموضوع يفرق، وبتبان مختلفة لما الكل يبقى شبه بعض.",
+      body: "أغلب الناس بتتمرن عشان تحس إنها كويسة. إحنا بنتمرن عشان نبقى صعب حد يوقفنا. كل لاعب ماشي على سيستم واحد، بيتبني طبقة فوق طبقة، من غير ما نفوّت حاجة. الشغل الحقيقي بيحصل في المكان اللي محدش شايفه. الصبح بدري. ملاعب فاضية. آخر مجموعة محدش بيعدّها. هناك الفرق بيتعمل. ويوم الماتش بيكشفه بس.",
+      line: "خليك اللي محدش عارف يستعد له.",
+      goal: "مهمتنا إننا نحط السيستم ده والمستوى ده في إيد كل لاعب مستعد يشيله، في أي مكان بيتمرن فيه.",
+      note: "أنا بنيت نفسي لوحدي، في ساعات محدش شافها. ده علّمني حاجة واحدة: السيستم الحقيقي بيبني أي حد مش ناوي يستسلم. هدفي إني أثبت ده، لاعب ورا لاعب، وإني أوصّل نفس المستوى لأي حد، في أي مكان، عايزه بجد.",
+      statement: "خليك اللاعب اللي محدش كان متوقعه.",
+      sign: "VSHVDOW",
+      cta: "ابدأ التحدي",
     },
     footer: {
       tagline: "متبني للأداء · متبني للاستمرار",

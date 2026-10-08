@@ -6,7 +6,8 @@ Cloudflare publishes it, and you can update it any time by editing one
 file.
 
 ```
-index.html            page structure (you shouldn't need to touch this)
+index.html            the home page structure (you shouldn't need to touch this)
+mission.html          the Mission page structure (you shouldn't need to touch this)
 styles.css            visual design (you shouldn't need to touch this)
 content.js            ALL text, prices, spots left, links: edit this one
 script.js             interactive behaviour (you shouldn't need to touch this)
@@ -20,6 +21,7 @@ product-welcome.jpg, product-training.jpg,
 product-nutrition.jpg, product-tracker.jpg      the four Products card photos
 products-light.jpg, products-dark.jpg           Products banner (light and dark mode)
 vshvdow-icon.svg      the crescent V icon (used in Products)
+mission-hero.jpg, mission-hero-1200.jpg         the Mission page photo (big and phone sizes)
 aileron-300.woff2, aileron-400.woff2            the Aileron font (all the numbers)
 ```
 
@@ -31,7 +33,7 @@ folder, so keeping everything flat avoids that.
 
 1. Open your repository on github.com.
 2. Click **Add file**, then **Upload files**.
-3. Drag in all 18 files from the zip at once (select them all, then
+3. Drag in all 21 files from the zip at once (select them all, then
    drag the selection; don't drag a folder). Files with the same name
    are replaced.
 4. Wait until every file name shows in the list, then click
@@ -87,6 +89,11 @@ Everything is in `content.js`, split into `en:` (English) and `ar:`
 are and only change the words between the quotes. The site's copy is
 written without dashes; keep it that way when you add new lines.
 
+**Editing the Mission page.**
+Its words are in `content.js` under `mission:` (English) and the second
+`mission:` (Arabic): the hero line, the statement, your own paragraph
+(`note`) and the closing line. The menu label is `mission` inside `nav`.
+
 **Changing your Instagram or TikTok links.**
 At the top of `content.js`, in `CONFIG`.
 
@@ -134,6 +141,18 @@ me and I'll fix it.
   the language they're reading in.
 - **The coach and Results** sit together as one story, with the photos
   on opposite sides.
+- **Mission page** (`mission.html`): a light, foggy hero with "Built in
+  the dark." over the sky, then one calm centred column: the statement,
+  the creed, your own words, and the closing line "Become the athlete
+  nobody saw coming.", signed VSHVDOW, with the "Enter the Shadow"
+  button and the Join the Shadow signup. The hero stays light in dark
+  mode too and sinks into black at the bottom. It's in the menu as
+  "Mission" (underlined while you're on it), and the coach section on
+  the home page links to it.
+- **Moving between pages** cross-fades with the header standing still,
+  in browsers that support it.
+- **Menu**: with six links, the header switches to the menu button on
+  screens narrower than about 1140px (tablets and small laptops).
 - **Footer**: one slim line with the name, Instagram and TikTok, and the
   © year (it updates itself).
 - **Fonts**: Raleway for every letter, Aileron for every number, Cairo
