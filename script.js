@@ -93,15 +93,15 @@ function productCardHTML(p, lang, i) {
   return `
     <article class="product-card" role="listitem">
       <div class="product-media">
-        <img class="product-still" src="${p.image}" alt="" loading="lazy" decoding="async">
+        <img class="product-still" src="${p.image}" alt="" loading="lazy" decoding="async" draggable="false">
         ${film}
       </div>
       <div class="product-overlay">
         <div class="product-top">
-          <span class="product-num">0${i + 1}</span>
           <img src="vshvdow-icon-small.svg" alt="" class="product-mark">
         </div>
         <div class="product-bottom">
+          <span class="product-num">0${i + 1}</span>
           <h3 class="product-title">${p.name[lang]}</h3>
           <p class="product-line">${p.line[lang]}</p>
         </div>
@@ -242,7 +242,7 @@ function showToast(msg) {
    from its base; bundle cards come in one after another. */
 const REVEAL_SELECTORS = [
   '.section-inner > h2', '.section-sub', '.pricing-note', '.fx-note', '.band-line',
-  '.bundle-card', '.layer', '.products-banner-copy', '.product-rail',
+  '.bundle-card', '.layer', '.products-head', '.product-rail',
   '.about-media', '.about-copy', '.results-media', '.results-copy', '.contact-inner > *',
   '.signup-inner > *', '.mission-inner > *',
 ];
@@ -309,6 +309,111 @@ function initProductFilms(root) {
   }
   root.querySelectorAll('video.product-video').forEach((v) => filmObserver.observe(v));
 }
+
+/* ---------- the products reel ---------- */
+/* The cards scroll sideways on their own: swipe on phones and trackpads,
+   arrow keys once the row has focus, and on a computer the row can simply be
+   dragged with the mouse. A drag lets go onto the nearest card (a quick flick
+   carries on to the next one). The hairline underneath shows how much of the
+   row you've seen, and disappears on screens wide enough to show it all. */
+function railGeometry(rail) {
+  const cards = [...rail.querySelectorAll('.product-card')];
+  const rtl = getComputedStyle(rail).direction === 'rtl';
+  const max = rail.scrollWidth - rail.clientWidth;
+  if (!cards.length) return { cards, rtl, max, stops: [0] };
+  const first = cards[0].getBoundingClientRect();
+  // where the row has to be scrolled to for each card to sit on the text line
+  const stops = cards.map((c) => {
+    const r = c.getBoundingClientRect();
+    const d = rtl ? r.right - first.right : r.left - first.left;
+    return Math.max(-max, Math.min(max, d));
+  });
+  return { cards, rtl, max, stops };
+}
+
+function updateRail() {
+  const rail = $('productsRail');
+  const bar = $('productsProgress');
+  if (!rail) return;
+  const max = rail.scrollWidth - rail.clientWidth;
+  const scrollable = max > 2;
+  rail.classList.toggle('is-scrollable', scrollable);
+  if (!bar) return;
+  bar.hidden = !scrollable;
+  if (!scrollable) return;
+  const track = rail.querySelector('.product-track');
+  const cards = rail.querySelectorAll('.product-card');
+  if (!track || !cards.length) return;
+  const a = cards[0].getBoundingClientRect(), b = cards[cards.length - 1].getBoundingClientRect();
+  const rowW = Math.max(a.right, b.right) - Math.min(a.left, b.left);
+  const pad = parseFloat(getComputedStyle(rail).paddingInlineStart) || 0;
+  const view = rail.clientWidth - pad * 2;
+  const seen = Math.min(1, (Math.abs(rail.scrollLeft) + view) / rowW);
+  bar.style.setProperty('--seen', seen.toFixed(4));
+}
+
+(function initProductRail() {
+  const rail = $('productsRail');
+  if (!rail) return;
+  let ticking = false;
+  rail.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { ticking = false; updateRail(); });
+  }, { passive: true });
+  window.addEventListener('resize', updateRail);
+  window.addEventListener('load', updateRail);
+
+  let drag = null, settleTimer = 0;
+  const settle = (velocity) => {
+    const g = railGeometry(rail);
+    const dir = g.rtl ? -1 : 1;
+    const pos = rail.scrollLeft;
+    // the card we're nearest to, nudged one further by a quick flick
+    let i = 0, best = Infinity;
+    g.stops.forEach((st, k) => { const d = Math.abs(st - pos); if (d < best) { best = d; i = k; } });
+    const forward = -velocity * dir; // dragging against the reading direction moves the row forward
+    if (Math.abs(forward) > 0.35) {
+      const ahead = g.stops.findIndex((st) => (st - pos) * dir > 4);
+      const behind = g.stops.map((st, k) => ((pos - st) * dir > 4 ? k : -1)).filter((k) => k >= 0).pop();
+      if (forward > 0 && ahead >= 0) i = ahead;
+      if (forward < 0 && behind != null) i = behind;
+    }
+    rail.classList.add('is-settling');
+    rail.scrollTo({ left: g.stops[i], behavior: 'smooth' });
+    clearTimeout(settleTimer);
+    const done = () => { clearTimeout(settleTimer); rail.classList.remove('is-settling'); rail.removeEventListener('scrollend', done); };
+    rail.addEventListener('scrollend', done);
+    settleTimer = setTimeout(done, 700);
+  };
+
+  rail.addEventListener('pointerdown', (e) => {
+    if (e.pointerType !== 'mouse' || e.button !== 0 || !rail.classList.contains('is-scrollable')) return;
+    clearTimeout(settleTimer);
+    rail.classList.remove('is-settling');
+    drag = { x: e.clientX, left: rail.scrollLeft, lastX: e.clientX, lastT: performance.now(), v: 0, moved: false };
+    e.preventDefault();
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) < 4) return;
+    if (!drag.moved) { drag.moved = true; rail.classList.add('is-dragging'); }
+    rail.scrollLeft = drag.left - dx;
+    const now = performance.now(), dt = now - drag.lastT;
+    if (dt > 0) { drag.v = drag.v * 0.4 + ((e.clientX - drag.lastX) / dt) * 0.6; drag.lastX = e.clientX; drag.lastT = now; }
+  });
+  const release = () => {
+    if (!drag) return;
+    const { moved, v, lastT } = drag;
+    drag = null;
+    rail.classList.remove('is-dragging');
+    if (moved) settle(performance.now() - lastT > 90 ? 0 : v);
+  };
+  window.addEventListener('pointerup', release);
+  window.addEventListener('pointercancel', release);
+  window.addEventListener('blur', release);
+})();
 
 /* ---------- main render ---------- */
 
@@ -381,6 +486,9 @@ function renderHome(C, lang) {
     }
     grid.setAttribute('aria-label', C.products.title);
   }
+  const rail = $('productsRail');
+  if (rail) { rail.setAttribute('role', 'region'); rail.setAttribute('aria-label', C.products.title); }
+  updateRail();
 
   setText('aboutTitle', C.about.title);
   setText('aboutMission', C.about.missionLink);

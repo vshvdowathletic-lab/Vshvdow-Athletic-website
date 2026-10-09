@@ -21,7 +21,6 @@ product-welcome.mp4, product-training.mp4,
 product-nutrition.mp4, product-tracker.mp4      the four Products card films
 product-welcome.jpg, product-training.jpg,
 product-nutrition.jpg, product-tracker.jpg      their stills (the first frame of each film)
-products-light.jpg, products-dark.jpg           Products banner (light and dark mode)
 vshvdow-icon.svg      the crescent icon (used in Products)
 vshvdow-icon-small.svg  the same icon with a heavier body, for small sizes
 mission-hero.jpg, mission-hero-1200.jpg         the Mission page photo (big and phone sizes)
@@ -36,7 +35,7 @@ folder, so keeping everything flat avoids that.
 
 1. Open your repository on github.com.
 2. Click **Add file**, then **Upload files**.
-3. Drag in all 26 files from the zip at once (select them all, then
+3. Drag in all 24 files from the zip at once (select them all, then
    drag the selection; don't drag a folder). Files with the same name
    are replaced.
 4. Wait until every file name shows in the list, then click
@@ -45,6 +44,12 @@ folder, so keeping everything flat avoids that.
 Cloudflare publishes the new version by itself within a minute or two.
 Your video and the five photos stay as they are, so they're not in the
 zip.
+
+The Products section no longer uses `products-light.jpg` and
+`products-dark.jpg` (the banner photo is gone). They do no harm if they
+stay in your repository. To tidy up, open each one on github.com, click
+the **...** menu at the top right of the file, choose **Delete file**,
+then **Commit changes**.
 
 ## 2. Turn on the "Join the Shadow" email signup (one time)
 
@@ -134,15 +139,24 @@ me and I'll fix it.
   scroll.
 - **Photo sections** fade into the page at the top and bottom instead
   of ending on a hard edge. In dark mode they dissolve into black.
-- **Products**: four cards, each a short silent film in black and
-  white: the welcome pack, rows for the training plan, pulldowns for
-  nutrition, dips for the tracker. They're graded to match each other and
-  the hero, slowed to 80%, and each one loops without a visible seam. A
-  film only downloads when its card comes into view, plays while it's on
-  screen and pauses when it isn't, so phones only load what someone
-  actually reaches (all four together are about 2.3 MB). Switching
-  language doesn't restart them. Visitors with reduced motion or data
-  saver turned on see each card's still instead.
+- **Products**: a calm centred title (the crescent, "Products" and one
+  line), then four tall cards in a row that slides sideways, sized like
+  Opus Athletic's training principle cards: 3:4, about 3.3 across on a
+  computer, 1.7 on a tablet, 1.2 on a phone. The row starts on the same
+  line as the text and runs off the right edge (the left edge in
+  Arabic), so the next card always peeks in. It snaps card by card:
+  swipe on a phone or trackpad, drag it with a mouse, or use the arrow
+  keys. A hairline under the cards fills as you move through them.
+- **The product cards** have no frame: the crescent sits top right, and
+  the number sits just above the title, bottom left. Each card is a short
+  silent film in black and white: the welcome pack, rows for the training
+  plan, pulldowns for nutrition, dips for the tracker. They're graded to
+  match each other and the hero, slowed to 80%, and each one loops
+  without a visible seam. A film only downloads when its card comes into
+  view, plays while it's on screen and pauses when it isn't, so phones
+  only load what someone actually reaches (all four together are about
+  2.7 MB). Switching language doesn't restart them. Visitors with reduced
+  motion or data saver turned on see each card's still instead.
 - **Bundles**: prices written out in words, clean lists with no bullet
   marks, and thin square "Join" buttons.
 - **Instagram DM**: Instagram doesn't let websites type into a DM, so
@@ -212,12 +226,10 @@ private tab.
 | `hero.mp4` | Home page, the full screen video behind "PERFORMANCE UNDER PRESSURE" (tablets and computers) | landscape 16:9 | 1920 × 1080, 8 to 15 seconds, under 8 MB |
 | `hero.jpg` | The same spot on phones, the still before the video starts, and the picture shown when someone shares your link | landscape 16:9 | 1920 × 1080, under 400 KB |
 | `momentum.jpg` | The dark band with "BUILT TO PERFORM · BUILT TO LAST" | landscape | 1920 × 1080 |
-| `products-light.jpg` | Products banner in light mode | wide landscape | 2000 × 1125 |
-| `products-dark.jpg` | Products banner in dark mode | wide landscape | 2000 × 1125 |
-| `product-welcome.mp4` and `.jpg` | Products card 01, Welcome Pack: the film and its still | portrait 4:5 | 640 × 800, under 1 MB |
-| `product-training.mp4` and `.jpg` | Card 02, Training Plan | portrait 4:5 | 640 × 800, under 1 MB |
-| `product-nutrition.mp4` and `.jpg` | Card 03, Nutrition System | portrait 4:5 | 640 × 800, under 1 MB |
-| `product-tracker.mp4` and `.jpg` | Card 04, Athlete Tracker | portrait 4:5 | 640 × 800, under 1 MB |
+| `product-welcome.mp4` and `.jpg` | Products card 01, Welcome Pack: the film and its still | portrait 3:4 | 720 × 960, under 1 MB |
+| `product-training.mp4` and `.jpg` | Card 02, Training Plan | portrait 3:4 | 720 × 960, under 1 MB |
+| `product-nutrition.mp4` and `.jpg` | Card 03, Nutrition System | portrait 3:4 | 720 × 960, under 1 MB |
+| `product-tracker.mp4` and `.jpg` | Card 04, Athlete Tracker | portrait 3:4 | 720 × 960, under 1 MB |
 | `about.jpg` | About the coach | shows as a tall 4:5 crop of the middle | 1200 × 1500 portrait is ideal |
 | `results.jpg` | Results | shows as a tall 4:5 crop of the middle | 1200 × 1500 portrait is ideal |
 | `closing.jpg` | Behind "Ready to start?" at the bottom of the home page | landscape | 1920 × 1080 |
@@ -240,9 +252,6 @@ Things that keep each spot looking right:
   use black and white versions to keep the look.
 * **Hero, band and the closing photo**: the words sit in the middle over
   a dark tint, so a calm centre reads best.
-* **Products banner**: the title sits on the right, so keep the right
-  side open (fog, sky, empty space). You can upload the same photo under
-  both names if you don't want a separate dark mode version.
 * **About and Results**: the site shows the middle of the photo as a tall
   4:5 crop, so keep the person near the centre.
 * **Mission**: upload both sizes of the same photo, the big one as
@@ -273,8 +282,9 @@ the switch. So when you replace a film, replace its still too.
   set Settings > Camera > Formats > Most Compatible before filming). Turn
   HDR off too (Settings > Camera > Record Video > HDR Video), because HDR
   looks washed out on websites.
-* **Portrait, 4:5**, 640 × 800. A normal tall phone video also works;
-  the card shows its middle.
+* **Portrait, 3:4**, 720 × 960, the same shape as the cards (and as the
+  four videos you sent). A normal tall phone video also works; the card
+  shows its middle.
 * **5 to 12 seconds**, no sound (the cards are always silent, so remove
   the audio track; it only adds weight).
 * **Under about 1 MB.**
@@ -285,8 +295,8 @@ the switch. So when you replace a film, replace its still too.
 1. Open the video in HandBrake.
 2. **Summary** tab: Format **MP4**, and tick **Web Optimized**.
 3. **Dimensions** tab: Cropping **Custom**, then crop the top and bottom
-   until the size reads 4:5 (for a 1080 wide video, 1350 tall). Set the
-   width to **640**; the height becomes 800.
+   until the size reads 3:4 (for a 1080 wide video, 1440 tall). Set the
+   width to **720**; the height becomes 960.
 4. **Filters** tab: tick **Grayscale** for black and white.
 5. **Video** tab: Video Encoder **H.264 (x264)**, Framerate **Same as
    source** with **Constant Framerate**, Quality **RF 26** (a higher RF
@@ -301,7 +311,7 @@ the switch. So when you replace a film, replace its still too.
    the very first frame (press **E** to step one frame at a time).
 2. Click **Video**, then **Take Snapshot**. VLC saves a picture of that
    frame in your Pictures folder (on a Mac, on the Desktop).
-3. Put it through squoosh.app as a JPG (640 × 800, quality 80) and name
+3. Put it through squoosh.app as a JPG (720 × 960, quality 80) and name
    it like the film with `.jpg` at the end, for example
    `product-training.jpg`.
 4. Upload both files together.
