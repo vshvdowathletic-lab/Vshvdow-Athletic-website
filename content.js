@@ -185,7 +185,7 @@ const DM_MESSAGES = {
 const CONTENT = {
   en: {
     dir: "ltr",
-    metaTitle: "VSHVDOW | Athletic Coaching",
+    metaTitle: "VSHVDOW ATHLETIC",
     metaDescription: "Athletic coaching built around football. One training system, three bundles, built to perform and built to last.",
     nav: { pyramid: "Pyramid", bundles: "Bundles", products: "Products", coach: "Coach", mission: "Mission", contact: "Contact" },
     hero: {
