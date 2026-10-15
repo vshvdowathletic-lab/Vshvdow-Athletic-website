@@ -9,20 +9,20 @@ file.
 index.html            the home page structure (you shouldn't need to touch this)
 mission.html          the Mission page structure (you shouldn't need to touch this)
 styles.css            visual design (you shouldn't need to touch this)
-content.js            ALL text, prices, spots left, links: edit this one
+content.js            ALL text, prices, spots, programs, links: edit this one
 script.js             interactive behaviour (you shouldn't need to touch this)
+vshvdow-wordmark.svg  the VSHVDOW name logo (the only copy; every page uses it)
+vshvdow-icon.svg      the crescent logo (the only copy; every page uses it)
 favicon-16.png        browser tab icon, small size
 favicon-32.png        browser tab icon
 favicon-180.png       icon used when saved to a phone home screen
 favicon-512.png       larger version of the same icon
 hero.mp4              looping hero background video (desktop and tablet only)
-hero.jpg, about.jpg, momentum.jpg, results.jpg, closing.jpg    the five photos
+hero.jpg, about.jpg, momentum.jpg, results.jpg    the four photos
 product-welcome.mp4, product-training.mp4,
-product-nutrition.mp4, product-tracker.mp4      the four Products card films
+product-nutrition.mp4, product-tracker.mp4      the four Programs card films
 product-welcome.jpg, product-training.jpg,
 product-nutrition.jpg, product-tracker.jpg      their stills (the first frame of each film)
-vshvdow-icon.svg      the crescent icon (used in Products)
-vshvdow-icon-small.svg  the same icon with a heavier body, for small sizes
 mission-hero.jpg, mission-hero-1200.jpg         the Mission page photo (big and phone sizes)
 aileron-300.woff2, aileron-400.woff2            the Aileron font (all the numbers)
 ```
@@ -35,21 +35,22 @@ folder, so keeping everything flat avoids that.
 
 1. Open your repository on github.com.
 2. Click **Add file**, then **Upload files**.
-3. Drag in all 24 files from the zip at once (select them all, then
+3. Drag in all 25 files from the zip at once (select them all, then
    drag the selection; don't drag a folder). Files with the same name
    are replaced.
 4. Wait until every file name shows in the list, then click
    **Commit changes**.
 
 Cloudflare publishes the new version by itself within a minute or two.
-Your video and the five photos stay as they are, so they're not in the
-zip.
+Your four photos stay as they are, so they're not in the zip. The hero
+video is in it: it's the same film, now about 2 MB instead of 6.3 MB.
 
-The Products section no longer uses `products-light.jpg` and
-`products-dark.jpg` (the banner photo is gone). They do no harm if they
-stay in your repository. To tidy up, open each one on github.com, click
-the **...** menu at the top right of the file, choose **Delete file**,
-then **Commit changes**.
+**Files you can delete.** These are no longer used anywhere:
+`closing.jpg`, `products-light.jpg`, `products-dark.jpg`,
+`vshvdow-icon-small.svg`, `vshvdow-mark.png` and `favicon.svg`. They do
+no harm if they stay. To tidy up, open each one on github.com, click the
+**...** menu at the top right of the file, choose **Delete file**, then
+**Commit changes**.
 
 ## 2. Turn on the "Join the Shadow" email signup (one time)
 
@@ -78,18 +79,46 @@ in front of it).
 
 ## 3. Editing the site day to day
 
-Open **`content.js`**. Every section is labelled.
+Open **`content.js`**. Every section is labelled and numbered.
 
-**Someone joins a bundle and you want to lower the spot count.**
-Find that bundle in `BUNDLES` and change `spotsLeft`. Set it to `0` and
-that bundle switches to a waitlist button and badge by itself.
+**Someone starts coaching and you want to lower the spot count.**
+In `COACHING`, change that level's `spotsLeft`. Set it to `0` and its
+card switches to "Full, waitlist open" and a waitlist button by itself.
+
+**Someone takes the launch offer.**
+In `LAUNCH_OFFER`, lower `placesLeft` by one. At `0` the offer line
+disappears from the page and from the WhatsApp message.
 
 **Changing a price.**
-Each bundle has `priceUSD: [16, 20]` and `priceEGP: [799, 999]`. The
-two numbers are the low and the high end. The site writes them out as
-"$16 to $20" and "799 to 999 EGP" (in Arabic "16 إلى 20 دولار" and
-"799 إلى 999 جنيه"). For one fixed price, write a single number, like
-`priceUSD: 20`.
+Coaching prices are per month: `priceEGP` and `priceUSD` on each level
+in `COACHING`. Program prices are `priceEGP` and `priceUSD` on each
+program in `PROGRAMS`. Each price is set for its own market; nothing is
+converted. Visitors reading in Arabic see EGP first and English readers
+see USD, and the switch on the Coaching section changes every price on
+the page.
+
+**Opening a program for sale.**
+In `PROGRAMS`, change that program's `status: "soon"` to
+`status: "live"`. Its card swaps "Coming soon" for a Buy button that
+opens WhatsApp with the order typed. When none are "soon" any more, the
+"get it first" line under the row disappears by itself. Set `weeks` to
+the program's length (or leave it as `""`).
+
+**Founding athletes (Results).**
+`FOUNDING` lists them with their sport, program, start date and number
+of weeks. The "Week 2 of 18" counter and the progress line work
+themselves out from the start date, every day. To add your second
+athlete, copy the line, change the sport and start date, and keep the
+comma between lines. With `start: ""` the athlete shows "Starting soon".
+
+**WhatsApp number and messages.**
+The number is `whatsapp` in `CONFIG` (country code and number, digits
+only). The typed messages are in `WA_MESSAGES`: Start (Performance),
+Apply (Private Athlete), Buy (programs) and Waitlist, in both languages.
+`{name}`, `{price}` and `{offer}` are filled in automatically.
+
+**Athlete login.**
+`appUrl` in `CONFIG`. It's the link in the menu and in the footer.
 
 **Editing any wording.**
 Everything is in `content.js`, split into `en:` (English) and `ar:`
@@ -99,23 +128,14 @@ written without dashes; keep it that way when you add new lines.
 
 **Editing the Mission page.**
 Its words are in `content.js` under `mission:` (English) and the second
-`mission:` (Arabic): the hero line, the statement, your own paragraph
-(`note`) and the closing line. The menu label is `mission` inside `nav`.
+`mission:` (Arabic). The signature under the closing line is the real
+logo, so it changes with the logo file.
 
 **Changing your Instagram or TikTok links.**
 At the top of `content.js`, in `CONFIG`.
 
-**Changing the DM message a bundle button copies.**
-`DM_MESSAGES` in `content.js`: one for joining, one for the waitlist, in
-each language. `{name}` is filled in automatically.
-
 **Changing a photo or a video.**
-Part 5 below walks through it step by step: which file is where, the
-right size for each, and how to prepare a new film for a Products card.
-
-**Adding real testimonials.**
-The Results section says case studies are on their way. When you have
-some, send them over and I'll build proper testimonial cards.
+Part 5 below walks through it step by step.
 
 If the site ever stops working after an edit to `content.js`, it's
 almost always a missing comma or quotation mark. Paste the file back to
@@ -123,12 +143,14 @@ me and I'll fix it.
 
 ## 4. How it behaves
 
-- **Logo**: VSHVDOW in Raleway Semibold, every letter joined to the
-  next by exactly the same amount, and the crescent icon: the edge of a
-  shadow, four arcs meeting in one sharp point with a small arch cut
-  into it. Both are drawn as outlines inside the pages, so they look
-  identical on every device. The browser tab icons (favicons) are the
-  crescent too.
+- **Logo**: one name logo and one crescent, each from a single file
+  (part 6), in four fixed sizes: the name at 18 pixels high in the
+  header and as the Mission signature, 12 in the footer; the crescent at
+  96 pixels wide over the Programs title and 40 on the cards. The
+  browser tab icons are the same crescent.
+- **Home page order**: Hero, Programs, the Pyramid, the band, Coaching,
+  Results, the coach, Join the Shadow, footer. The menu: Programs,
+  Coaching, Coach, Mission, and Athlete login after a short line.
 - **Header**: transparent over the hero. Once you scroll, a soft fog
   with a light blur fades in behind it. It turns white only over the dark middle of a
   photo section and stays black over the faded edges and the plain
@@ -139,36 +161,37 @@ me and I'll fix it.
   scroll.
 - **Photo sections** fade into the page at the top and bottom instead
   of ending on a hard edge. In dark mode they dissolve into black.
-- **Products**: a calm centred title (the crescent, "Products" and one
+- **Programs**: a calm centred title (the crescent, "Programs" and one
   line), then four tall cards in a row that slides sideways, sized like
   Opus Athletic's training principle cards: 3:4, about 3.3 across on a
-  computer, 1.7 on a tablet, 1.2 on a phone. The row starts on the same
-  line as the text and runs off the right edge (the left edge in
-  Arabic), so the next card always peeks in. It snaps card by card:
+  computer, 1.7 on a tablet, 1.2 on a phone. It snaps card by card:
   swipe on a phone or trackpad, drag it with a mouse, or use the arrow
-  keys. A hairline under the cards fills as you move through them.
-- **The product cards** have no frame: the crescent sits top right, and
-  the number sits just above the title, bottom left. Each card is a short
-  silent film in black and white: the welcome pack, rows for the training
-  plan, pulldowns for nutrition, dips for the tracker. They're graded to
-  match each other and the hero, slowed to 80%, and each one loops
-  without a visible seam. A film only downloads when its card comes into
-  view, plays while it's on screen and pauses when it isn't, so phones
-  only load what someone actually reaches (all four together are about
-  2.7 MB). Switching language doesn't restart them. Visitors with reduced
+  keys, and a hairline under the cards fills as you move. Each card shows
+  "Coming soon" (or a Buy button once live), the crescent, the number,
+  the name, one line, and the length and price. Under the row, while
+  Force & Form is coming, one line and a "Get it first" button lead to
+  the email signup.
+- **The films**: short, silent, black and white, graded to match each
+  other and the hero, slowed to 80%, looping without a visible seam. A
+  film only downloads when its card comes into view and pauses when it
+  leaves, so phones only load what someone reaches. Visitors with reduced
   motion or data saver turned on see each card's still instead.
-- **Bundles**: prices written out in words, clean lists with no bullet
-  marks, and thin square "Join" buttons.
-- **Instagram DM**: Instagram doesn't let websites type into a DM, so
-  "Join [bundle]" copies a short ready message and opens your Instagram
-  DM in the same tap. The visitor pastes and sends. The message follows
-  the language they're reading in.
-- **The coach and Results** sit together as one story, with the photos
-  on opposite sides.
+- **Coaching**: Performance and Private Athlete side by side, laid out
+  like a spec sheet: name and spots left, the monthly price, the block
+  of 12 weeks and the 10% upfront saving, then one row each for program,
+  app, check in, form reviews, nutrition, testing and reply time. The
+  launch offer sits above them. "Start Performance" and "Apply" open
+  WhatsApp with the message already typed, in the visitor's language and
+  currency.
+- **Results**: each founding athlete as one row: sport, program, the
+  live "Week 2 of 18" counter and a progress hairline.
+- **Results and the coach** sit together as one story, with the photos
+  on opposite sides. Every portrait photo and film on the site uses the
+  same 3:4 shape.
 - **Mission page** (`mission.html`): a light, foggy hero with "Built in
   the dark." over the sky, then one calm centred column: the statement,
   the creed, your own words, and the closing line "Become the athlete
-  nobody saw coming.", signed VSHVDOW, with the "Enter the Shadow"
+  nobody saw coming.", signed with the logo, with the "Enter the Shadow"
   button and the Join the Shadow signup. The hero stays light in dark
   mode too and sinks into black at the bottom. It's in the menu as
   "Mission" (underlined while you're on it), and the coach section on
@@ -176,16 +199,19 @@ me and I'll fix it.
 - **Moving between pages** cross-fades, in browsers that support it.
   The header looks the same on both pages, so it holds still through the
   fade.
-- **Menu**: with six links, the header switches to the menu button on
-  screens narrower than about 1140px (tablets and small laptops).
-- **Footer**: one slim line with the name, Instagram and TikTok, and the
-  © year (it updates itself).
+- **Menu**: the header switches to the menu button on screens narrower
+  than about 1140px (tablets and small laptops).
+- **Footer**: one slim line with the logo, Instagram and TikTok, Athlete
+  login, and the © year (it updates itself).
+- **Link previews**: when the site is shared, WhatsApp and Instagram show
+  `hero.jpg` (the Mission page shows its own photo), from the full
+  vshvdow.com address so the preview always finds it.
 - **Fonts**: Raleway for every letter, Aileron for every number, Cairo
   for Arabic. Aileron is hosted with the site, so it always loads.
 - **Weights**: everything is Medium. The only bold thing is the header
   logo.
 - **Motion**: sections fade up as you scroll, the pyramid builds from
-  the base, cards respond on hover. All of it switches off for anyone
+  the base, cards come in one after another. All of it switches off for anyone
   with "reduce motion" turned on.
 - **Language and dark mode** remember each visitor's last choice and
   start from their phone or computer setting on the first visit.
@@ -226,13 +252,12 @@ private tab.
 | `hero.mp4` | Home page, the full screen video behind "PERFORMANCE UNDER PRESSURE" (tablets and computers) | landscape 16:9 | 1920 × 1080, 8 to 15 seconds, under 8 MB |
 | `hero.jpg` | The same spot on phones, the still before the video starts, and the picture shown when someone shares your link | landscape 16:9 | 1920 × 1080, under 400 KB |
 | `momentum.jpg` | The dark band with "BUILT TO PERFORM · BUILT TO LAST" | landscape | 1920 × 1080 |
-| `product-welcome.mp4` and `.jpg` | Products card 01, Welcome Pack: the film and its still | portrait 3:4 | 720 × 960, under 1 MB |
-| `product-training.mp4` and `.jpg` | Card 02, Training Plan | portrait 3:4 | 720 × 960, under 1 MB |
-| `product-nutrition.mp4` and `.jpg` | Card 03, Nutrition System | portrait 3:4 | 720 × 960, under 1 MB |
-| `product-tracker.mp4` and `.jpg` | Card 04, Athlete Tracker | portrait 3:4 | 720 × 960, under 1 MB |
+| `product-welcome.mp4` and `.jpg` | Programs card 01, Force & Form: the film and its still | portrait 3:4 | 720 × 960, under 1 MB |
+| `product-tracker.mp4` and `.jpg` | Card 02, Preseason | portrait 3:4 | 720 × 960, under 1 MB |
+| `product-nutrition.mp4` and `.jpg` | Card 03, Speed | portrait 3:4 | 720 × 960, under 1 MB |
+| `product-training.mp4` and `.jpg` | Card 04, Strength | portrait 3:4 | 720 × 960, under 1 MB |
 | `about.jpg` | About the coach | shows as a tall 4:5 crop of the middle | 1200 × 1500 portrait is ideal |
 | `results.jpg` | Results | shows as a tall 4:5 crop of the middle | 1200 × 1500 portrait is ideal |
-| `closing.jpg` | Behind "Ready to start?" at the bottom of the home page | landscape | 1920 × 1080 |
 | `mission-hero.jpg` | The Mission page photo on computers | nearly square | 2000 wide |
 | `mission-hero-1200.jpg` | The same photo, smaller, for phones | nearly square | 1200 wide |
 
@@ -250,7 +275,7 @@ Things that keep each spot looking right:
 * **Black and white**: only the hero video is turned black and white by
   the site itself. Every other photo shows exactly as you upload it, so
   use black and white versions to keep the look.
-* **Hero, band and the closing photo**: the words sit in the middle over
+* **Hero and band**: the words sit in the middle over
   a dark tint, so a calm centre reads best.
 * **About and Results**: the site shows the middle of the photo as a tall
   4:5 crop, so keep the person near the centre.
@@ -262,7 +287,7 @@ Things that keep each spot looking right:
   change `hero.mp4`, also save one frame of it as `hero.jpg`, so phones
   and the moment before it starts show the same scene.
 
-### Replacing a Products film
+### Replacing a Programs film
 
 Each card has two files that belong together:
 
@@ -341,3 +366,31 @@ called something else. To make a card a plain photo with no film, write
 * **Low power mode on iPhones** stops every website's videos from
   playing by themselves. The cards show their stills then, which is
   expected.
+
+## 6. Changing the logo
+
+Every logo on the site comes from two files, and only these two:
+
+* `vshvdow-wordmark.svg`: the VSHVDOW name (header, footer, the Mission
+  signature)
+* `vshvdow-icon.svg`: the crescent (over the Programs title and on every
+  card)
+
+The site draws them in the right colour by itself (black, white, or
+following dark mode), so the files can be any single colour.
+
+To change the logo everywhere:
+
+1. Save the new name logo as an SVG called `vshvdow-wordmark.svg` and the
+   new icon as `vshvdow-icon.svg`. Each should be one solid shape, cropped
+   tight to its edges (no empty margin around it).
+2. Upload both to GitHub (part 5, step by step). Every page changes at
+   once.
+3. If the new shapes are a different width to height than today's, open
+   `styles.css`, find `aspect-ratio: 6228 / 1018` (the name) and
+   `aspect-ratio: 1000 / 470` (the crescent) under "Logo", and put the
+   new file's width and height there (the two numbers after `viewBox="0 0`
+   in the SVG file).
+4. The browser tab icons (`favicon-*.png`) are pictures, so they need
+   making again from the new icon. Send me the files and I'll make them,
+   along with the logo files themselves if you only have a PNG.

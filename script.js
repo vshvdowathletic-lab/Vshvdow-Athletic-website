@@ -37,133 +37,136 @@ function spotsLeftLabel(lang, n) {
   return `${n} spot${n === 1 ? '' : 's'} left`;
 }
 
-/* Prices live in content.js as [low, high] numbers and are written out
-   in words here, so there's no dash anywhere: "$16 to $20", "799 to 999 EGP",
-   or in Arabic "16 إلى 20 دولار". A single number shows on its own. */
-function priceRange(lang, value, currency) {
-  const t = CONTENT[lang].bundles;
-  const [lo, hi] = Array.isArray(value) ? value : [value, value];
-  const num = (n) => Number(n).toLocaleString('en-US');
-  if (currency === 'usd' && lang !== 'ar') {
-    return lo === hi ? `$${num(lo)}` : `$${num(lo)} ${t.rangeWord} $${num(hi)}`;
-  }
-  const unit = currency === 'usd' ? t.currencyUSD : t.currencyEGP;
-  return lo === hi ? `${num(lo)} ${unit}` : `${num(lo)} ${t.rangeWord} ${num(hi)} ${unit}`;
+/* ---------- currency ---------- */
+/* Prices are fixed per market, never converted. Arabic opens in EGP and
+   English in USD, until the visitor picks one with the switch. */
+function currentCurrency() {
+  let saved = null;
+  try { saved = localStorage.getItem('vshvdow-currency'); } catch (e) {}
+  if (saved === 'EGP' || saved === 'USD') return saved;
+  return currentLang === 'ar' ? 'EGP' : 'USD';
 }
 
-function bundleCardHTML(b, lang) {
-  const t = CONTENT[lang].bundles;
-  const isFull = b.spotsLeft <= 0;
-
-  const sections = b.sections.map(sec => `
-      <div>
-        <div class="bundle-list-title">${sec.title[lang]}</div>
-        <ul class="bundle-list">${sec.items.map(it => `<li>${it[lang]}</li>`).join('')}</ul>
-      </div>`).join('');
-
-  const bestList = b.bestFor[lang].map(x => `<li>${x}</li>`).join('');
-  const ctaLabel = isFull ? t.waitlistCta : `${t.joinWord} ${b.name}`;
-
-  return `
-    <article class="bundle-card${b.featured ? ' featured' : ''}">
-      <div class="bundle-badge">${b.badge[lang]}</div>
-      <div>
-        <div class="bundle-name">${b.name}</div>
-        <div class="bundle-price">${priceRange(lang, b.priceUSD, 'usd')}<small>${t.perMonth}</small><span class="egp">${priceRange(lang, b.priceEGP, 'egp')}</span></div>
-        <div class="bundle-minimum">${t.minimum}</div>
-      </div>
-      <div class="spots-row${isFull ? ' is-full' : ''}">
-        <span class="spots-dot"></span>
-        <span class="spots-label">${isFull ? t.waitlistBadge : spotsLeftLabel(lang, b.spotsLeft)}</span>
-      </div>
-      ${sections}
-      <div class="bundle-best">
-        <div class="bundle-list-title">${t.bestForTitle}</div>
-        <ul class="bundle-best-list">${bestList}</ul>
-      </div>
-      <a href="#" class="btn btn-primary dm-btn${isFull ? ' is-waitlist' : ''}" data-bundle-id="${b.id}" data-waitlist="${isFull}">${ctaLabel}</a>
-    </article>`;
+/* the number and its unit apart, so the big price on a coaching card stays a clean number */
+function priceParts(lang, item, cur) {
+  const t = CONTENT[lang].coaching;
+  const n = (v) => Number(v).toLocaleString('en-US');
+  if (cur === 'EGP') return { num: n(item.priceEGP), unit: t.currencyEGP };
+  return lang === 'ar' ? { num: n(item.priceUSD), unit: t.currencyUSD } : { num: `$${n(item.priceUSD)}`, unit: '' };
 }
 
-function productCardHTML(p, lang, i) {
-  // the still (first frame of the film) sits underneath; the film fades in over it once it plays
+function priceText(lang, item, cur) {
+  const t = CONTENT[lang].coaching;
+  const n = (v) => Number(v).toLocaleString('en-US');
+  if (cur === 'EGP') return `${n(item.priceEGP)} ${t.currencyEGP}`;
+  return lang === 'ar' ? `${n(item.priceUSD)} ${t.currencyUSD}` : `$${n(item.priceUSD)}`;
+}
+
+/* ---------- WhatsApp ---------- */
+/* Start, Apply, Buy and Waitlist open WhatsApp with the message typed. */
+function waLink(text) {
+  return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
+}
+function waMessage(lang, kind, vars) {
+  let m = WA_MESSAGES[lang][kind] || '';
+  Object.keys(vars).forEach((k) => { m = m.split(`{${k}}`).join(vars[k]); });
+  return m.replace(/\n\n+/g, '\n');
+}
+
+/* ---------- templates ---------- */
+function programCardHTML(p, lang, i, cur) {
+  const t = CONTENT[lang].programs;
   const film = p.video
     ? `<video class="product-video" data-src="${p.video}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" disablepictureinpicture disableremoteplayback></video>`
     : '';
+  const live = p.status === 'live';
+  const meta = [p.weeks ? `${p.weeks} ${t.weeks}` : '', priceText(lang, p, cur)].filter(Boolean)
+    .map((x) => `<span>${x}</span>`).join('');
+  const buy = live
+    ? `<a class="product-buy" data-wa="buy" data-id="${p.id}" href="${waLink(waMessage(lang, 'buy', { name: p.name[lang], price: priceText(lang, p, cur) }))}" target="_blank" rel="noopener">${t.buy}</a>`
+    : '';
   return `
-    <article class="product-card" role="listitem">
+    <article class="product-card" role="listitem" data-id="${p.id}">
       <div class="product-media">
         <img class="product-still" src="${p.image}" alt="" loading="lazy" decoding="async" draggable="false">
         ${film}
       </div>
       <div class="product-overlay">
         <div class="product-top">
-          <img src="vshvdow-icon-small.svg" alt="" class="product-mark">
+          <span class="product-status">${live ? '' : t.soon}</span>
+          <span class="logo-mark product-mark" aria-hidden="true"></span>
         </div>
         <div class="product-bottom">
           <span class="product-num">0${i + 1}</span>
           <h3 class="product-title">${p.name[lang]}</h3>
           <p class="product-line">${p.line[lang]}</p>
+          <div class="product-meta">${meta}</div>
+          ${buy}
         </div>
       </div>
     </article>`;
 }
 
-/* ---------- DM messages ---------- */
-
-function bundleMessage(lang, bundleId, isWaitlist) {
-  const b = BUNDLES.find(x => x.id === bundleId);
-  if (!b) return '';
-  const tpl = DM_MESSAGES[lang][isWaitlist ? 'waitlist' : 'join'];
-  const price = lang === 'ar' ? priceRange(lang, b.priceEGP, 'egp') : priceRange(lang, b.priceUSD, 'usd');
-  return tpl.replace(/\{name\}/g, b.name).replace(/\{price\}/g, price);
+function coachCardHTML(c, lang, cur) {
+  const t = CONTENT[lang].coaching;
+  const full = c.spotsLeft <= 0;
+  const labels = COACHING_LABELS[lang];
+  const price = priceText(lang, c, cur);
+  const pp = priceParts(lang, c, cur);
+  const offerOn = LAUNCH_OFFER.placesLeft > 0;
+  const kind = full ? 'waitlist' : (c.apply ? 'apply' : 'start');
+  const msg = waMessage(lang, kind, { name: c.name, price, offer: offerOn ? WA_MESSAGES[lang].offer : '' });
+  const cta = full ? t.waitlist : (c.apply ? t.apply : `${t.start} ${c.name}`);
+  const rows = c.rows.map((r, k) => `
+        <div class="coach-row"><dt>${labels[k] || ''}</dt><dd>${r[lang]}</dd></div>`).join('');
+  return `
+    <article class="coach-card${c.featured ? ' featured' : ''}" data-id="${c.id}">
+      <div class="coach-top">
+        <h3 class="coach-name" dir="ltr">${c.name}</h3>
+        <span class="coach-spots${full ? ' is-full' : ''}">${full ? t.full : spotsLeftLabel(lang, c.spotsLeft)}</span>
+      </div>
+      <p class="coach-pitch">${c.pitch[lang]}</p>
+      <div class="coach-price"><span class="coach-amount">${pp.num}</span><span class="coach-per">${pp.unit ? pp.unit + ' ' : ''}${t.perMonth}</span></div>
+      <p class="coach-terms">${t.block} · ${t.upfront}</p>
+      <dl class="coach-rows">${rows}
+      </dl>
+      <a class="coach-cta" data-wa="${kind}" href="${waLink(msg)}" target="_blank" rel="noopener">${cta}</a>
+    </article>`;
 }
 
-/* Copies text synchronously (works on every browser, and finishes
-   before the DM tab/app takes focus), then also tries the modern
-   clipboard API as a backup. */
-function copyText(text) {
-  let ok = false;
-  try {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.setAttribute('readonly', '');
-    ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;';
-    document.body.appendChild(ta);
-    ta.focus();
-    ta.select();
-    ta.setSelectionRange(0, text.length);
-    ok = document.execCommand('copy');
-    document.body.removeChild(ta);
-  } catch (e) {}
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).catch(() => {});
-    ok = true;
+/* Founding athletes: the week counter works itself out from the start date. */
+function foundingHTML(f, lang, i) {
+  const t = CONTENT[lang].results;
+  let week = 0, status = t.soon, pct = 0;
+  if (f.start) {
+    const start = new Date(f.start + 'T00:00:00');
+    const days = Math.floor((Date.now() - start.getTime()) / 86400000);
+    if (days >= 0) {
+      week = Math.min(f.weeks, Math.floor(days / 7) + 1);
+      pct = Math.min(1, (days + 1) / (f.weeks * 7));
+      status = week >= f.weeks && days >= f.weeks * 7 ? t.done : t.inProgress;
+    }
   }
-  return ok;
-}
-
-/* Instagram doesn't let websites pre-type a DM, so the bundle button
-   copies a ready-written message, then opens the DM thread straight
-   away. The visitor just pastes and sends. */
-function wireDmButton(el) {
-  if (!el) return;
-  el.href = `https://ig.me/m/${CONFIG.instagramHandle}`;
-  el.target = '_blank';
-  el.rel = 'noopener';
-  el.onclick = function () {
-    const msg = bundleMessage(currentLang, el.dataset.bundleId, el.dataset.waitlist === 'true');
-    if (msg && copyText(msg)) showToast(CONTENT[currentLang].ui.copiedToast);
-    // no preventDefault: the link opens the DM in the same tap
-  };
+  const weekText = week ? t.week.replace('{w}', week).replace('{n}', f.weeks) : '';
+  return `
+    <li class="founding-row">
+      <div class="founding-head">
+        <span class="founding-num">0${i + 1}</span>
+        <span class="founding-tag">${t.athlete} · ${f.sport[lang]}</span>
+      </div>
+      <div class="founding-main">
+        <span class="founding-prog" dir="ltr">${f.program}</span>
+        <span class="founding-week">${weekText}</span>
+      </div>
+      <div class="founding-bar" aria-hidden="true"><span style="--p:${pct.toFixed(3)}"></span></div>
+      <p class="founding-status">${status}</p>
+    </li>`;
 }
 
 function wireDynamicButtons() {
-  // Hero, nav, and contact CTAs scroll to the Bundles section (plain
-  // #bundles links). Only the per-bundle buttons open a DM.
-  document.querySelectorAll('.dm-btn').forEach(wireDmButton);
   if ($('igLink')) $('igLink').href = CONFIG.instagramUrl;
   if ($('ttLink')) $('ttLink').href = CONFIG.tiktokUrl;
+  document.querySelectorAll('[data-app-link]').forEach((a) => { a.href = CONFIG.appUrl; });
 }
 
 /* ---------- "Join the Shadow" signup ---------- */
@@ -239,11 +242,11 @@ function showToast(msg) {
 /* ---------- scroll reveal ---------- */
 /* Tags sections, cards and the pyramid with .rv and adds .in as each one
    reaches the screen (styles.css does the motion). The pyramid builds up
-   from its base; bundle cards come in one after another. */
+   from its base; coaching cards come in one after another. */
 const REVEAL_SELECTORS = [
-  '.section-inner > h2', '.section-sub', '.pricing-note', '.fx-note', '.band-line',
-  '.bundle-card', '.layer', '.products-head', '.product-rail',
-  '.about-media', '.about-copy', '.results-media', '.results-copy', '.contact-inner > *',
+  '.section-inner > h2', '.section-sub', '.band-line', '.coaching-head', '.offer-line',
+  '.coach-card', '.layer', '.products-head', '.product-rail', '.programs-note',
+  '.about-media', '.about-copy', '.results-media', '.results-copy',
   '.signup-inner > *', '.mission-inner > *',
 ];
 const revealObserver = ('IntersectionObserver' in window)
@@ -264,8 +267,7 @@ function setupReveal() {
   // pyramid: base (last in the list) first, peak last
   const layers = [...document.querySelectorAll('#pyramidLayers .layer')];
   layers.forEach((el, i) => el.style.setProperty('--d', `${(layers.length - 1 - i) * 0.12}s`));
-  document.querySelectorAll('#bundleGrid .bundle-card').forEach((el, i) => el.style.setProperty('--d', `${i * 0.1}s`));
-  document.querySelectorAll('.contact-inner > *').forEach((el, i) => el.style.setProperty('--d', `${i * 0.08}s`));
+  document.querySelectorAll('#coachGrid .coach-card').forEach((el, i) => el.style.setProperty('--d', `${i * 0.1}s`));
 }
 
 /* ---------- product films ---------- */
@@ -434,6 +436,7 @@ function render(lang) {
 
   if (PAGE === 'home') renderHome(C, lang);
   if (PAGE === 'mission') renderMission(C);
+  renderPrices(lang);
 
   // signup (both pages)
   setText('joinTitle', C.join.title);
@@ -456,57 +459,102 @@ function renderHome(C, lang) {
   setText('heroLine2', C.hero.line2);
   setText('heroCta', C.hero.cta);
 
+  // Programs: the cards are built once; a language switch only swaps the
+  // words, so the films keep playing without a restart or a flash.
+  setText('productsTitle', C.programs.title);
+  setText('productsSub', C.programs.sub);
+  setText('programsNote', C.programs.note);
+  setText('programsCta', C.programs.cta);
+  const grid = $('productsGrid');
+  if (grid) {
+    const cur = currentCurrency();
+    const cards = grid.querySelectorAll('.product-card');
+    if (cards.length === PROGRAMS.length) {
+      cards.forEach((card, i) => {
+        const p = PROGRAMS[i];
+        const fresh = document.createElement('div');
+        fresh.innerHTML = programCardHTML(p, lang, i, cur);
+        const next = fresh.firstElementChild;
+        card.querySelector('.product-overlay').replaceWith(next.querySelector('.product-overlay'));
+      });
+    } else {
+      grid.innerHTML = PROGRAMS.map((p, i) => programCardHTML(p, lang, i, cur)).join('');
+      initProductFilms(grid);
+    }
+    grid.setAttribute('aria-label', C.programs.title);
+  }
+  const rail = $('productsRail');
+  if (rail) { rail.setAttribute('role', 'region'); rail.setAttribute('aria-label', C.programs.title); }
+  updateRail();
+  if ($('programsNote')) $('programsNote').closest('.programs-note').hidden = !PROGRAMS.some((p) => p.status !== 'live');
+
   setText('pyramidTitle', C.pyramid.title);
   setText('pyramidSub', C.pyramid.sub);
   if ($('pyramidLayers')) $('pyramidLayers').innerHTML = C.layers.map(layerHTML).join('');
 
   setText('bandLine', C.footer.tagline);
 
-  setText('bundlesTitle', C.bundles.title);
-  setText('bundlesSub', C.bundles.sub);
-  setText('pricingNote', C.bundles.pricingNote);
-  setText('fxNote', C.bundles.fxNote);
-  if ($('bundleGrid')) $('bundleGrid').innerHTML = BUNDLES.map(b => bundleCardHTML(b, lang)).join('');
-
-  setText('productsTitle', C.products.title);
-  setText('productsSub', C.products.sub);
-  const grid = $('productsGrid');
-  if (grid) {
-    // Built once. Switching language only swaps the words, so the films keep
-    // playing without a restart or a flash.
-    const cards = grid.querySelectorAll('.product-card');
-    if (cards.length === PRODUCTS.length) {
-      cards.forEach((card, i) => {
-        card.querySelector('.product-title').textContent = PRODUCTS[i].name[lang];
-        card.querySelector('.product-line').textContent = PRODUCTS[i].line[lang];
-      });
-    } else {
-      grid.innerHTML = PRODUCTS.map((p, i) => productCardHTML(p, lang, i)).join('');
-      initProductFilms(grid);
-    }
-    grid.setAttribute('aria-label', C.products.title);
+  setText('coachingTitle', C.coaching.title);
+  setText('coachingSub', C.coaching.sub);
+  const sw = $('currencySwitch');
+  if (sw) {
+    sw.setAttribute('aria-label', C.coaching.currencyLabel);
+    sw.querySelectorAll('[data-cur]').forEach((b) => { b.textContent = b.dataset.cur === 'EGP' ? C.coaching.egp : C.coaching.usd; });
   }
-  const rail = $('productsRail');
-  if (rail) { rail.setAttribute('role', 'region'); rail.setAttribute('aria-label', C.products.title); }
-  updateRail();
+
+  setText('resultsTitle', C.results.title);
+  setText('resultsSub', C.results.sub);
+  if ($('foundingList')) $('foundingList').innerHTML = FOUNDING.map((f, i) => foundingHTML(f, lang, i)).join('');
 
   setText('aboutTitle', C.about.title);
   setText('aboutMission', C.about.missionLink);
   if ($('aboutBody')) $('aboutBody').innerHTML = C.about.body.map(p => `<p>${p}</p>`).join('');
 
-  setText('resultsTitle', C.results.title);
-  setText('resultsBody', C.results.body);
-
-  setText('contactTitle', C.contact.title);
-  setText('contactSub', C.contact.sub);
-  setText('contactCta', C.contact.cta);
-
   if ($('scrollCue')) $('scrollCue').setAttribute('aria-label', C.ui.scrollCue);
 }
 
+/* Everything with a price follows the currency switch. */
+function renderPrices(lang) {
+  const C = CONTENT[lang];
+  const cur = currentCurrency();
+  const sw = $('currencySwitch');
+  if (sw) sw.querySelectorAll('[data-cur]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.cur === cur)));
+  const cg = $('coachGrid');
+  if (cg) {
+    const shown = !!cg.querySelector('.coach-card.in');
+    cg.innerHTML = COACHING.map((c) => coachCardHTML(c, lang, cur)).join('');
+    // already on screen (a language or currency switch): no second entrance
+    if (shown) cg.querySelectorAll('.coach-card').forEach((el) => el.classList.add('rv', 'in'));
+  }
+  const offer = $('offerLine');
+  if (offer) {
+    offer.hidden = !(LAUNCH_OFFER.placesLeft > 0);
+    offer.textContent = C.coaching.offer.replace('{percent}', LAUNCH_OFFER.percent).replace('{n}', LAUNCH_OFFER.placesLeft);
+  }
+  document.querySelectorAll('#productsGrid .product-card').forEach((card, i) => {
+    const p = PROGRAMS[i]; if (!p) return;
+    const meta = card.querySelector('.product-meta');
+    if (meta) meta.innerHTML = [p.weeks ? `${p.weeks} ${C.programs.weeks}` : '', priceText(lang, p, cur)].filter(Boolean).map((x) => `<span>${x}</span>`).join('');
+    const buy = card.querySelector('.product-buy');
+    if (buy) buy.href = waLink(waMessage(lang, 'buy', { name: p.name[lang], price: priceText(lang, p, cur) }));
+  });
+}
+
+(function initCurrencySwitch() {
+  const sw = $('currencySwitch');
+  if (!sw) return;
+  sw.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-cur]');
+    if (!b) return;
+    try { localStorage.setItem('vshvdow-currency', b.dataset.cur); } catch (err) {}
+    renderPrices(currentLang);
+    setupReveal();
+  });
+})();
+
 function renderMission(C) {
   const M = C.mission;
-  ['kicker', 'title', 'sub', 'lead', 'body', 'line', 'goal', 'note', 'statement', 'sign', 'cta']
+  ['kicker', 'title', 'sub', 'lead', 'body', 'line', 'goal', 'note', 'statement', 'cta']
     .forEach((key) => setText('mission' + key[0].toUpperCase() + key.slice(1), M[key]));
 }
 
@@ -519,7 +567,6 @@ function renderMission(C) {
 const TONE_ZONES = [
   { sel: '.hero', tone: 'dark', top: 0, bottom: 0 },
   { sel: '.band', tone: 'dark', top: 0.2, bottom: 0.2 },
-  { sel: '.contact-section', tone: 'dark', top: 0.2, bottom: 0.2 },
   { sel: '.mission-hero', tone: 'light', top: 0, bottom: 0, bottomDark: 0.17 },
 ];
 

@@ -1,9 +1,9 @@
 /* ============================================================
    VSHVDOW SITE CONTENT
    ------------------------------------------------------------
-   This is the ONLY file you should need to edit day-to-day.
-   Change prices, spots left, links, or any text (English or
-   Egyptian Arabic) right here. The page rebuilds itself from
+   This is the ONLY file you should need to edit day to day.
+   Prices, spots left, programs, links and every word (English
+   and Egyptian Arabic) live here. The page rebuilds itself from
    this file.
 
    Do NOT touch index.html or script.js unless you're changing
@@ -11,191 +11,146 @@
    ============================================================ */
 
 /* ---------- 1. BUSINESS INFO ---------- */
-/* Your social links. The bundle buttons open an Instagram DM
-   with instagramHandle. */
 const CONFIG = {
   brand: "VSHVDOW",
-  instagramHandle: "vshvdow",
+  siteUrl: "https://vshvdow.com",
+  appUrl: "https://app.vshvdow.com",          // "Athlete login" opens this
+  whatsapp: "201022067934",                    // country code + number, digits only
   instagramUrl: "https://www.instagram.com/vshvdow/",
   tiktokUrl: "https://www.tiktok.com/@vshvdow?is_from_webapp=1&sender_device=pc",
   defaultLang: "en", // "en" or "ar": which language loads first for new visitors
   // Where the "Join the Shadow" signup sends each new email (it arrives in
-  // your Gmail). After you activate it once, you can swap the email part
-  // for the random code FormSubmit gives you, to hide your address.
+  // your Gmail). This moves to MailerLite in the next update.
   signupEndpoint: "https://formsubmit.co/ajax/vshvdowathletic@gmail.com",
 };
 
-/* ---------- 2. BUNDLES ---------- */
-/* spotsLeft is the ONLY number you'll likely change often.
-   Set it to 0 and that bundle automatically switches to
-   "Waitlist" on the live site. Nothing else to touch. */
-const BUNDLES = [
-  {
-    id: "foundation",
-    name: "Athlete Foundation",
-    badge: { en: "Best value", ar: "أحسن قيمة" },
-    priceUSD: [16, 20],     // shows as "$16 to $20"
-    priceEGP: [799, 999],   // shows as "799 to 999 EGP"
-    spotsTotal: 4,
-    spotsLeft: 4,
-    featured: false,
-    sections: [
-      { title: { en: "Training", ar: "التمرين" }, items: [
-        { en: "Monthly program block", ar: "برنامج تمرين شهري" },
-        { en: "Pyramid layers 1 to 3", ar: "مستويات الهرم من 1 إلى 3" },
-        { en: "2 form reviews a month", ar: "مراجعتين للفورم في الشهر" },
-        { en: "Progress check every 2 weeks", ar: "متابعة كل أسبوعين" },
-      ]},
-      { title: { en: "Athletic components", ar: "العناصر الرياضية" }, items: [
-        { en: "Mobility protocol", ar: "بروتوكول مرونة" },
-        { en: "Movement quality foundation", ar: "أساسيات جودة الحركة" },
-        { en: "General conditioning base", ar: "قاعدة لياقة عامة" },
-        { en: "Basic power work", ar: "تمارين باور أساسية" },
-      ]},
-      { title: { en: "Nutrition", ar: "التغذية" }, items: [
-        { en: "Calorie + macro framework", ar: "إطار للسعرات والماكروز" },
-        { en: "Performance eating guide", ar: "دليل أكل للأداء" },
-      ]},
-      { title: { en: "Assessment", ar: "التقييم" }, items: [
-        { en: "InBody scan", ar: "قياس InBody" },
-        { en: "Lifestyle + habit intake form", ar: "استمارة عن نمط حياتك وعاداتك" },
-        { en: "Video movement screen", ar: "تقييم حركة بالفيديو" },
-      ]},
-    ],
-    bestFor: {
-      en: ["General fitness", "Muscle gain & fat loss", "Beginners", "Body shape recomposition"],
-      ar: ["لياقة عامة", "بناء عضل وحرق دهون", "المبتدئين", "إعادة تشكيل الجسم"],
-    },
-  },
-  {
-    id: "performance",
-    name: "Performance",
-    badge: { en: "Most popular", ar: "الأكتر طلبًا" },
-    priceUSD: [30, 40],
-    priceEGP: [1499, 1999],
-    spotsTotal: 3,
-    spotsLeft: 3,
-    featured: true,
-    sections: [
-      { title: { en: "Training", ar: "التمرين" }, items: [
-        { en: "Custom monthly block", ar: "برنامج شهري مخصوص ليك" },
-        { en: "Full pyramid, layers 1 to 4", ar: "الهرم كامل، من مستوى 1 إلى 4" },
-        { en: "Unlimited form reviews", ar: "مراجعات فورم مفتوحة" },
-        { en: "Weekly progress check", ar: "متابعة كل أسبوع" },
-      ]},
-      { title: { en: "Athletic components", ar: "العناصر الرياضية" }, items: [
-        { en: "Speed block every cycle", ar: "بلوك سرعة في كل دورة" },
-        { en: "Power training", ar: "تمارين باور" },
-        { en: "Agility work + change of direction", ar: "رشاقة وتغيير اتجاه" },
-        { en: "Lactate threshold + sprint work", ar: "عتبة اللاكتات وسبرنتات" },
-      ]},
-      { title: { en: "Nutrition", ar: "التغذية" }, items: [
-        { en: "Macros synced to each phase", ar: "ماكروز ماشية مع مرحلة التمرين" },
-        { en: "Carb cycling on training days", ar: "تدوير الكارب في أيام التمرين" },
-      ]},
-      { title: { en: "Assessment", ar: "التقييم" }, items: [
-        { en: "All Foundation assessments", ar: "كل تقييمات Athlete Foundation" },
-        { en: "Strength testing", ar: "اختبارات قوة" },
-        { en: "Sprint + jump benchmark", ar: "قياسات سرعة وقفز" },
-        { en: "Basic injury history review", ar: "مراجعة أساسية لتاريخ الإصابات" },
-      ]},
-    ],
-    bestFor: {
-      en: ["Serious gym goers", "Recreational footballers", "Athletes who want to look and perform"],
-      ar: ["اللي بيتمرنوا في الجيم بجد", "لاعيبة الكورة الهواة", "اللي عايز يبان كويس ويأدّي كويس"],
-    },
-  },
-  {
-    id: "private",
-    name: "Private Athlete",
-    badge: { en: "Limited spots", ar: "أماكن محدودة" },
-    priceUSD: [50, 70],
-    priceEGP: [2500, 3500],
-    spotsTotal: 2,
-    spotsLeft: 2,
-    featured: false,
-    sections: [
-      { title: { en: "Training", ar: "التمرين" }, items: [
-        { en: "Bespoke weekly plan", ar: "خطة أسبوعية متفصّلة عليك" },
-        { en: "Full pyramid, all 5 layers", ar: "الهرم كامل بالخمس مستويات" },
-        { en: "Unlimited form reviews", ar: "مراجعات فورم مفتوحة" },
-        { en: "2 progress checks a week", ar: "متابعتين في الأسبوع" },
-        { en: "Graduation report at week 12", ar: "تقرير ختامي في الأسبوع 12" },
-      ]},
-      { title: { en: "Athletic components", ar: "العناصر الرياضية" }, items: [
-        { en: "Full athletic periodisation", ar: "تخطيط رياضي متكامل (Periodisation)" },
-        { en: "Football season integration", ar: "مظبوط على موسم الكورة" },
-        { en: "Mindset + psychology work", ar: "شغل على العقلية والجانب النفسي" },
-        { en: "Full aerobic and anaerobic conditioning", ar: "لياقة هوائية ولاهوائية كاملة" },
-      ]},
-      { title: { en: "Nutrition", ar: "التغذية" }, items: [
-        { en: "Full personalised plan", ar: "خطة أكل شخصية كاملة" },
-        { en: "Weekly nutrition review", ar: "مراجعة تغذية كل أسبوع" },
-      ]},
-      { title: { en: "Assessment", ar: "التقييم" }, items: [
-        { en: "Injury screening + range of motion", ar: "فحص إصابات ومدى حركة" },
-        { en: "Nutrition log review over 7 days", ar: "مراجعة سجل أكل 7 أيام" },
-        { en: "Speed & agility screening", ar: "تقييم سرعة ورشاقة" },
-      ]},
-    ],
-    bestFor: {
-      en: ["Hybrid athletes", "Semi professional footballers", "MENA and international"],
-      ar: ["الرياضيين الهايبرد", "لاعيبة كورة شبه محترفين", "الشرق الأوسط وبرّه"],
-    },
-  },
+/* ---------- 2. PROGRAMS ---------- */
+/* One payment, yours to keep. Each program is a card with a short film.
+   status: "soon" shows "Coming soon" (the button under the row sends people
+           to the email signup), "live" shows a Buy button that opens
+           WhatsApp with the order typed.
+   weeks: leave as "" if it isn't set yet.
+   video / image: the film and its still (the film's first frame).
+   README.md, part 5, explains how to swap them. */
+const PROGRAMS = [
+  { id: "force-form", status: "soon", weeks: 18, priceEGP: 999, priceUSD: 49,
+    image: "product-welcome.jpg", video: "product-welcome.mp4",
+    name: { en: "Force & Form", ar: "Force & Form" },
+    line: { en: "The complete athlete program. Speed, power and strength for any sport, football first.",
+            ar: "برنامج اللاعب الكامل. سرعة وانفجارية وقوة لأي رياضة، والكورة الأول." } },
+  { id: "preseason", status: "soon", weeks: "", priceEGP: 599, priceUSD: 29,
+    image: "product-tracker.jpg", video: "product-tracker.mp4",
+    name: { en: "Preseason", ar: "تحضير الموسم" },
+    line: { en: "Match fit before the first whistle.",
+            ar: "جاهز للماتش قبل أول صفارة." } },
+  { id: "speed", status: "soon", weeks: "", priceEGP: 599, priceUSD: 29,
+    image: "product-nutrition.jpg", video: "product-nutrition.mp4",
+    name: { en: "Speed", ar: "السرعة" },
+    line: { en: "Acceleration and top speed, built step by step.",
+            ar: "تسارع وأقصى سرعة، بتتبني خطوة بخطوة." } },
+  { id: "strength", status: "soon", weeks: "", priceEGP: 599, priceUSD: 29,
+    image: "product-training.jpg", video: "product-training.mp4",
+    name: { en: "Strength", ar: "القوة" },
+    line: { en: "Raise your ceiling. Heavy, simple, progressive.",
+            ar: "ارفع سقفك. أوزان تقيلة، بسيطة، وبتزيد بالتدريج." } },
 ];
 
-/* ---------- 3. PRODUCTS ---------- */
-/* Each product is a card with a short silent film: number, title, one line.
-   "video" is the film (an .mp4 in the same folder as everything else).
-   "image" is its still: the very first frame of the film. It shows while the
-   film loads, and it's all that visitors with reduced motion or data saver
-   see. To show a photo only, write video: "" and the card stays still.
-   README.md, part 5, explains how to swap either one. */
-const PRODUCTS = [
-  { id: "welcome",   image: "product-welcome.jpg",   video: "product-welcome.mp4",
-    name: { en: "Welcome Pack",     ar: "باكدج الترحيب" },
-    line: { en: "Everything you need to start on day one.",        ar: "كل اللي محتاجه عشان تبدأ من أول يوم." } },
-  { id: "training",  image: "product-training.jpg",  video: "product-training.mp4",
-    name: { en: "Training Plan",    ar: "خطة التمرين" },
-    line: { en: "Every set, rep and cue, rebuilt every 4 weeks.", ar: "كل مجموعة وعدّة وملاحظة، بتتكتب من جديد كل 4 أسابيع." } },
-  { id: "nutrition", image: "product-nutrition.jpg", video: "product-nutrition.mp4",
-    name: { en: "Nutrition System", ar: "سيستم التغذية" },
-    line: { en: "Your macros and meals, dialed in by phase.",       ar: "الماكروز والوجبات بتاعتك، مظبوطة على كل مرحلة." } },
-  { id: "tracker",   image: "product-tracker.jpg",   video: "product-tracker.mp4",
-    name: { en: "Athlete Tracker",  ar: "متابعة الأداء" },
-    line: { en: "Every number that matters, in one sheet.",         ar: "كل رقم مهم، في شيت واحد." } },
+/* ---------- 3. COACHING ---------- */
+/* Prices are per month; coaching runs in blocks of 12 weeks.
+   spotsLeft: set to 0 and that card switches to a waitlist by itself.
+   apply: true = the button asks people to apply instead of start. */
+const COACHING = [
+  {
+    id: "performance", name: "Performance", featured: true, apply: false,
+    priceEGP: 2500, priceUSD: 99, spotsTotal: 4, spotsLeft: 4,
+    pitch: { en: "Your system, shaped around you.", ar: "السيستم بتاعك، متفصّل عليك." },
+    rows: [
+      { en: "Your system, adjusted to your sport, schedule and equipment", ar: "السيستم متظبط على رياضتك ومواعيدك والأدوات اللي عندك" },
+      { en: "VSHVDOW app", ar: "تطبيق VSHVDOW" },
+      { en: "Weekly, in the app", ar: "كل أسبوع، في التطبيق" },
+      { en: "One video batch a week", ar: "مجموعة فيديوهات كل أسبوع" },
+      { en: "Macro targets for every phase", ar: "ماكروز لكل مرحلة" },
+      { en: "Baseline, then a retest at week 12", ar: "قياس في الأول، وإعادة في الأسبوع 12" },
+      { en: "Within 48 hours", ar: "خلال 48 ساعة" },
+    ],
+  },
+  {
+    id: "private", name: "Private Athlete", featured: false, apply: true,
+    priceEGP: 5500, priceUSD: 249, spotsTotal: 2, spotsLeft: 2,
+    pitch: { en: "Me in every detail. By application.", ar: "أنا معاك في كل تفصيلة. بالتقديم." },
+    rows: [
+      { en: "Written from scratch around you", ar: "مكتوب من الصفر عليك" },
+      { en: "VSHVDOW app and a kickoff call", ar: "تطبيق VSHVDOW ومكالمة في البداية" },
+      { en: "Twice a week, plus WhatsApp", ar: "مرتين في الأسبوع، وواتساب" },
+      { en: "Unlimited", ar: "مفتوحة" },
+      { en: "A full plan, reviewed every week", ar: "خطة كاملة، بتتراجع كل أسبوع" },
+      { en: "Full tests at weeks 1, 6 and 12, plus a graduation report", ar: "اختبارات كاملة في الأسابيع 1 و6 و12، وتقرير ختامي" },
+      { en: "Within 24 hours", ar: "خلال 24 ساعة" },
+    ],
+  },
+];
+/* The row labels, in the same order as rows above. */
+const COACHING_LABELS = {
+  en: ["Program", "App", "Check in", "Form reviews", "Nutrition", "Testing", "Replies"],
+  ar: ["البرنامج", "التطبيق", "المتابعة", "مراجعة الفورم", "التغذية", "الاختبارات", "الرد"],
+};
+/* Launch offer: the first paying athletes get 25% off their first block.
+   Lower placesLeft as they're taken; at 0 the line disappears. */
+const LAUNCH_OFFER = { percent: 25, placesLeft: 5 };
+
+/* ---------- 4. FOUNDING ATHLETES (Results) ---------- */
+/* Shown live: the week counter works itself out from the start date.
+   start: the Monday their block began, written "YYYY-MM-DD".
+   Leave start as "" and the athlete shows "starting soon".
+   Delete a line to hide that athlete. */
+const FOUNDING = [
+  { sport: { en: "Football", ar: "كورة" }, program: "Force & Form", start: "2026-10-05", weeks: 18 },
 ];
 
-/* ---------- 4. DM MESSAGES ---------- */
-/* What gets copied when someone taps a bundle button.
-   {name} = bundle name. The message follows the visitor's language (English / Arabic). */
-const DM_MESSAGES = {
+/* ---------- 5. WHATSAPP MESSAGES ---------- */
+/* Typed into WhatsApp when someone taps Start, Apply, Buy or Waitlist.
+   {name} = program or coaching level, {price} = its price. */
+const WA_MESSAGES = {
   en: {
-    join:     "Hi Coach,\nI'd like to subscribe to the {name} bundle.\nPlease send me the full details and how I can start.\nThanks!",
-    waitlist: "Hi Coach,\nI'd like to join the waitlist for the {name} bundle.\nPlease let me know as soon as a spot opens.\nThanks!",
+    start: "Hi Coach,\nI'd like to start {name} coaching ({price} a month, block of 12 weeks).\n{offer}\nName:\nSport and position:\nMain goal for the block:\nThanks!",
+    offer: "I'd like the launch offer if a place is still open.",
+    apply: "Hi Coach,\nI'd like to apply for {name}.\nName:\nAge:\nSport and position:\nLevel (school, club, academy, semi pro, pro):\nMain goal for the next 12 weeks:\nInjuries:\nDays I can train each week:\nWhere I train (gym, pitch, home):\nThanks!",
+    waitlist: "Hi Coach,\nI'd like to join the waitlist for {name}.\nPlease tell me as soon as a spot opens.\nThanks!",
+    buy: "Hi Coach,\nI'd like to buy {name} ({price}).\nName:\nEmail for the PDF:\nI'll pay by (InstaPay, Vodafone Cash or PayPal):\nThanks!",
   },
   ar: {
-    join:     "أهلاً كابتن،\nحابب أشترك في باقة {name}.\nياريت تبعتلي كل التفاصيل وإزاي أقدر أبدأ.\nشكرًا!",
-    waitlist: "أهلاً كابتن،\nحابب أسجّل في قائمة الانتظار لباقة {name}.\nياريت تبلغني أول ما يفضى مكان.\nشكرًا!",
+    start: "أهلاً كابتن،\nحابب أبدأ التدريب في {name} ({price} في الشهر، بلوك 12 أسبوع).\n{offer}\nالاسم:\nالرياضة والمركز:\nهدفي في البلوك:\nشكرًا!",
+    offer: "وحابب آخد عرض الافتتاح لو لسه فيه أماكن.",
+    apply: "أهلاً كابتن،\nحابب أقدّم على {name}.\nالاسم:\nالسن:\nالرياضة والمركز:\nالمستوى (مدرسة، نادي، أكاديمية، شبه محترف، محترف):\nهدفي في 12 أسبوع الجايين:\nالإصابات:\nعدد أيام التمرين في الأسبوع:\nبتمرن فين (جيم، ملعب، بيت):\nشكرًا!",
+    waitlist: "أهلاً كابتن،\nحابب أسجّل في قائمة الانتظار بتاعة {name}.\nياريت تبلغني أول ما يفضى مكان.\nشكرًا!",
+    buy: "أهلاً كابتن،\nحابب أشتري {name} ({price}).\nالاسم:\nالإيميل اللي يوصله ملف PDF:\nهدفع عن طريق (إنستاباي، فودافون كاش، أو PayPal):\nشكرًا!",
   },
 };
 
-/* ---------- 5. ALL OTHER TEXT ---------- */
+/* ---------- 6. ALL OTHER TEXT ---------- */
 const CONTENT = {
   en: {
     dir: "ltr",
     metaTitle: "VSHVDOW ATHLETIC",
-    metaDescription: "Athletic coaching built around football. One training system, three bundles, built to perform and built to last.",
-    nav: { pyramid: "Pyramid", bundles: "Bundles", products: "Products", coach: "Coach", mission: "Mission", contact: "Contact" },
+    metaDescription: "Athletic coaching and training programs. Every athlete, football first. One system, built to perform and built to last.",
+    nav: { programs: "Programs", coaching: "Coaching", coach: "Coach", mission: "Mission", login: "Athlete login" },
     hero: {
       line1: "PERFORMANCE UNDER PRESSURE",
       line2: "VSHVDOW ATHLETIC",
       cta: "Enter the Shadow",
     },
+    programs: {
+      title: "Programs",
+      sub: "The full system, written out for you to run on your own. One payment, yours to keep.",
+      soon: "Coming soon",
+      weeks: "weeks",
+      buy: "Buy",
+      note: "Force & Form opens soon. Join the Shadow to get it first.",
+      cta: "Get it first",
+    },
     pyramid: {
       title: "The Pyramid",
-      sub: "Every client, every goal, every session. The pyramid is always the process.",
+      sub: "Every athlete, every sport, football first. Every session follows the same five layers.",
     },
     layers: [
       { n: 5, name: "Peak expression", detail: "Physique, performance, and mindset" },
@@ -204,45 +159,44 @@ const CONTENT = {
       { n: 2, name: "Athletic conditioning", detail: "Aerobic base, lactate threshold, repeated sprint capacity" },
       { n: 1, name: "Movement foundation", detail: "Mobility, joint health, movement quality, injury resilience, posture" },
     ],
-    bundles: {
-      title: "Bundle System",
-      sub: "All three bundles are athletic first. Your goal changes the apex, not the process.",
-      pricingNote: "Every price is set for the individual athlete. Your level, your goals and your training capacity decide the exact number. The ranges below are the frame. Message me and we'll land on yours in a couple of messages.",
-      fxNote: "EGP pricing is fixed at roughly 50 EGP per $1, reviewed monthly.",
-      minimum: "Minimum 3 months",
+    coaching: {
+      title: "Coaching",
+      sub: "Train with me on the full system. Two levels, both capped, both in blocks of 12 weeks.",
       perMonth: "/ month",
-      rangeWord: "to",         // "$16 to $20"
+      block: "Block of 12 weeks",
+      upfront: "Pay the block upfront and save 10%",
+      offer: "Launch offer: {percent}% off your first block for the next {n} athletes.",
+      start: "Start",
+      apply: "Apply",
+      waitlist: "Join the waitlist",
+      full: "Full, waitlist open",
+      currencyLabel: "Currency",
+      usd: "USD",
+      egp: "EGP",
       currencyEGP: "EGP",
-      bestForTitle: "Best for",
-      waitlistBadge: "Full, waitlist open",
-      waitlistCta: "Join waitlist",
-      joinWord: "Join",
+      currencyUSD: "$",
     },
-    products: {
-      title: "Products",
-      sub: "Everything you need. Nothing you don't.",
+    results: {
+      title: "Results",
+      sub: "Our founding athletes train on the system in the open. Their tests go up here as each block lands.",
+      athlete: "Founding athlete",
+      week: "Week {w} of {n}",
+      done: "Block complete, results coming",
+      soon: "Starting soon",
+      inProgress: "Block 1 in progress",
     },
     about: {
       title: "About the coach",
       body: [
         "Every athlete I coach moves through the same system: five layers, built in order, nothing skipped. It's not a tagline. It's the only approach I've seen actually build performance that lasts, proven over years on the pitch and in the gym.",
-        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your program is tracked, reviewed and rebuilt every four weeks around what the sessions and the numbers actually show. Never guesswork.",
+        "VSHVDOW is the standard I hold myself to, and the one every athlete gets held to. Your training is tracked every week and retested at the end of every block, built around what the sessions and the numbers actually show. Never guesswork.",
         "I coach the way I train: obsessively, honestly, with zero patience for wasted effort.",
       ],
       missionLink: "Read the mission",
     },
-    results: {
-      title: "Results",
-      body: "Real athletes, real numbers. Case studies are on their way, so message me directly and I'll walk you through current client progress.",
-    },
-    contact: {
-      title: "Ready to start?",
-      sub: "Every bundle is right above. Pick the one that fits and I'll walk you through the rest.",
-      cta: "Into the Shadow",
-    },
     join: {
       title: "Join the Shadow",
-      sub: "The work happens in the dark. New programs, drops and open spots reach the shadow first. No noise.",
+      sub: "Force & Form, new blocks and open coaching spots reach the shadow first. No noise.",
       label: "Email address",
       placeholder: "Email address",
       button: "Join",
@@ -265,7 +219,6 @@ const CONTENT = {
       goal: "Our mission is to put that system and that standard in the hands of every athlete willing to carry it, wherever they train.",
       note: "I built myself alone, in hours nobody saw. That taught me one thing. A real system builds anyone who refuses to quit on it. My goal is to prove it, one athlete at a time, and to bring that standard to anyone, anywhere, who wants it enough.",
       statement: "Become the athlete nobody saw coming.",
-      sign: "VSHVDOW",
       cta: "Enter the Shadow",
     },
     footer: {
@@ -278,24 +231,32 @@ const CONTENT = {
       themeToDark: "Dark mode",
       menuOpen: "Menu",
       menuClose: "Close",
-      copiedToast: "Message copied. Paste it in the chat and hit send.",
       scrollCue: "Scroll down",
     },
   },
 
   ar: {
     dir: "rtl",
-    metaTitle: "VSHVDOW | تدريب رياضي",
-    metaDescription: "تدريب رياضي مبني على الكورة. سيستم تمرين واحد، وتلات باقات، متبني للأداء ومتبني للاستمرار.",
-    nav: { pyramid: "الهرم", bundles: "الباقات", products: "المنتجات", coach: "الكوتش", mission: "المهمة", contact: "تواصل" },
+    metaTitle: "VSHVDOW ATHLETIC",
+    metaDescription: "تدريب رياضي وبرامج تمرين. كل لاعب، والكورة الأول. سيستم واحد، متبني للأداء ومتبني للاستمرار.",
+    nav: { programs: "البرامج", coaching: "التدريب", coach: "الكوتش", mission: "المهمة", login: "دخول اللاعبين" },
     hero: {
       line1: "أداء تحت الضغط",
       line2: "VSHVDOW ATHLETIC",
       cta: "ابدأ التحدي",
     },
+    programs: {
+      title: "البرامج",
+      sub: "السيستم كامل، مكتوب عشان تمشي عليه لوحدك. تدفع مرة واحدة، ويفضل معاك.",
+      soon: "قريبًا",
+      weeks: "أسبوع",
+      buy: "اشتري",
+      note: "Force & Form بيفتح قريب. انضم للظل عشان يوصلك الأول.",
+      cta: "خليه يوصلك الأول",
+    },
     pyramid: {
       title: "الهرم",
-      sub: "كل عميل، كل هدف، كل تمرينة. الهرم هو الطريقة، دايمًا.",
+      sub: "كل لاعب، كل رياضة، والكورة الأول. كل تمرينة ماشية على نفس الخمس مستويات.",
     },
     layers: [
       { n: 5, name: "القمة", detail: "الشكل، والأداء، والعقلية" },
@@ -304,46 +265,44 @@ const CONTENT = {
       { n: 2, name: "اللياقة الرياضية", detail: "قاعدة هوائية، عتبة اللاكتات، وتكرار السبرنتات" },
       { n: 1, name: "أساس الحركة", detail: "المرونة، صحة المفاصل، جودة الحركة، الوقاية من الإصابات، والقوام" },
     ],
-    bundles: {
-      title: "نظام الباقات",
-      sub: "التلات باقات أساسهم رياضي. هدفك بيغيّر القمة، مش الطريقة.",
-      pricingNote: "كل سعر بيتحدد على حسب اللاعب نفسه: مستواك، وأهدافك، وقدرتك على التمرين. الأرقام اللي تحت دي هي الإطار العام، وهنوصل لرقمك بالظبط في رسالة أو اتنين.",
-      fxNote: "سعر الجنيه ثابت على حوالي 50 جنيه للدولار، وبيتراجع كل شهر.",
-      minimum: "أقل مدة 3 شهور",
+    coaching: {
+      title: "التدريب",
+      sub: "اتمرن معايا على السيستم كامل. مستويين، أماكنهم محدودة، والاتنين على بلوكات 12 أسبوع.",
       perMonth: "/ في الشهر",
-      rangeWord: "إلى",        // "16 إلى 20 دولار"
-      currencyUSD: "دولار",
+      block: "بلوك 12 أسبوع",
+      upfront: "ادفع البلوك كله مرة واحدة ووفّر 10%",
+      offer: "عرض الافتتاح: خصم {percent}% على أول بلوك لأول {n} لاعبين.",
+      start: "ابدأ",
+      apply: "قدّم",
+      waitlist: "سجّل في قائمة الانتظار",
+      full: "كاملة، وقائمة الانتظار مفتوحة",
+      currencyLabel: "العملة",
+      usd: "دولار",
+      egp: "جنيه",
       currencyEGP: "جنيه",
-      bestForTitle: "مناسبة لمين",
-      waitlistBadge: "كاملة، وقائمة الانتظار مفتوحة",
-      waitlistCta: "سجّل في قائمة الانتظار",
-      joinWord: "اشترك في",
+      currencyUSD: "دولار",
     },
-    products: {
-      title: "المنتجات",
-      sub: "كل اللي محتاجه. ومفيش حاجة زيادة.",
+    results: {
+      title: "النتايج",
+      sub: "اللاعيبة المؤسسين بيتمرنوا على السيستم قدام الكل. نتايج اختباراتهم بتنزل هنا مع كل بلوك.",
+      athlete: "لاعب مؤسس",
+      week: "الأسبوع {w} من {n}",
+      done: "البلوك خلص، والنتايج جاية",
+      soon: "هيبدأ قريب",
+      inProgress: "البلوك الأول شغال",
     },
     about: {
       title: "عن الكوتش",
       body: [
         "كل لاعب بدرّبه بيمشي على نفس السيستم: خمس مستويات، بتتبني بالترتيب، من غير ما نفوّت ولا واحد فيهم. ده مش شعار. دي الطريقة الوحيدة اللي شفتها بتبني أداء حقيقي بيستمر، واتجربت سنين في الملعب والجيم.",
-        "VSHVDOW هو المستوى اللي بحاسب نفسي عليه، ونفس المستوى اللي بحاسب عليه كل لاعب معايا. برنامجك بيتتابع وبيتراجع وبيتبني من جديد كل أربع أسابيع على حسب اللي التمرين والأرقام بيقولوه فعلًا. مفيش تخمين.",
+        "VSHVDOW هو المستوى اللي بحاسب نفسي عليه، ونفس المستوى اللي بحاسب عليه كل لاعب معايا. تمرينك بيتتابع كل أسبوع وبيتقاس من جديد في آخر كل بلوك، على حسب اللي التمرين والأرقام بيقولوه فعلًا. مفيش تخمين.",
         "بدرّب زي ما بتمرّن: بهوس، وبصدق، ومن غير أي صبر على مجهود بيضيع على الفاضي.",
       ],
       missionLink: "اقرأ المهمة",
     },
-    results: {
-      title: "النتايج",
-      body: "لاعيبة حقيقيين وأرقام حقيقية. قصص النجاح جاية قريب، ولحد ما تنزل ابعتلي وهوريك تقدّم العملاء الحاليين.",
-    },
-    contact: {
-      title: "جاهز تبدأ؟",
-      sub: "كل الباقات موجودة فوق. اختار اللي تناسبك وأنا هكمّل معاك الباقي.",
-      cta: "يلا نبدأ",
-    },
     join: {
       title: "انضم للظل",
-      sub: "الشغل الحقيقي بيتعمل في الضلمة. البرامج الجديدة والأماكن اللي بتفضى بتوصل للي في الظل الأول، من غير دوشة.",
+      sub: "Force & Form، والبلوكات الجديدة، والأماكن اللي بتفضى في التدريب بتوصل للي في الظل الأول. من غير دوشة.",
       label: "الإيميل",
       placeholder: "الإيميل بتاعك",
       button: "انضم",
@@ -365,7 +324,6 @@ const CONTENT = {
       goal: "مهمتنا إننا نحط السيستم ده والمستوى ده في إيد كل لاعب مستعد يشيله، في أي مكان بيتمرن فيه.",
       note: "أنا بنيت نفسي لوحدي، في ساعات محدش شافها. ده علّمني حاجة واحدة: السيستم الحقيقي بيبني أي حد مش ناوي يستسلم. هدفي إني أثبت ده، لاعب ورا لاعب، وإني أوصّل نفس المستوى لأي حد، في أي مكان، عايزه بجد.",
       statement: "خليك اللاعب اللي محدش كان متوقعه.",
-      sign: "VSHVDOW",
       cta: "ابدأ التحدي",
     },
     footer: {
@@ -378,7 +336,6 @@ const CONTENT = {
       themeToDark: "الوضع الغامق",
       menuOpen: "القائمة",
       menuClose: "اقفل",
-      copiedToast: "الرسالة اتنسخت. الصقها في الشات وابعت.",
       scrollCue: "انزل لتحت",
     },
   },
