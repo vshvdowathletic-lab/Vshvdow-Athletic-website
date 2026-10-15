@@ -14,7 +14,14 @@
 const CONFIG = {
   brand: "VSHVDOW",
   siteUrl: "https://vshvdow.com",
-  appUrl: "https://app.vshvdow.com",          // "Athlete login" opens this
+  // "Athlete login" opens this. Change it to "https://app.vshvdow.com" once
+  // that address is connected to the app (README part 7).
+  appUrl: "https://vshvdow-athletic.web.app",
+  // Where the videos stream from. iPhones and Safari only play a video when
+  // the server can send it in pieces, which this host doesn't do, so the
+  // videos stream from jsDelivr, a free video-friendly mirror of your GitHub
+  // files. If it ever fails, the site falls back to its own copy by itself.
+  mediaBase: "https://cdn.jsdelivr.net/gh/vshvdowathletic-lab/Vshvdow-Athletic-website@main/",
   whatsapp: "201022067934",                    // country code + number, digits only
   instagramUrl: "https://www.instagram.com/vshvdow/",
   tiktokUrl: "https://www.tiktok.com/@vshvdow?is_from_webapp=1&sender_device=pc",

@@ -17,7 +17,8 @@ favicon-16.png        browser tab icon, small size
 favicon-32.png        browser tab icon
 favicon-180.png       icon used when saved to a phone home screen
 favicon-512.png       larger version of the same icon
-hero.mp4              looping hero background video (desktop and tablet only)
+hero.mp4              looping hero video for laptops, computers and tablets held sideways
+hero-mobile.mp4       the same video cut upright for phones (follows the athlete)
 hero.jpg, about.jpg, momentum.jpg, results.jpg    the four photos
 product-welcome.mp4, product-training.mp4,
 product-nutrition.mp4, product-tracker.mp4      the four Programs card films
@@ -35,7 +36,7 @@ folder, so keeping everything flat avoids that.
 
 1. Open your repository on github.com.
 2. Click **Add file**, then **Upload files**.
-3. Drag in all 25 files from the zip at once (select them all, then
+3. Drag in all 26 files from the zip at once (select them all, then
    drag the selection; don't drag a folder). Files with the same name
    are replaced.
 4. Wait until every file name shows in the list, then click
@@ -215,8 +216,11 @@ me and I'll fix it.
   with "reduce motion" turned on.
 - **Language and dark mode** remember each visitor's last choice and
   start from their phone or computer setting on the first visit.
-- **Hero video** plays on tablets and computers only. Phones show the
-  still `hero.jpg`, which saves data and keeps the text easy to read.
+- **Hero video** plays on every screen: the wide film on computers and
+  tablets held sideways, an upright cut that follows the athlete on
+  phones. Visitors with data saver or reduced motion see `hero.jpg`.
+- **Videos on iPhone and Safari** stream from jsDelivr (part 5), with
+  the site's own copies as a backup.
 
 ## 5. Replacing a photo or a video
 
@@ -240,6 +244,14 @@ to change. You never touch the code for this.
    changes**.
 7. Give Cloudflare a minute or two, then open the site and refresh.
 
+**Videos stream from a mirror.** iPhones and Safari only play a video
+when the server can send it in pieces, and your host doesn't, so the
+site plays every video from jsDelivr, a free mirror of your GitHub
+files that does. It picks up new files by itself, but can keep an old
+video for up to 12 hours. To switch it straight away, open this address
+in your browser once, with the file's name at the end:
+`https://purge.jsdelivr.net/gh/vshvdowathletic-lab/Vshvdow-Athletic-website@main/product-welcome.mp4`
+
 If you still see the old picture, your browser kept a copy. On a
 computer press **Ctrl + Shift + R** (Windows) or **Cmd + Shift + R**
 (Mac). On a phone, close the tab and open the site again, or open it in a
@@ -250,7 +262,8 @@ private tab.
 | File | Where it shows | Shape | Best size |
 |---|---|---|---|
 | `hero.mp4` | Home page, the full screen video behind "PERFORMANCE UNDER PRESSURE" (tablets and computers) | landscape 16:9 | 1920 × 1080, 8 to 15 seconds, under 8 MB |
-| `hero.jpg` | The same spot on phones, the still before the video starts, and the picture shown when someone shares your link | landscape 16:9 | 1920 × 1080, under 400 KB |
+| `hero-mobile.mp4` | The same spot on phones: the hero video cut upright, following the athlete | portrait 9:16 | 608 × 1080 or 720 × 1280, under 1.5 MB |
+| `hero.jpg` | The still before the video starts, for visitors with data saver or reduced motion, and the picture shown when someone shares your link | landscape 16:9 | 1920 × 1080, under 400 KB |
 | `momentum.jpg` | The dark band with "BUILT TO PERFORM · BUILT TO LAST" | landscape | 1920 × 1080 |
 | `product-welcome.mp4` and `.jpg` | Programs card 01, Force & Form: the film and its still | portrait 3:4 | 720 × 960, under 1 MB |
 | `product-tracker.mp4` and `.jpg` | Card 02, Preseason | portrait 3:4 | 720 × 960, under 1 MB |
@@ -283,9 +296,10 @@ Things that keep each spot looking right:
   `mission-hero.jpg` and a 1200 wide copy as `mission-hero-1200.jpg`.
   "Built in the dark." sits over the upper part, so a light, foggy sky
   there works best.
-* **The hero video** plays on tablets and computers only. When you
-  change `hero.mp4`, also save one frame of it as `hero.jpg`, so phones
-  and the moment before it starts show the same scene.
+* **The hero video** has two files: `hero.mp4` (wide, for computers) and
+  `hero-mobile.mp4` (upright, for phones). Replace both together, and
+  save one frame as `hero.jpg` so the moment before it starts shows the
+  same scene. Send me a new hero video and I'll cut the phone version.
 
 ### Replacing a Programs film
 
@@ -394,3 +408,31 @@ To change the logo everywhere:
 4. The browser tab icons (`favicon-*.png`) are pictures, so they need
    making again from the new icon. Send me the files and I'll make them,
    along with the logo files themselves if you only have a PNG.
+
+## 7. Connecting app.vshvdow.com to the app
+
+Until this is done, "Athlete login" opens the app at its own address,
+`https://vshvdow-athletic.web.app`, so nothing is broken in the
+meantime.
+
+1. Open the Firebase console, your project **vshvdow-athletic**, then
+   **Hosting**, and click **Add custom domain**.
+2. Type `app.vshvdow.com` and click **Continue**. Choose the quick setup.
+3. Firebase shows the records to add: a **TXT** record (proof the domain
+   is yours) and the records that point the address at the app (usually
+   **A** records with IP addresses).
+4. In another tab, open Cloudflare, your domain **vshvdow.com**, then
+   **DNS**, then **Records**. If a record named `app` already exists,
+   delete it first. Add each record exactly as Firebase shows it. For
+   every record, set **Proxy status** to **DNS only** (the grey cloud),
+   not Proxied. Firebase can't issue the security certificate through
+   Cloudflare's proxy.
+5. Back in Firebase, click **Verify**. The status moves to "Pending",
+   then "Connected" once the certificate is ready. That usually takes a
+   few hours and can take up to 24.
+6. Firebase console, **Authentication**, **Settings**, **Authorized
+   domains**: click **Add domain** and add `app.vshvdow.com`, so password
+   reset emails and sign in work from the new address.
+7. Open `https://app.vshvdow.com` and sign in. When it works, open
+   `content.js`, change `appUrl` to `"https://app.vshvdow.com"`, and
+   upload `content.js` to GitHub.

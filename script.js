@@ -283,12 +283,28 @@ const FILMS_OK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 let filmObserver = null;
 
+/* Videos stream from CONFIG.mediaBase (a mirror that iPhones and Safari can
+   play from); if that fails, the site's own copy takes over. */
+function mediaUrl(file) { return (CONFIG.mediaBase || '') + file; }
+function setVideoSource(v, file) {
+  v.muted = true;
+  v.setAttribute('playsinline', '');
+  if (CONFIG.mediaBase) {
+    v.addEventListener('error', () => {
+      if (v.dataset.fellBack) return;
+      v.dataset.fellBack = '1';
+      v.src = file;
+      const p = v.play(); if (p && p.catch) p.catch(() => {});
+    }, { once: true });
+  }
+  v.src = mediaUrl(file);
+}
+
 function playFilm(v) {
   if (document.hidden) return;
   if (!v.getAttribute('src')) {
-    v.muted = true;
     v.addEventListener('playing', () => v.classList.add('is-playing'), { once: true });
-    v.src = v.dataset.src;
+    setVideoSource(v, v.dataset.src);
   }
   const p = v.play();
   if (p && p.catch) p.catch(() => {});
@@ -663,17 +679,19 @@ window.addEventListener('load', () => {
 // inline head-script already applied, without actually toggling it.
 setTheme(document.documentElement.getAttribute('data-theme') || 'light');
 
-// Only load the hero video on wider screens (saves mobile data) and only
-// if the visitor hasn't asked for reduced motion. On narrow screens or
-// with reduced motion on, the <video poster="hero.jpg"> just shows the
-// still photo forever. Nothing extra to load, nothing to break.
+// The hero video plays everywhere except for visitors with reduced motion or
+// data saver turned on, who keep the still (hero.jpg). Phones and other
+// upright screens get hero-mobile.mp4, cut to their shape.
 (function initHeroVideo() {
-  const isWide = window.matchMedia('(min-width: 768px)').matches;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!isWide || reduceMotion) return;
   const video = document.getElementById('heroVideo');
+  if (!video) return;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = navigator.connection && navigator.connection.saveData;
+  if (reduceMotion || saveData) return;
+  // phones get the upright cut that follows the athlete; wider screens the full frame
+  const tall = window.matchMedia('(max-aspect-ratio: 4/5)').matches;
   const source = document.getElementById('heroVideoSource');
-  if (!video || !source) return;
-  source.src = 'hero.mp4';
-  video.load();
+  if (source) source.remove();
+  setVideoSource(video, tall ? 'hero-mobile.mp4' : 'hero.mp4');
+  const p = video.play(); if (p && p.catch) p.catch(() => {});
 })();
