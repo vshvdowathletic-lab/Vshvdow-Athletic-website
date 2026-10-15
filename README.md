@@ -409,30 +409,24 @@ To change the logo everywhere:
    making again from the new icon. Send me the files and I'll make them,
    along with the logo files themselves if you only have a PNG.
 
-## 7. Connecting app.vshvdow.com to the app
+## 7. The app address (app.vshvdow.com)
 
-Until this is done, "Athlete login" opens the app at its own address,
-`https://vshvdow-athletic.web.app`, so nothing is broken in the
-meantime.
+"Athlete login" opens `https://app.vshvdow.com`, which is your Firebase
+app. It is set in `content.js` (`appUrl`) and in the login links of
+`index.html` and `mission.html`.
 
-1. Open the Firebase console, your project **vshvdow-athletic**, then
-   **Hosting**, and click **Add custom domain**.
-2. Type `app.vshvdow.com` and click **Continue**. Choose the quick setup.
-3. Firebase shows the records to add: a **TXT** record (proof the domain
-   is yours) and the records that point the address at the app (usually
-   **A** records with IP addresses).
-4. In another tab, open Cloudflare, your domain **vshvdow.com**, then
-   **DNS**, then **Records**. If a record named `app` already exists,
-   delete it first. Add each record exactly as Firebase shows it. For
-   every record, set **Proxy status** to **DNS only** (the grey cloud),
-   not Proxied. Firebase can't issue the security certificate through
-   Cloudflare's proxy.
-5. Back in Firebase, click **Verify**. The status moves to "Pending",
-   then "Connected" once the certificate is ready. That usually takes a
-   few hours and can take up to 24.
-6. Firebase console, **Authentication**, **Settings**, **Authorized
-   domains**: click **Add domain** and add `app.vshvdow.com`, so password
-   reset emails and sign in work from the new address.
-7. Open `https://app.vshvdow.com` and sign in. When it works, open
-   `content.js`, change `appUrl` to `"https://app.vshvdow.com"`, and
-   upload `content.js` to GitHub.
+How it is wired, so nobody breaks it by accident:
+
+- In Cloudflare, **DNS**, **Records**, there is one record named `app`:
+  **CNAME** to `vshvdow-athletic.web.app`, **DNS only** (grey cloud).
+  Never switch it to Proxied (orange cloud). Firebase renews the
+  security certificate through it, and the app stops opening if
+  Cloudflare sits in between.
+- Leave the two **Worker** records (`vshvdow.com` and `*.vshvdow.com`)
+  as they are. They serve this website. The `app` record wins over the
+  `*` one for that single address.
+- In Firebase, **Hosting** lists `app.vshvdow.com` as a custom domain,
+  and **Authentication**, **Settings**, **Authorized domains** includes
+  it, so sign in and password reset emails work from it.
+
+The app also still opens at `https://vshvdow-athletic.web.app`.
