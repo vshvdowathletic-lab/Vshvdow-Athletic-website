@@ -87,8 +87,13 @@ In `COACHING`, change that level's `spotsLeft`. Set it to `0` and its
 card switches to "Full, waitlist open" and a waitlist button by itself.
 
 **Someone takes the launch offer.**
-In `LAUNCH_OFFER`, lower `placesLeft` by one. At `0` the offer line
-disappears from the page and from the WhatsApp message.
+The launch offer is `percent` off for as long as the athlete stays (50
+now, so Performance shows $49 / 1,250 EGP and Private Athlete $124 /
+2,750 EGP, with the full price struck through next to it). In
+`LAUNCH_OFFER`, lower `placesLeft` by one each time a place is taken. At
+`0` the offer line disappears, the cards go back to the full price, and
+the WhatsApp message stops mentioning it. Athletes who already have the
+offer keep their price; you track that in the app, not on the site.
 
 **Changing a price.**
 Coaching prices are per month: `priceEGP` and `priceUSD` on each level
@@ -181,7 +186,8 @@ me and I'll fix it.
   like a spec sheet: name and spots left, the monthly price, the block
   of 12 weeks and the 10% upfront saving, then one row each for program,
   app, check in, form reviews, nutrition, testing and reply time. The
-  launch offer sits above them. "Start Performance" and "Apply" open
+  launch offer sits above them; while it's open the cards show the offer
+  price with the full price struck through. "Start Performance" and "Apply" open
   WhatsApp with the message already typed, in the visitor's language and
   currency.
 - **Results**: each founding athlete as one row: sport, program, the
@@ -219,6 +225,8 @@ me and I'll fix it.
 - **Hero video** plays on every screen: the wide film on computers and
   tablets held sideways, an upright cut that follows the athlete on
   phones. Visitors with data saver or reduced motion see `hero.jpg`.
+  An iPhone in Low Power Mode won't start any website's videos by itself,
+  so there the films start the moment the visitor taps or swipes.
 - **Videos on iPhone and Safari** stream from jsDelivr (part 5), with
   the site's own copies as a backup.
 

@@ -100,9 +100,12 @@ const COACHING_LABELS = {
   en: ["Program", "App", "Check in", "Form reviews", "Nutrition", "Testing", "Replies"],
   ar: ["البرنامج", "التطبيق", "المتابعة", "مراجعة الفورم", "التغذية", "الاختبارات", "الرد"],
 };
-/* Launch offer: the first paying athletes get 25% off their first block.
-   Lower placesLeft as they're taken; at 0 the line disappears. */
-const LAUNCH_OFFER = { percent: 25, placesLeft: 5 };
+/* Launch offer: the next paying athletes get this much off for as long as
+   they stay. The coaching cards show the offer price with the full price
+   struck through. Lower placesLeft as places are taken; at 0 the offer line
+   disappears and the cards go back to the full price. Athletes who already
+   took it keep their price. */
+const LAUNCH_OFFER = { percent: 50, placesLeft: 5 };
 
 /* ---------- 4. FOUNDING ATHLETES (Results) ---------- */
 /* Shown live: the week counter works itself out from the start date.
@@ -119,14 +122,14 @@ const FOUNDING = [
 const WA_MESSAGES = {
   en: {
     start: "Hi Coach,\nI'd like to start {name} coaching ({price} a month, block of 12 weeks).\n{offer}\nName:\nSport and position:\nMain goal for the block:\nThanks!",
-    offer: "I'd like the launch offer if a place is still open.",
+    offer: "I'd like the launch offer ({percent}% off for as long as I stay) if a place is still open.",
     apply: "Hi Coach,\nI'd like to apply for {name}.\nName:\nAge:\nSport and position:\nLevel (school, club, academy, semi pro, pro):\nMain goal for the next 12 weeks:\nInjuries:\nDays I can train each week:\nWhere I train (gym, pitch, home):\nThanks!",
     waitlist: "Hi Coach,\nI'd like to join the waitlist for {name}.\nPlease tell me as soon as a spot opens.\nThanks!",
     buy: "Hi Coach,\nI'd like to buy {name} ({price}).\nName:\nEmail for the PDF:\nI'll pay by (InstaPay, Vodafone Cash or PayPal):\nThanks!",
   },
   ar: {
     start: "أهلاً كابتن،\nحابب أبدأ التدريب في {name} ({price} في الشهر، بلوك 12 أسبوع).\n{offer}\nالاسم:\nالرياضة والمركز:\nهدفي في البلوك:\nشكرًا!",
-    offer: "وحابب آخد عرض الافتتاح لو لسه فيه أماكن.",
+    offer: "وحابب آخد عرض الافتتاح (خصم {percent}% طول ما أنا مكمّل) لو لسه فيه أماكن.",
     apply: "أهلاً كابتن،\nحابب أقدّم على {name}.\nالاسم:\nالسن:\nالرياضة والمركز:\nالمستوى (مدرسة، نادي، أكاديمية، شبه محترف، محترف):\nهدفي في 12 أسبوع الجايين:\nالإصابات:\nعدد أيام التمرين في الأسبوع:\nبتمرن فين (جيم، ملعب، بيت):\nشكرًا!",
     waitlist: "أهلاً كابتن،\nحابب أسجّل في قائمة الانتظار بتاعة {name}.\nياريت تبلغني أول ما يفضى مكان.\nشكرًا!",
     buy: "أهلاً كابتن،\nحابب أشتري {name} ({price}).\nالاسم:\nالإيميل اللي يوصله ملف PDF:\nهدفع عن طريق (إنستاباي، فودافون كاش، أو PayPal):\nشكرًا!",
@@ -171,7 +174,7 @@ const CONTENT = {
       perMonth: "/ month",
       block: "Block of 12 weeks",
       upfront: "Pay the block upfront and save 10%",
-      offer: "Launch offer: {percent}% off your first block for the next {n} athletes.",
+      offer: "Launch offer: {percent}% off for as long as you stay, for the next {n} athletes.",
       start: "Start",
       apply: "Apply",
       waitlist: "Join the waitlist",
@@ -277,7 +280,7 @@ const CONTENT = {
       perMonth: "/ في الشهر",
       block: "بلوك 12 أسبوع",
       upfront: "ادفع البلوك كله مرة واحدة ووفّر 10%",
-      offer: "عرض الافتتاح: خصم {percent}% على أول بلوك لأول {n} لاعبين.",
+      offer: "عرض الافتتاح: خصم {percent}% طول ما انت مكمّل معانا، لأول {n} لاعبين.",
       start: "ابدأ",
       apply: "قدّم",
       waitlist: "سجّل في قائمة الانتظار",

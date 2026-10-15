@@ -107,15 +107,24 @@ function programCardHTML(p, lang, i, cur) {
     </article>`;
 }
 
+/* The launch offer price, rounded down to a whole number. */
+function offerItem(item) {
+  const k = 1 - LAUNCH_OFFER.percent / 100;
+  return { priceUSD: Math.floor(item.priceUSD * k), priceEGP: Math.floor(item.priceEGP * k) };
+}
+
 function coachCardHTML(c, lang, cur) {
   const t = CONTENT[lang].coaching;
   const full = c.spotsLeft <= 0;
   const labels = COACHING_LABELS[lang];
-  const price = priceText(lang, c, cur);
-  const pp = priceParts(lang, c, cur);
-  const offerOn = LAUNCH_OFFER.placesLeft > 0;
+  const offerOn = LAUNCH_OFFER.placesLeft > 0 && LAUNCH_OFFER.percent > 0 && !full;
+  const shown = offerOn ? offerItem(c) : c;
+  const price = priceText(lang, shown, cur);
+  const pp = priceParts(lang, shown, cur);
+  const was = offerOn ? `<s class="coach-was" aria-hidden="true">${priceParts(lang, c, cur).num}</s>` : '';
   const kind = full ? 'waitlist' : (c.apply ? 'apply' : 'start');
-  const msg = waMessage(lang, kind, { name: c.name, price, offer: offerOn ? WA_MESSAGES[lang].offer : '' });
+  const offerMsg = offerOn ? WA_MESSAGES[lang].offer.split('{percent}').join(LAUNCH_OFFER.percent) : '';
+  const msg = waMessage(lang, kind, { name: c.name, price, offer: offerMsg });
   const cta = full ? t.waitlist : (c.apply ? t.apply : `${t.start} ${c.name}`);
   const rows = c.rows.map((r, k) => `
         <div class="coach-row"><dt>${labels[k] || ''}</dt><dd>${r[lang]}</dd></div>`).join('');
@@ -126,7 +135,7 @@ function coachCardHTML(c, lang, cur) {
         <span class="coach-spots${full ? ' is-full' : ''}">${full ? t.full : spotsLeftLabel(lang, c.spotsLeft)}</span>
       </div>
       <p class="coach-pitch">${c.pitch[lang]}</p>
-      <div class="coach-price"><span class="coach-amount">${pp.num}</span><span class="coach-per">${pp.unit ? pp.unit + ' ' : ''}${t.perMonth}</span></div>
+      <div class="coach-price"><span class="coach-amount">${pp.num}</span><span class="coach-per">${pp.unit ? pp.unit + ' ' : ''}${t.perMonth}</span>${was}</div>
       <p class="coach-terms">${t.block} · ${t.upfront}</p>
       <dl class="coach-rows">${rows}
       </dl>
@@ -300,14 +309,39 @@ function setVideoSource(v, file) {
   v.src = mediaUrl(file);
 }
 
+/* Low power mode on iPhone won't start a video by itself but lets it play
+   once the visitor touches the page. So a refused video waits here, and the
+   next tap or swipe starts every waiting video that's on screen. */
+const waitingFilms = new Set();
+function startWaitingFilms() {
+  waitingFilms.forEach((v) => {
+    if (v.classList.contains('product-video') && !v.inView) return;
+    const p = v.play();
+    if (p && p.then) p.then(() => { waitingFilms.delete(v); if (!waitingFilms.size) listenForTouch(false); }).catch(() => {});
+  });
+}
+function listenForTouch(on) {
+  ['touchend', 'click', 'keydown'].forEach((type) => {
+    if (on) document.addEventListener(type, startWaitingFilms, { capture: true, passive: true });
+    else document.removeEventListener(type, startWaitingFilms, { capture: true });
+  });
+}
+function tryPlay(v) {
+  const p = v.play();
+  if (p && p.catch) p.catch((err) => {
+    if (!err || err.name !== 'NotAllowedError') return;
+    if (!waitingFilms.size) listenForTouch(true);
+    waitingFilms.add(v);
+  });
+}
+
 function playFilm(v) {
   if (document.hidden) return;
   if (!v.getAttribute('src')) {
     v.addEventListener('playing', () => v.classList.add('is-playing'), { once: true });
     setVideoSource(v, v.dataset.src);
   }
-  const p = v.play();
-  if (p && p.catch) p.catch(() => {});
+  tryPlay(v);
 }
 
 function initProductFilms(root) {
@@ -693,5 +727,5 @@ setTheme(document.documentElement.getAttribute('data-theme') || 'light');
   const source = document.getElementById('heroVideoSource');
   if (source) source.remove();
   setVideoSource(video, tall ? 'hero-mobile.mp4' : 'hero.mp4');
-  const p = video.play(); if (p && p.catch) p.catch(() => {});
+  tryPlay(video);
 })();
