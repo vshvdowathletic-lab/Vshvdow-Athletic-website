@@ -144,7 +144,7 @@ const CONTENT = {
     metaDescription: "Athletic coaching and training programs. Every athlete, football first. One system, built to perform and built to last.",
     nav: { programs: "Programs", app: "The app", coaching: "Coaching", coach: "Coach", mission: "Mission", login: "Athlete login" },
     hero: {
-      line1: "Train unseen.",
+      line1: "Performance under pressure",
       line2: "VSHVDOW ATHLETIC",
       cta: "Start journey",
     },
@@ -266,7 +266,7 @@ const CONTENT = {
     metaDescription: "تدريب رياضي وبرامج تمرين. كل لاعب، والكورة الأول. سيستم واحد، متبني للأداء ومتبني للاستمرار.",
     nav: { programs: "البرامج", app: "التطبيق", coaching: "التدريب", coach: "الكوتش", mission: "المهمة", login: "دخول اللاعبين" },
     hero: {
-      line1: "تدرّب في الخفاء.",
+      line1: "أداء تحت الضغط",
       line2: "VSHVDOW ATHLETIC",
       cta: "ابدأ الرحلة",
     },

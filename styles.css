@@ -172,7 +172,7 @@ html { scroll-behavior: smooth; }
   -webkit-mask-position: center; mask-position: center;
 }
 .logo-word { -webkit-mask-image: url("vshvdow-wordmark.svg"); mask-image: url("vshvdow-wordmark.svg"); aspect-ratio: 6228 / 1018; height: var(--logo-md); width: auto; }
-.logo-mark { -webkit-mask-image: url("vshvdow-icon.svg"); mask-image: url("vshvdow-icon.svg"); aspect-ratio: 1000 / 470; width: var(--mark-sm); height: auto; }
+.logo-mark { -webkit-mask-image: url("vshvdow-icon.svg"); mask-image: url("vshvdow-icon.svg"); aspect-ratio: 978.52 / 416.3; width: var(--mark-sm); height: auto; }
 @media (forced-colors: active) { .logo-word, .logo-mark { forced-color-adjust: none; background-color: CanvasText; } }
 
 /* ---------- Header ---------- */
@@ -213,7 +213,7 @@ html { scroll-behavior: smooth; }
 .site-header.on-light .wordmark,
 .site-header.on-light .pill-btn,
 .site-header.on-light .icon-btn { color: var(--c-void); }
-@media (min-width: 1141px) {
+@media (min-width: 901px) {
   /* on smaller screens the nav links live inside the solid dropdown panel, so they keep theme colours */
   .site-header.on-dark .main-nav a { color: #fff; }
   .site-header.on-light .main-nav a { color: var(--c-void); }
@@ -235,7 +235,7 @@ html { scroll-behavior: smooth; }
 @media (max-width: 860px) { .wordmark .logo-word { height: 15px; } }
 /* Athlete login sits apart from the page links, behind a short hairline */
 .main-nav .nav-login { position: relative; }
-@media (min-width: 1141px) {
+@media (min-width: 901px) {
   .main-nav .nav-login::before { content: ""; position: absolute; inset-inline-start: -14px; top: 50%; width: 1px; height: 12px; background: currentColor; opacity: .3; transform: translateY(-50%); }
 }
 .main-nav { display: flex; align-items: center; gap: 28px; grid-column: 1; justify-self: start; }
@@ -266,7 +266,7 @@ html[data-theme="dark"] .icon-moon { display: block; }
 .nav-toggle[aria-expanded="true"] .burger span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 .nav-utility { display: none; }
-@media (max-width: 1140px) {
+@media (max-width: 900px) {
   .header-inner { display: flex; justify-content: flex-end; align-items: center; position: relative; }
   .wordmark { position: absolute; left: 50%; transform: translateX(-50%); }
   .main-nav {

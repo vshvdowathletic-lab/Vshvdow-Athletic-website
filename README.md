@@ -9,6 +9,7 @@ file.
 index.html            the home page structure (you shouldn't need to touch this)
 mission.html          the Mission page structure (you shouldn't need to touch this)
 styles.css            visual design (you shouldn't need to touch this)
+glass.css             the glass look on top of styles.css: wallpaper, panes, pills
 content.js            ALL text, prices, spots, programs, links: edit this one
 script.js             interactive behaviour (you shouldn't need to touch this)
 vshvdow-wordmark.svg  the VSHVDOW name logo (the only copy; every page uses it)
@@ -20,6 +21,9 @@ favicon-512.png       larger version of the same icon
 hero.mp4              looping hero video for laptops, computers and tablets held sideways
 hero-mobile.mp4       the same video cut upright for phones (follows the athlete)
 hero.jpg, about.jpg, momentum.jpg, results.jpg    the four photos
+wallpaper-dark.jpg, wallpaper-light.jpg          the 4K wallpaper behind the page (dark and light mode)
+wallpaper-dark-tall.jpg, wallpaper-light-tall.jpg  the same wallpaper cut upright for phones
+app-card-workout.jpg, app-card-week.jpg          the two app share cards in The app section
 product-welcome.mp4, product-training.mp4,
 product-nutrition.mp4, product-tracker.mp4      the four Programs card films
 product-welcome.jpg, product-training.jpg,
@@ -36,15 +40,15 @@ folder, so keeping everything flat avoids that.
 
 1. Open your repository on github.com.
 2. Click **Add file**, then **Upload files**.
-3. Drag in all 26 files from the zip at once (select them all, then
+3. Drag in every file from the zip at once (select them all, then
    drag the selection; don't drag a folder). Files with the same name
    are replaced.
 4. Wait until every file name shows in the list, then click
    **Commit changes**.
 
 Cloudflare publishes the new version by itself within a minute or two.
-Your four photos stay as they are, so they're not in the zip. The hero
-video is in it: it's the same film, now about 2 MB instead of 6.3 MB.
+A zip only holds the files that changed; everything else on GitHub
+stays as it is.
 
 **Files you can delete.** These are no longer used anywhere:
 `closing.jpg`, `products-light.jpg`, `products-dark.jpg`,
@@ -154,17 +158,22 @@ me and I'll fix it.
   header and as the Mission signature, 12 in the footer; the crescent at
   96 pixels wide over the Programs title and 40 on the cards. The
   browser tab icons are the same crescent.
-- **Home page order**: Hero, Programs, the Pyramid, the band, Coaching,
-  Results, the coach, Join the Shadow, footer. The menu: Programs,
-  Coaching, Coach, Mission, and Athlete login after a short line.
-- **Header**: transparent over the hero. Once you scroll, a soft fog
-  with a light blur fades in behind it. It turns white only over the dark middle of a
-  photo section and stays black over the faded edges and the plain
-  sections.
-- **Hero**: fills the screen. "PERFORMANCE UNDER PRESSURE" over two
-  lines, "VSHVDOW ATHLETIC" under it, the square outline "ENTER THE
-  SHADOW" button, and a thin moving line at the bottom that invites a
-  scroll.
+- **Home page order**: Hero, Programs, the Pyramid, the band, The app,
+  Coaching, Results, the coach, Join the Shadow, footer.
+- **Header**: three links on the left (The app, Mission, and Athlete
+  login after a short line), the name in the middle, Arabic and dark
+  mode on the right. Transparent over the hero; once you scroll it
+  becomes a floating smoked pill.
+- **Wallpaper**: one quiet 4K wave sits behind the whole page, dark or
+  light with the theme, with an upright cut for phones so the wave
+  keeps its shape. Every pane on the page is clear glass over it.
+- **Hero**: fills the screen. "PERFORMANCE UNDER PRESSURE" in one calm
+  line of spaced capitals (two lines on a phone), "VSHVDOW ATHLETIC"
+  under it, the "Start journey" pill (to Coaching), and a thin moving
+  line at the bottom that invites a scroll.
+- **The Pyramid**: five glass layers in even steps, 05 Peak expression
+  at the top (the narrowest) down to 01 Movement foundation at the base
+  (the widest).
 - **Photo sections** fade into the page at the top and bottom instead
   of ending on a hard edge. In dark mode they dissolve into black.
 - **Programs**: a calm centred title (the crescent, "Programs" and one
@@ -198,7 +207,7 @@ me and I'll fix it.
 - **Mission page** (`mission.html`): a light, foggy hero with "Built in
   the dark." over the sky, then one calm centred column: the statement,
   the creed, your own words, and the closing line "Become the athlete
-  nobody saw coming.", signed with the logo, with the "Enter the Shadow"
+  nobody saw coming.", signed with the logo, with the "Start journey"
   button and the Join the Shadow signup. The hero stays light in dark
   mode too and sinks into black at the bottom. It's in the menu as
   "Mission" (underlined while you're on it), and the coach section on
@@ -207,7 +216,8 @@ me and I'll fix it.
   The header looks the same on both pages, so it holds still through the
   fade.
 - **Menu**: the header switches to the menu button on screens narrower
-  than about 1140px (tablets and small laptops).
+  than about 900px (phones and small tablets), which opens a full width
+  panel with the three links, Arabic and dark mode.
 - **Footer**: one slim line with the logo, Instagram and TikTok, Athlete
   login, and the © year (it updates itself).
 - **Link previews**: when the site is shared, WhatsApp and Instagram show
@@ -273,6 +283,11 @@ private tab.
 | `hero-mobile.mp4` | The same spot on phones: the hero video cut upright, following the athlete | portrait 9:16 | 608 × 1080 or 720 × 1280, under 1.5 MB |
 | `hero.jpg` | The still before the video starts, for visitors with data saver or reduced motion, and the picture shown when someone shares your link | landscape 16:9 | 1920 × 1080, under 400 KB |
 | `momentum.jpg` | The dark band with "BUILT TO PERFORM · BUILT TO LAST" | landscape | 1920 × 1080 |
+| `wallpaper-dark.jpg` | The wallpaper behind the page in dark mode (computers, tablets) | landscape 16:9 | 3840 × 2160, under 300 KB |
+| `wallpaper-light.jpg` | The same in light mode | landscape 16:9 | 3840 × 2160, under 300 KB |
+| `wallpaper-dark-tall.jpg` | The dark wallpaper on phones | portrait 9:16 | 2160 × 3840, under 300 KB |
+| `wallpaper-light-tall.jpg` | The light wallpaper on phones | portrait 9:16 | 2160 × 3840, under 300 KB |
+| `app-card-workout.jpg`, `app-card-week.jpg` | The two share cards in The app section | portrait 9:16 | 720 × 1280 |
 | `product-welcome.mp4` and `.jpg` | Programs card 01, Force & Form: the film and its still | portrait 3:4 | 720 × 960, under 1 MB |
 | `product-tracker.mp4` and `.jpg` | Card 02, Preseason | portrait 3:4 | 720 × 960, under 1 MB |
 | `product-nutrition.mp4` and `.jpg` | Card 03, Speed | portrait 3:4 | 720 × 960, under 1 MB |
@@ -410,12 +425,15 @@ To change the logo everywhere:
    once.
 3. If the new shapes are a different width to height than today's, open
    `styles.css`, find `aspect-ratio: 6228 / 1018` (the name) and
-   `aspect-ratio: 1000 / 470` (the crescent) under "Logo", and put the
+   `aspect-ratio: 978.52 / 416.3` (the crescent) under "Logo", and put the
    new file's width and height there (the two numbers after `viewBox="0 0`
    in the SVG file).
 4. The browser tab icons (`favicon-*.png`) are pictures, so they need
    making again from the new icon. Send me the files and I'll make them,
    along with the logo files themselves if you only have a PNG.
+
+Today's crescent is the refined icon from the brand identity (locked 22
+October 2026), and the tab icons are made from it.
 
 ## 7. The app address (app.vshvdow.com)
 
