@@ -1,0 +1,211 @@
+/* ==========================================================
+   VSHVDOW · glass.css  (v17, matches the VSHVDOW Athletic app)
+   Loaded after styles.css. The same material as the app:
+   one wallpaper behind everything, ultra clear glass on top
+   (grain, a rim and a shadow, no frosting, no grey), rounded
+   corners, pill buttons and a thin light that travels around
+   the featured card. No blur anywhere.
+   To change the wallpaper, replace wallpaper-dark.jpg and
+   wallpaper-light.jpg (same names, any size, portrait or not).
+   ========================================================== */
+
+:root {
+  --wall: url("wallpaper-light.jpg");
+  --wall-color: #f2f2f2;
+  --r-xl: 30px; --r-lg: 24px; --r-md: 18px; --r-pill: 999px;
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  --glass: linear-gradient(170deg, rgba(255,255,255,.62), rgba(255,255,255,.34));
+  --glass-line: rgba(10,10,10,.08);
+  --glass-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 0 0 .5px rgba(10,10,10,.1), 0 24px 48px -30px rgba(0,0,0,.35);
+  --glass-rim: linear-gradient(176deg, rgba(255,255,255,.95), rgba(255,255,255,.2) 16%, transparent 36%, transparent 80%, rgba(255,255,255,.4));
+  --lit: #0a0a0a;
+  --bg: #f2f2f2;
+}
+html[data-theme="dark"] {
+  --wall: url("wallpaper-dark.jpg");
+  --wall-color: #000;
+  --glass: var(--noise), linear-gradient(170deg, rgba(255,255,255,.05), rgba(255,255,255,.014) 40%, rgba(255,255,255,.024));
+  --glass-line: rgba(255,255,255,.09);
+  --glass-shadow: 0 1px 0 rgba(255,255,255,.09) inset, 0 -1px 0 rgba(255,255,255,.025) inset, 0 0 0 .5px rgba(0,0,0,.6), 0 30px 60px -30px rgba(0,0,0,.95);
+  --glass-rim: linear-gradient(176deg, rgba(255,255,255,.5), rgba(255,255,255,.1) 14%, transparent 34%, transparent 78%, rgba(255,255,255,.09));
+  --lit: #fff;
+  --bg: #000;
+  --border: rgba(255,255,255,.1);
+}
+
+/* ---------- the wallpaper, fixed behind the whole page ---------- */
+html { background: var(--wall-color); }
+body { background: transparent; }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: var(--wall-color) var(--wall) center top / cover no-repeat;
+}
+main, .site-footer { position: relative; }
+
+/* ---------- one glass material ---------- */
+.coach-card, .layer, .founding, .signup-form, .app-feat, .mission-note,
+.currency-switch, .site-header.scrolled .header-inner {
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+/* the crisp top rim on every pane */
+.coach-card, .layer, .founding, .app-feat { position: relative; isolation: isolate; }
+.coach-card::before, .layer::before, .founding::before, .app-feat::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; z-index: -1;
+  background: var(--glass-rim);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+}
+
+/* ---------- light that travels: once round the edge, then rests ---------- */
+@property --la { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.lit::after, .coach-card.featured::after, .hero-cta::after {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; pointer-events: none; z-index: 3;
+  background: conic-gradient(from var(--la), transparent 0 292deg, rgba(255,255,255,0) 300deg, rgba(255,255,255,.9) 340deg, #fff 352deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  filter: drop-shadow(0 0 3px rgba(255,255,255,.8)); opacity: 0;
+  animation: vshTrace 11s linear infinite; animation-delay: var(--lit-delay, 1.2s);
+}
+@keyframes vshTrace { 0% { --la: 0deg; opacity: 0 } 3% { opacity: 1 } 34% { --la: 360deg; opacity: 1 } 38%, 100% { --la: 360deg; opacity: 0 } }
+html:not([data-theme="dark"]) .coach-card.featured::after { display: none; }
+@media (prefers-reduced-motion: reduce) { .lit::after, .coach-card.featured::after, .hero-cta::after { animation: none; opacity: 0; } }
+
+/* ---------- header: no blur. A floating smoked pill once you scroll ---------- */
+.site-header::before { display: none; }
+.site-header { padding-top: 10px; }
+.header-inner {
+  max-width: calc(var(--container) + 24px); height: 56px; border-radius: var(--r-pill);
+  border: 1px solid transparent; transition: background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+}
+.hero { margin-top: -66px; }
+.site-header.scrolled .header-inner { background: rgba(250,250,250,.9); }
+html[data-theme="dark"] .site-header.scrolled .header-inner { background: rgba(8,8,8,.86); }
+.site-header.scrolled .wordmark,
+.site-header.scrolled .pill-btn,
+.site-header.scrolled .icon-btn { color: var(--text); }
+@media (min-width: 1141px) { .site-header.scrolled .main-nav a { color: var(--text); } }
+.pill-btn, .icon-btn, .nav-utility-btn { border-radius: var(--r-pill); }
+@media (max-width: 1140px) {
+  .main-nav {
+    inset: 74px 12px auto 12px; border-radius: var(--r-lg); padding: var(--sp-3) var(--sp-5) var(--sp-5);
+    background: rgba(250,250,250,.97);
+  }
+  html[data-theme="dark"] .main-nav { background: rgba(10,10,10,.97); }
+  .main-nav a:last-of-type { border-bottom: 0; }
+}
+
+/* ---------- hero: the app's sign-in voice ---------- */
+.hero { border-radius: 0 0 var(--r-xl) var(--r-xl); }
+.hero-line1 {
+  font-weight: 300; font-size: clamp(2.5rem, 7vw, 5.4rem); letter-spacing: -.02em; line-height: 1;
+  text-transform: none; max-width: none;
+}
+html[lang="ar"] .hero-line1 { font-weight: 500; font-size: clamp(2.3rem, 6.4vw, 4.8rem); line-height: 1.2; }
+.hero-line2 { margin-top: var(--sp-5); letter-spacing: .38em; font-size: clamp(.66rem, .8vw, .78rem); color: rgba(255,255,255,.72); }
+.hero-cta {
+  position: relative; isolation: isolate; margin-top: var(--sp-7);
+  padding: 1.15em 2.4em; border-radius: var(--r-pill);
+  background: rgba(0,0,0,.55); border: 1px solid rgba(255,255,255,.34);
+  box-shadow: 0 1px 0 rgba(255,255,255,.18) inset, 0 20px 40px -18px rgba(0,0,0,.9);
+  letter-spacing: .26em; font-weight: 500;
+  --lit-delay: 2.2s;
+}
+.hero-cta:hover, .hero-cta:focus-visible { background: #fff; color: #0a0a0a; border-color: #fff; }
+
+/* ---------- buttons: pills everywhere ---------- */
+.coach-cta, .product-buy, .line-btn, .btn, .signup-btn, .currency-switch button { border-radius: var(--r-pill); }
+.coach-cta { border-color: var(--glass-line); background: rgba(255,255,255,.04); }
+html:not([data-theme="dark"]) .coach-cta { border-color: rgba(10,10,10,.22); background: rgba(255,255,255,.5); }
+.coach-card.featured .coach-cta { background: var(--text); color: var(--bg); border-color: var(--text); }
+.coach-card.featured .coach-cta:hover, .coach-card.featured .coach-cta:focus-visible { background: transparent; color: var(--text); }
+.product-buy { background: rgba(0,0,0,.35); border-color: rgba(255,255,255,.6); }
+.currency-switch { border-radius: var(--r-pill); padding: 4px; }
+.currency-switch button[aria-pressed="true"] { box-shadow: 0 0 16px -4px rgba(255,255,255,.35); }
+
+/* ---------- coaching: two clear panes, the featured one carries the light ---------- */
+.coach-card { border-radius: var(--r-xl); }
+.coach-card.featured { background: var(--glass); color: var(--text); border-color: rgba(255,255,255,.2); }
+html:not([data-theme="dark"]) .coach-card.featured { border-color: rgba(10,10,10,.28); }
+.coach-card.featured .coach-spots, .coach-card.featured .coach-pitch, .coach-card.featured .coach-per, .coach-card.featured .coach-was { color: var(--text-muted); }
+.coach-card.featured .coach-terms, .coach-card.featured .coach-row dt { color: var(--text-faint); }
+.coach-card.featured .coach-rows, .coach-card.featured .coach-row,
+.coach-rows, .coach-row { border-color: var(--glass-line); }
+.coach-row:last-child { border-bottom: 0; }
+.offer-line { display: inline-flex; padding: .7em 1.2em; border-radius: var(--r-pill); border: 1px solid var(--glass-line); background: var(--glass); }
+
+/* ---------- pyramid: five stacked panes, widening to the base ---------- */
+.pyramid { gap: 10px; }
+.layer { border-radius: var(--r-lg); border-top: 1px solid var(--glass-line); }
+.layer:last-child { border-bottom: 1px solid var(--glass-line); }
+.layer:hover { border-color: rgba(255,255,255,.22); }
+html:not([data-theme="dark"]) .layer:hover { border-color: rgba(10,10,10,.2); }
+
+/* ---------- photos and films: rounded, like the app ---------- */
+.product-card, .about-media img, .results-media img { border-radius: var(--r-lg); }
+.product-card { box-shadow: var(--glass-shadow); }
+.mission-hero { border-radius: 0 0 var(--r-xl) var(--r-xl); overflow: hidden; }
+
+/* the band becomes an inset pane instead of a hard full-bleed stripe */
+.band { margin-inline: clamp(12px, 2.4vw, 32px); border-radius: var(--r-xl); height: 46vh; min-height: 300px; box-shadow: var(--glass-shadow); }
+.band::after { display: none; }
+.band-scrim { background: rgba(0,0,0,.45); }
+
+/* ---------- results ---------- */
+.founding { padding: var(--sp-5) var(--sp-5) var(--sp-6); border-radius: var(--r-lg); gap: var(--sp-5); }
+.founding-row:first-child { padding-top: 0; border-top: 0; }
+.founding-row { border-color: var(--glass-line); }
+.founding-bar { height: 3px; border-radius: 3px; background: var(--glass-line); }
+.founding-bar span { border-radius: 3px; background: var(--lit); }
+
+/* ---------- Join the Shadow ---------- */
+.signup-form { border-radius: var(--r-pill); padding: 5px; }
+.signup-form:focus-within { border-color: rgba(255,255,255,.4); }
+html:not([data-theme="dark"]) .signup-form:focus-within { border-color: rgba(10,10,10,.35); }
+.signup-btn { border-inline-start: 0; background: var(--text); color: var(--bg); }
+.signup-btn:hover, .signup-btn:focus-visible { background: transparent; color: var(--text); box-shadow: 0 0 0 1px var(--text) inset; }
+.signup-input:-webkit-autofill { -webkit-box-shadow: 0 0 0 100px transparent inset; }
+
+/* ---------- small caps kickers, letterspaced like the app ---------- */
+.kicker { display: block; font-size: .68rem; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; color: var(--text-faint); margin-bottom: var(--sp-4); }
+html[lang="ar"] .kicker { letter-spacing: 0; font-size: .85rem; }
+
+/* ---------- The app ---------- */
+.app-section .section-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+@media (max-width: 900px) { .app-section .section-inner { grid-template-columns: 1fr; } }
+.app-copy h2 { font-size: clamp(1.9rem, 3.6vw, 2.6rem); line-height: 1.1; }
+.app-copy .section-sub { margin-top: var(--sp-4); }
+.app-feats { margin-top: var(--sp-6); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 520px) { .app-feat { padding: 14px 14px 16px; } .app-feat span { font-size: .78rem; } }
+@media (max-width: 340px) { .app-feats { grid-template-columns: 1fr; } }
+.app-feat { padding: 18px 18px 20px; border-radius: var(--r-md); }
+.app-feat b { display: block; font-size: var(--text-sm); font-weight: 500; }
+.app-feat span { display: block; margin-top: 6px; font-size: .84rem; line-height: 1.5; color: var(--text-muted); }
+.app-actions { margin-top: var(--sp-6); display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5); }
+.app-cta {
+  display: inline-flex; align-items: center; justify-content: center; padding: 1.1em 2em; border-radius: var(--r-pill);
+  background: var(--text); color: var(--bg); text-decoration: none; font-size: .7rem; font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+  transition: opacity .3s var(--ease);
+}
+.app-cta:hover, .app-cta:focus-visible { opacity: .8; }
+html[lang="ar"] .app-cta { letter-spacing: 0; font-size: .9rem; }
+.app-actions .text-link { margin-top: 0; }
+.app-note { margin-top: var(--sp-4); font-size: var(--text-xs); color: var(--text-faint); }
+/* the two share cards, standing like phones */
+.app-cards { position: relative; display: flex; justify-content: center; align-items: center; min-height: 520px; }
+.app-card { width: min(50%, 300px); aspect-ratio: 9 / 16; border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 40px 80px -30px rgba(0,0,0,.9); }
+html:not([data-theme="dark"]) .app-card { box-shadow: 0 0 0 1px rgba(10,10,10,.08), 0 40px 80px -36px rgba(0,0,0,.45); }
+.app-card img { width: 100%; height: 100%; object-fit: cover; }
+.app-card:first-child { transform: rotate(-5deg) translateX(10%); z-index: 1; }
+.app-card:last-child { transform: rotate(4deg) translate(-10%, 28px); }
+html[dir="rtl"] .app-card:first-child { transform: rotate(5deg) translateX(-10%); }
+html[dir="rtl"] .app-card:last-child { transform: rotate(-4deg) translate(10%, 28px); }
+@media (max-width: 900px) { .app-cards { min-height: 0; padding-block: var(--sp-5) var(--sp-7); } }
+
+/* ---------- Mission ---------- */
+.mission-note { border-radius: var(--r-lg); padding: clamp(28px, 4vw, 44px); }
+.mission-note::before { display: none; }
+
+@media (prefers-reduced-transparency: reduce) {
+  .coach-card, .layer, .founding, .signup-form, .app-feat, .mission-note, .currency-switch { background: var(--bg-raised); }
+}

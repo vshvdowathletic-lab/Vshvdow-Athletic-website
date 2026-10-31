@@ -256,7 +256,7 @@ const REVEAL_SELECTORS = [
   '.section-inner > h2', '.section-sub', '.band-line', '.coaching-head', '.offer-line',
   '.coach-card', '.layer', '.products-head', '.product-rail', '.programs-note',
   '.about-media', '.about-copy', '.results-media', '.results-copy',
-  '.signup-inner > *', '.mission-inner > *',
+  '.signup-inner > *', '.mission-inner > *', '.app-copy', '.app-cards',
 ];
 const revealObserver = ('IntersectionObserver' in window)
   ? new IntersectionObserver((entries) => {
@@ -543,6 +543,15 @@ function renderHome(C, lang) {
   if ($('pyramidLayers')) $('pyramidLayers').innerHTML = C.layers.map(layerHTML).join('');
 
   setText('bandLine', C.footer.tagline);
+
+  if (C.app) {
+    setText('appKicker', C.app.kicker);
+    setText('appTitle', C.app.title);
+    setText('appSub', C.app.sub);
+    setText('appCta', C.app.cta);
+    setText('appNote', C.app.note);
+    if ($('appFeats')) $('appFeats').innerHTML = C.app.feats.map((f) => `<li class="app-feat"><b>${f.t}</b><span>${f.d}</span></li>`).join('');
+  }
 
   setText('coachingTitle', C.coaching.title);
   setText('coachingSub', C.coaching.sub);

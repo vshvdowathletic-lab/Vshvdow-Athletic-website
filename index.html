@@ -29,7 +29,7 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://vshvdow.com/">
-<meta name="theme-color" content="#0a0a0a">
+<meta name="theme-color" content="#000000">
 
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
@@ -45,6 +45,7 @@
 <link rel="preload" href="vshvdow-wordmark.svg" as="image" type="image/svg+xml">
 <link rel="preload" href="vshvdow-icon.svg" as="image" type="image/svg+xml">
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="glass.css">
 </head>
 <body data-page="home">
 
@@ -54,6 +55,7 @@
   <div class="header-inner">
     <nav class="main-nav" id="mainNav" aria-label="Primary">
       <a href="#programs" data-nav="programs"></a>
+      <a href="#app" data-nav="app"></a>
       <a href="#coaching" data-nav="coaching"></a>
       <a href="#coach" data-nav="coach"></a>
       <a href="mission.html" data-nav="mission"></a>
@@ -96,7 +98,7 @@
         <span id="heroLine1" class="hero-line1 reveal"></span>
         <span id="heroLine2" class="hero-line2 reveal reveal-delay" dir="ltr"></span>
       </h1>
-      <a id="heroCta" class="hero-cta reveal reveal-delay-2" href="#programs"></a>
+      <a id="heroCta" class="hero-cta reveal reveal-delay-2" href="#coaching"></a>
     </div>
     <a class="scroll-cue" href="#programs" id="scrollCue"><span></span></a>
   </section>
@@ -131,6 +133,26 @@
     <img src="momentum.jpg" alt="" class="band-img">
     <div class="band-scrim"></div>
     <p class="band-line" id="bandLine"></p>
+  </section>
+
+  <section class="app-section" id="app">
+    <div class="section-inner">
+      <div class="app-copy">
+        <span class="kicker" id="appKicker"></span>
+        <h2 id="appTitle"></h2>
+        <p class="section-sub" id="appSub"></p>
+        <ul class="app-feats" id="appFeats"></ul>
+        <div class="app-actions">
+          <a class="app-cta" id="appCta" href="#coaching"></a>
+          <a class="text-link" href="https://app.vshvdow.com" data-nav="login" data-app-link></a>
+        </div>
+        <p class="app-note" id="appNote"></p>
+      </div>
+      <div class="app-cards" aria-hidden="true">
+        <div class="app-card"><img src="app-card-workout.jpg" alt="" loading="lazy" decoding="async"></div>
+        <div class="app-card"><img src="app-card-week.jpg" alt="" loading="lazy" decoding="async"></div>
+      </div>
+    </div>
   </section>
 
   <section class="coaching-section" id="coaching">

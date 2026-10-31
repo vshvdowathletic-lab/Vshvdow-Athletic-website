@@ -72,7 +72,7 @@ const COACHING = [
     pitch: { en: "Your system, shaped around you.", ar: "السيستم بتاعك، متفصّل عليك." },
     rows: [
       { en: "Your system, adjusted to your sport, schedule and equipment", ar: "السيستم متظبط على رياضتك ومواعيدك والأدوات اللي عندك" },
-      { en: "VSHVDOW app", ar: "تطبيق VSHVDOW" },
+      { en: "VSHVDOW app: live workouts, fuel, Society", ar: "تطبيق VSHVDOW: تمرين مباشر، تغذية، ومجتمع" },
       { en: "Weekly, in the app", ar: "كل أسبوع، في التطبيق" },
       { en: "One video batch a week", ar: "مجموعة فيديوهات كل أسبوع" },
       { en: "Macro targets for every phase", ar: "ماكروز لكل مرحلة" },
@@ -142,11 +142,27 @@ const CONTENT = {
     dir: "ltr",
     metaTitle: "VSHVDOW ATHLETIC",
     metaDescription: "Athletic coaching and training programs. Every athlete, football first. One system, built to perform and built to last.",
-    nav: { programs: "Programs", coaching: "Coaching", coach: "Coach", mission: "Mission", login: "Athlete login" },
+    nav: { programs: "Programs", app: "The app", coaching: "Coaching", coach: "Coach", mission: "Mission", login: "Athlete login" },
     hero: {
-      line1: "PERFORMANCE UNDER PRESSURE",
+      line1: "Train unseen.",
       line2: "VSHVDOW ATHLETIC",
-      cta: "Enter the Shadow",
+      cta: "Start journey",
+    },
+    /* The app section: what every coached athlete trains in (app.vshvdow.com). */
+    app: {
+      kicker: "The app",
+      title: "Your whole block, in one place.",
+      sub: "Every athlete I coach trains in the VSHVDOW app. Built for this system, in English and Arabic.",
+      feats: [
+        { t: "Live workouts", d: "Log every set as you lift. Rest timer, pause, and swaps I approve." },
+        { t: "Your numbers", d: "Strength, speed and body tests, week by week, retested every block." },
+        { t: "Fuel", d: "Targets for training and rest days, 300+ foods with Egyptian staples, and your own foods saved." },
+        { t: "Mobility flow", d: "A daily routine pinned to your training tab, rest days too." },
+        { t: "Society", d: "Stories, posts and messages with the athletes on the system." },
+        { t: "Share cards", d: "Your week, a workout or your level, with a muscle hologram, ready for Instagram." },
+      ],
+      cta: "See coaching",
+      note: "Included with every coaching level.",
     },
     programs: {
       title: "Programs",
@@ -228,7 +244,7 @@ const CONTENT = {
       goal: "Our mission is to put that system and that standard in the hands of every athlete willing to carry it, wherever they train.",
       note: "I built myself alone, in hours nobody saw. That taught me one thing. A real system builds anyone who refuses to quit on it. My goal is to prove it, one athlete at a time, and to bring that standard to anyone, anywhere, who wants it enough.",
       statement: "Become the athlete nobody saw coming.",
-      cta: "Enter the Shadow",
+      cta: "Start journey",
     },
     footer: {
       tagline: "Built to perform · Built to last",
@@ -248,11 +264,26 @@ const CONTENT = {
     dir: "rtl",
     metaTitle: "VSHVDOW ATHLETIC",
     metaDescription: "تدريب رياضي وبرامج تمرين. كل لاعب، والكورة الأول. سيستم واحد، متبني للأداء ومتبني للاستمرار.",
-    nav: { programs: "البرامج", coaching: "التدريب", coach: "الكوتش", mission: "المهمة", login: "دخول اللاعبين" },
+    nav: { programs: "البرامج", app: "التطبيق", coaching: "التدريب", coach: "الكوتش", mission: "المهمة", login: "دخول اللاعبين" },
     hero: {
-      line1: "أداء تحت الضغط",
+      line1: "تدرّب في الخفاء.",
       line2: "VSHVDOW ATHLETIC",
-      cta: "ابدأ التحدي",
+      cta: "ابدأ الرحلة",
+    },
+    app: {
+      kicker: "التطبيق",
+      title: "البلوك كله، في مكان واحد.",
+      sub: "كل لاعب بدرّبه بيتمرن في تطبيق VSHVDOW. معمول للسيستم ده، بالعربي والإنجليزي.",
+      feats: [
+        { t: "تمرين مباشر", d: "سجّل كل مجموعة وانت بتشيل. تايمر راحة، إيقاف مؤقت، وبدائل أنا بوافق عليها." },
+        { t: "أرقامك", d: "القوة والسرعة واختبارات الجسم، أسبوع بأسبوع، وبتتعاد كل بلوك." },
+        { t: "التغذية", d: "أهداف لأيام التمرين والراحة، أكتر من 300 أكلة منها الأكل المصري، وأكلاتك انت محفوظة." },
+        { t: "روتين الحركة", d: "روتين يومي متثبّت في صفحة التمرين، حتى في أيام الراحة." },
+        { t: "المجتمع", d: "ستوريز وبوستات ورسايل مع اللاعبين اللي على السيستم." },
+        { t: "كروت المشاركة", d: "أسبوعك أو تمرينك أو مستواك، مع هولوجرام للعضلات، جاهز للإنستجرام." },
+      ],
+      cta: "شوف التدريب",
+      note: "مع كل مستويات التدريب.",
     },
     programs: {
       title: "البرامج",
@@ -333,7 +364,7 @@ const CONTENT = {
       goal: "مهمتنا إننا نحط السيستم ده والمستوى ده في إيد كل لاعب مستعد يشيله، في أي مكان بيتمرن فيه.",
       note: "أنا بنيت نفسي لوحدي، في ساعات محدش شافها. ده علّمني حاجة واحدة: السيستم الحقيقي بيبني أي حد مش ناوي يستسلم. هدفي إني أثبت ده، لاعب ورا لاعب، وإني أوصّل نفس المستوى لأي حد، في أي مكان، عايزه بجد.",
       statement: "خليك اللاعب اللي محدش كان متوقعه.",
-      cta: "ابدأ التحدي",
+      cta: "ابدأ الرحلة",
     },
     footer: {
       tagline: "متبني للأداء · متبني للاستمرار",
