@@ -21,7 +21,7 @@ const CONFIG = {
   // videos stream from jsDelivr, a free video-friendly mirror of your GitHub
   // files. If it ever fails, the site falls back to its own copy by itself.
   mediaBase: "https://cdn.jsdelivr.net/gh/vshvdowathletic-lab/Vshvdow-Athletic-website@main/",
-  whatsapp: "201022067934",                    // country code + number, digits only
+  whatsapp: "201097576909",                    // country code + number, digits only
   instagramUrl: "https://www.instagram.com/vshvdow/",
   tiktokUrl: "https://www.tiktok.com/@vshvdow?is_from_webapp=1&sender_device=pc",
   defaultLang: "en", // "en" or "ar": which language loads first for new visitors
@@ -44,21 +44,21 @@ const PROGRAMS = [
     name: { en: "Force & Form", ar: "Force & Form" },
     line: { en: "The complete athlete program. Speed, power and strength for any sport, football first.",
             ar: "برنامج اللاعب الكامل. سرعة وانفجارية وقوة لأي رياضة، والكورة الأول." } },
-  { id: "preseason", status: "soon", weeks: "", priceEGP: 599, priceUSD: 29,
-    image: "product-tracker.jpg", video: "product-tracker.mp4",
-    name: { en: "Preseason", ar: "تحضير الموسم" },
-    line: { en: "Match fit before the first whistle.",
-            ar: "جاهز للماتش قبل أول صفارة." } },
-  { id: "speed", status: "soon", weeks: "", priceEGP: 599, priceUSD: 29,
-    image: "product-nutrition.jpg", video: "product-nutrition.mp4",
-    name: { en: "Speed", ar: "السرعة" },
-    line: { en: "Acceleration and top speed, built step by step.",
-            ar: "تسارع وأقصى سرعة، بتتبني خطوة بخطوة." } },
-  { id: "strength", status: "soon", weeks: "", priceEGP: 599, priceUSD: 29,
+   { id: "strength", status: "soon", weeks: "", priceEGP: 599, priceUSD: 29,
     image: "product-training.jpg", video: "product-training.mp4",
     name: { en: "Strength", ar: "القوة" },
     line: { en: "Raise your ceiling. Heavy, simple, progressive.",
             ar: "ارفع سقفك. أوزان تقيلة، بسيطة، وبتزيد بالتدريج." } },
+   { id: "speed", status: "soon", weeks: "", priceEGP: 599, priceUSD: 29,
+    image: "product-nutrition.jpg", video: "product-nutrition.mp4",
+    name: { en: "Speed", ar: "السرعة" },
+    line: { en: "Acceleration and top speed, built step by step.",
+            ar: "تسارع وأقصى سرعة، بتتبني خطوة بخطوة." } },
+  { id: "preseason", status: "soon", weeks: "", priceEGP: 599, priceUSD: 29,
+    image: "product-tracker.jpg", video: "product-tracker.mp4",
+    name: { en: "Preseason", ar: "تحضير الموسم" },
+    line: { en: "Match fit before the first whistle.",
+            ar: "جاهز للماتش قبل أول صفارة." } },   
 ];
 
 /* ---------- 3. COACHING ---------- */
